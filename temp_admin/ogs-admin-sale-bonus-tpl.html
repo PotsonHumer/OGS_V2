@@ -1,0 +1,50 @@
+<h2>會員管理 > 未發送獎金列表</h2>
+
+<p>此處列出尚未發送的會員獎金，如果該會員獎金已經發送，請先勾選會員，然後按下 "已發送獎金" 按鈕</p>
+<p>系統會紀錄每次發送的獎金，該會員的累積獎金將會清空後繼續計算</p>
+
+<ul id="cate">
+	<li><a class="all" href="#">全選</a></li>
+	<li>
+		<input type="button" class="func" value="儲存紀錄" rel="{TAG_MANAGE_PATH}sale/grant/">
+	</li>
+</ul>
+
+<!-- START BLOCK : TAG_MEMBER_BLOCK -->
+<form name="func_form" action="{TAG_MANAGE_PATH}sale/bonus/" method="post">
+	<table>
+		<tr>
+			<th>選取</th>
+			<th>序列</th>
+			<th>帳號</th>
+			<th>會員名稱</th>
+			<th>銀行資料，戶名</th>
+			<th>銀行帳號</th>
+			<th>開戶行名稱</th>
+			<th>支行名稱</th>
+			<th>所屬階層</th>
+			<th>累計獎金</th>
+		</tr>
+		<!-- START BLOCK : TAG_MEMBER_LIST -->
+		<tr>
+			<td class="center">
+				<input type="checkbox" class="id" name="id[]" value="{VALUE_ID}">
+			</td>
+			<td class="center">{VALUE_NUMBER}</td>
+			<td class="center">{VALUE_ACCOUNT}</td>
+			<td class="center">{VALUE_NAME}</td>
+			<td class="center">{VALUE_BANK_NAME}</td>
+			<td class="center">{VALUE_BANK_ACCOUNT}</td>
+			<td class="center">{VALUE_LINE_NUMBER}</td>
+			<td class="center">{VALUE_BRANCH}</td>
+			<td class="center">{VALUE_LEVEL}</td>
+			<td class="center">{VALUE_BONUS}</td>
+		</tr>
+		<!-- END BLOCK : TAG_MEMBER_LIST -->
+	</table>
+</form>
+<!-- END BLOCK : TAG_MEMBER_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->

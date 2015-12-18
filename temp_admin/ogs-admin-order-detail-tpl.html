@@ -1,0 +1,91 @@
+<h2>訂單管理 > 訂單詳細</h2>
+
+<table>
+	<tr>
+		<th>訂單編號</th>
+		<td>{VALUE_SERIAL}</td>
+		<th>付款方式</th>
+		<td>{VALUE_PAYMENT_TYPE}</td>
+	</tr>
+	<tr>
+		<th>訂單狀態</th>
+		<td colspan="3">
+			<form action="{TAG_MANAGE_PATH}order/modify/" method="post">
+				<!-- START BLOCK : TAG_STATUS_LIST -->
+				<label>{VALUE_STATUS_STR}</label><input type="radio" name="status" value="{VALUE_STATUS}" {VALUE_STATUS_CK}>
+				<!-- END BLOCK : TAG_STATUS_LIST -->
+				<input type="hidden" name="id" value="{VALUE_ID}">
+				<input type="hidden" name="serial" value="{VALUE_SERIAL}">
+				<br /><br />
+				<p><input type="submit" value="更改狀態"></p>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<th>訂購時間</th>
+		<td>{VALUE_CREATEDATE}</td>
+		<th>修改時間</th>
+		<td>{VALUE_MODIFYDATE}</td>
+	</tr>
+	<tr>
+		<th>訂購人名稱</th>
+		<td>{VALUE_NAME}</td>
+		<th>訂購人電話</th>
+		<td>{VALUE_TEL}</td>
+	</tr>
+	<tr>
+		<th>訂購人手機</th>
+		<td>{VALUE_CELL}</td>
+		<th>訂購人 E-mail</th>
+		<td>{VALUE_EMAIL}</td>
+	</tr>
+	<tr>
+		<th>訂購人地址</th>
+		<td colspan="3">{VALUE_ADDRESS}</td>
+	</tr>
+	<tr>
+		<th>收件人名稱</th>
+		<td>{VALUE_ADD_NAME}</td>
+		<th>收件人電話</th>
+		<td>{VALUE_ADD_TEL}</td>
+	</tr>
+	<tr>
+		<th>收件人手機</th>
+		<td>{VALUE_ADD_CELL}</td>
+		<th>收件人 E-mail</th>
+		<td>{VALUE_ADD_EMAIL}</td>
+	</tr>
+	<tr>
+		<th>收件人地址</th>
+		<td colspan="3">{VALUE_ADD_ADDRESS}</td>
+	</tr>
+</table>
+
+<!-- START BLOCK : TAG_ITEM_BLOCK -->
+<table>
+	<tr>
+		<th>序列</th>
+		<th>產品名稱</th>
+		<th>規格</th>
+		<th>訂購數量</th>
+		<th>單價</th>
+	</tr>
+	<!-- START BLOCK : TAG_ITEM_LIST -->
+	<tr>
+		<td>{VALUE_ROW}</td>
+		<td>{VALUE_NAME}</td>
+		<td>{VALUE_SPEC}</td>
+		<td>{VALUE_AMOUNT}</td>
+		<td>{VALUE_PRICE}</td>
+	</tr>
+	<!-- END BLOCK : TAG_ITEM_LIST -->
+	<tr>
+		<th>運費</th>
+		<td colspan="2">{VALUE_SHIP}</td>
+		<th>總價</th>
+		<td>{VALUE_TOTAL}</td>
+	</tr>
+</table>
+<!-- END BLOCK : TAG_ITEM_BLOCK -->
+
+<input type="button" class="goto" value="回列表" rel="{TAG_MANAGE_PATH}order/">

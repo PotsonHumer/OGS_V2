@@ -1,0 +1,143 @@
+<h2>產品管理 > 產品修改</h2>
+
+<p class="theme">(※) 標註星號為必填項目</p>
+
+<form action="{TAG_MANAGE_PATH}products/modify/" method="post">
+	<ul id="cate">
+		<li><a class="tab_title">產品設定</a></li>
+		<li><a class="tab_title">圖片設定</a></li>
+		<li><a class="tab_title">SEO 設定</a></li>
+	</ul>
+
+	<div class="tab">
+		<table>
+			<tr>
+				<th>※ 所屬分類</th>
+				<td>
+					<select name="parent">
+						<option value="0">未選擇</option>
+						{VALUE_PARENT_OPTION}
+					</select>
+				</td>
+				<th>※ 標題</th>
+				<td>
+					<input type="text" name="subject" value="{VALUE_SUBJECT}" size="200">
+				</td>
+			</tr>
+			<tr>
+				<th>狀態</th>
+				<td>
+					<select name="status">
+						<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+						<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					</select>
+				</td>
+				<th>排序</th>
+				<td>
+					<input type="number" name="sort" value="{VALUE_SORT}" maxlength="2" size="100">
+				</td>
+			</tr>
+			<tr>
+				<th>售價</th>
+				<td>
+					<input type="number" name="price" value="{VALUE_PRICE}" size="100">
+				</td>
+				<th>特價</th>
+				<td>
+					<input type="number" name="discount" value="{VALUE_DISCOUNT}" size="100">
+				</td>
+			</tr>
+			<tr>
+				<th>簡述</th>
+				<td colspan="3">
+					<textarea class="tiny" name="info">{VALUE_INFO}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>※ 內容</th>
+				<td colspan="3">
+					<textarea class="tiny" name="content">{VALUE_CONTENT}</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="tab">
+		<table>
+			<!-- START BLOCK : IMAGES_BLOCK0 -->
+			<tr>
+				<th>小圖</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK0 -->
+			<!-- START BLOCK : IMAGES_BLOCK1 -->
+			<tr>
+				<th>大圖 1</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK1 -->
+			<!-- START BLOCK : IMAGES_BLOCK2 -->
+			<tr>
+				<th>大圖 2</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK2 -->
+			<!-- START BLOCK : IMAGES_BLOCK3 -->
+			<tr>
+				<th>大圖 3</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK3 -->
+			<!-- START BLOCK : IMAGES_BLOCK4 -->
+			<tr>
+				<th>大圖 4</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK4 -->
+			<!-- START BLOCK : IMAGES_BLOCK5 -->
+			<tr>
+				<th>大圖 5</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK5 -->
+			<!-- START BLOCK : IMAGES_BLOCK6 -->
+			<tr>
+				<th>大圖 6</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<!-- END BLOCK : IMAGES_BLOCK6 -->
+		</table>
+	</div>
+
+	<div class="tab">
+		<!-- INCLUDE BLOCK : SEO -->
+	</div>
+
+	<input type="submit" name="send" value="修改">
+	<input type="button" class="goto" name="back" value="回到列表" rel="{VALUE_BACK_LINK}">
+	<input type="hidden" name="callback" value="1">
+	<input type="hidden" name="id" value="{VALUE_ID}">
+</form>
+
+<script>
+	$(function(){
+		$(document).tab_box({
+			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
+			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+	});
+</script>

@@ -1,0 +1,26 @@
+/* 圖片置中 & 文章置中 CSS */
+
+.fix{
+	font-size: 0;
+	text-align: center;
+}
+
+.fix:before{
+	content: ' ';
+	width: 0;
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.fix .content{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.fix img,.fix p{
+	max-width: 100%;
+	max-height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}

@@ -1,0 +1,65 @@
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Open Grid System - Website manager workframe</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Potson Humer" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+		<script type="text/javascript" src="{TAG_JS_PATH}box_serial/tiny_box.js"></script>
+		<script type="text/javascript" src="{TAG_REAL_PATH}class/editor/tinymce/tinymce.min.js"></script>
+		<script type="text/javascript" src="{TAG_REAL_PATH}class/editor/tinymce/config.js"></script>
+		<script>
+			$(function(){
+				tiny_load("{TAG_REAL_PATH}");
+				
+				$(document).tiny_box({
+					SWITCH : 0, // 1 => 圖片 , 2 => 檔案
+					ID : ".all_manage", // 綁定元素 (同css選取器)，可設定多個元素，使用 , 分隔
+					ROOT : "{TAG_REAL_PATH}class/editor/" // 根目錄位置
+				});
+				
+				$(document).tiny_box({
+					SWITCH : 1, // 1 => 圖片 , 2 => 檔案
+					ID : ".img_manage", // 綁定元素 (同css選取器)，可設定多個元素，使用 , 分隔
+					ROOT : "{TAG_REAL_PATH}class/editor/" // 根目錄位置
+				});
+				
+				$(document).tiny_box({
+					SWITCH : 2, // 1 => 圖片 , 2 => 檔案
+					ID : ".file_manage", // 綁定元素 (同css選取器)，可設定多個元素，使用 , 分隔
+					ROOT : "{TAG_REAL_PATH}class/editor/" // 根目錄位置
+				});
+			});
+	    </script>
+
+		{TAG_CSS_INCLUDE}
+		{TAG_JS_BOX}
+		{TAG_JS_INCLUDE}
+		{TAG_CUSTOM_INCLUDE}
+
+		<!--
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		-->
+
+		<script>
+			// default.js 直接啟動項目
+			$(function(){
+				pixels_size();
+				goto();
+				goto_select();
+				func_handle();
+				link_alert();
+				all_select();
+				hotkey();
+				nav_slide();
+				images_box('{TAG_NO_IMG}');
+				images_cancel();
+			});
+		</script>
+	</head>

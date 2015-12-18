@@ -1,0 +1,26 @@
+<form action="{TAG_ROOT_PATH}member/cart-login/" method="post">
+	<table>
+		<tr>
+			<td><label>帳號：</label></td>
+			<td><input type="text" name="account"></td>
+		</tr>
+		<tr>
+			<td><label>密碼：</label></td>
+			<td><input type="password" name="password"></td>
+		</tr>
+	</table>
+
+	<input type="submit" value="登入">
+	<input type="hidden" name="goto" value="cart/">
+	<a href="{TAG_ROOT_PATH}member/forget/">忘記密碼?</a>
+</form>
+
+<!--<input type="button" name="first_shop" value="尚未擁有帳號？按此繼續!">-->
+
+<script>
+	$(function(){
+		$("input[name=first_shop]").click(function(){
+			//location.href = '{TAG_ROOT_PATH}detail/first-shop/';
+		});
+	});
+</script>

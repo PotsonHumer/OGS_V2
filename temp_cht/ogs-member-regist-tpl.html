@@ -1,0 +1,28 @@
+		<form class="cc" action="{TAG_ROOT_PATH}member/regist-act/" method="post">
+			<div class="tnput_t">推薦人 : <input type="text" placeholder="請填入介紹人的帳號" name="referrals"/> * 必填欄位</div>
+			<div class="tnput_t">帳　號 : <input type="text" placeholder="請填入自行取名的帳號 (最少6個英數)" name="account" value="{VALUE_ACCOUNT}" /> * 必填欄位</div>
+			<div class="tnput_t">密　碼 : <input type="password" placeholder="設置8位碼" name="password" maxlength="8" /> * 必填欄位</div>
+			<div class="tnput_t">再輸入 : <input type="password" placeholder="再次輸入同上密碼" name="password_match" maxlength="8" /> * 必填欄位</div>
+			<div class="tnput_t">姓　名 : <input type="text" placeholder="填寫正確姓名，以確保會員使用權益" name="name" value="{VALUE_NAME}" /> * 必填欄位</div>
+			<div class="tnput_t">性　別 : <input type="radio" value="1" name="gender" />男<input type="radio" value="0" name="gender" />女</div>
+			<div class="tnput_t">出生日期 : <input type="date" placeholder="" name="birth" value="{VALUE_BIRTH}" /> * 必填欄位</div>
+			<div class="tnput_t">ＩＤ身分證字號 : <input type="text" placeholder="填寫正確字號，以確保會員使用權益" name="identity" value="{VALUE_IDENTITY}" /> * 必填欄位</div>
+			<div class="tnput_t">連絡電話 : <input type="tel" placeholder="填寫正確字號，以確保會員使用權益" name="tel" value="{VALUE_TEL}" /> * 必填欄位</div>
+			<div class="tnput_t">連絡地址 : <input type="text" placeholder="請填寫完整地址" name="address" value="{VALUE_ADDRESS}" /></div>
+			<div class="tnput_t">QQ通訊 : <input type="text" placeholder="QQ或微信" name="qq" value="{VALUE_QQ}" /></div>
+			<div class="tnput_t">信　箱 : <input type="email" placeholder="填寫正確信箱，以方便連絡" name="email" value="{VALUE_EMAIL}" /> * 必填欄位</div>
+			<fieldset>
+				<legend>個人匯款資料(需確實填寫正確)</legend>
+				銀行戶名 : <input type="text" placeholder="填寫戶名" name="bank_name" class="min" value="{VALUE_BANK_NAME}"><br /><br />
+				銀行帳號 : <input type="text" placeholder="填寫銀行帳號" name="bank_account" value="{VALUE_BANK_ACCOUNT}"> * 必填欄位，以確保獎金能正確匯入<br /><br />
+				行號 : <input type="text" placeholder="填寫行號" name="line_number" class="min" value="{VALUE_LINE_NUMBER}">
+				行別(分行號) : <input type="text" placeholder="填寫行別" name="branch" class="min" value="{VALUE_BRANCH}">
+			</fieldset>
+			<fieldset>
+				<legend>註冊認證碼</legend>
+				輸入認證碼 : <input type="text" placeholder="無此認證碼將無法註冊" name="verify_code" class="min"> <span style="color: red;">* 必填欄位，請輸入給予的認證碼，無認證碼將無法註冊</span>
+			</fieldset>
+
+			<div class="tnput_t"><input type="submit" placeholder="填寫完成，送出" /><input type="reset" value="清除重新填寫" /></div>
+			<input type="hidden" name="callback" value="1">
+		</form>

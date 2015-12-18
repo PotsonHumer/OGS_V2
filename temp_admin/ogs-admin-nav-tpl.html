@@ -1,0 +1,81 @@
+<nav class="animate">
+	<h2 style="margin-left: 0;">功能選單</h2>
+	<ul {NAV_LEVEL_NULL}>
+		<li {NAV_LEVEL_SYSTEM}>
+			<label class="icon-cog">基本設定</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_SYSTEM} href="{TAG_MANAGE_PATH}system/">系統設定</a></li>
+				<li><a class="file_manage" href="#">檔案管理</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_MANAGER}>
+			<label class="icon-head">管理員管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_MANAGER_LEVEL} href="{TAG_MANAGE_PATH}manager/level/">權限設定</a></li>
+				<li><a {CURRENT_NAV_MANAGER} href="{TAG_MANAGE_PATH}manager/">管理員列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_AD}>
+			<label class="icon-paper">廣告管理</label>
+			<ul class="animate">
+				<!--<li><a {CURRENT_NAV_AD_CATE} href="{TAG_MANAGE_PATH}ad/cate/">分類列表</a></li>-->
+				<li><a {CURRENT_NAV_AD} href="{TAG_MANAGE_PATH}ad/">廣告列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_INTRO}>
+			<label class="icon-paragraph">介紹頁管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_INTRO} href="{TAG_MANAGE_PATH}intro/">介紹頁列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_FAQ}>
+			<label class="icon-speech-bubble">問與答管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_FAQ_CATE} href="{TAG_MANAGE_PATH}faq/cate/">分類列表</a></li>
+				<li><a {CURRENT_NAV_FAQ} href="{TAG_MANAGE_PATH}faq/">問與答列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_NEWS}>
+			<label class="icon-signal">最新消息管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_NEWS_CATE} href="{TAG_MANAGE_PATH}news/cate/">分類列表</a></li>
+				<li><a {CURRENT_NAV_NEWS} href="{TAG_MANAGE_PATH}news/">最新消息列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_PRODUCTS}>
+			<label class="icon-folder">產品管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_PRODUCTS_CATE} href="{TAG_MANAGE_PATH}products/cate/">分類列表</a></li>
+				<li><a {CURRENT_NAV_PRODUCTS} href="{TAG_MANAGE_PATH}products/">產品列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_MEMBER}>
+			<label class="icon-clipboard">會員管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_MEMBER} href="{TAG_MANAGE_PATH}member/">會員列表</a></li>
+			</ul>
+		</li>
+		<li  {NAV_LEVEL_ORDER}>
+			<label class="icon-bag">訂單管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_ORDER} href="{TAG_MANAGE_PATH}order/">訂單列表</a></li>
+			</ul>
+		</li>
+		<li {NAV_LEVEL_CONTACT}>
+			<label class="icon-bell">聯絡我們管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_CONTACT} href="{TAG_MANAGE_PATH}contact/">留言列表</a></li>
+			</ul>
+		</li>
+		<!--
+		<li>
+			<label>庫存管理</label>
+			<ul class="animate">
+				<li><a {CURRENT_NAV_STOCK_CATE} href="{TAG_MANAGE_PATH}stock/cate/">庫存類別管理</a></li>
+				<li><a {CURRENT_NAV_STOCK_ITEM} href="{TAG_MANAGE_PATH}stock/item/">庫存項目管理</a></li>
+				<li><a {CURRENT_NAV_STOCK} href="{TAG_MANAGE_PATH}stock/">庫存列表</a></li>
+			</ul>
+		</li>
+		-->
+	</ul>
+</nav>

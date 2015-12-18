@@ -1,0 +1,31 @@
+<h2>管理員認證</h2>
+
+<p>你使用了 "保持登入" 的功能,系統必須確認你帳號 (E-mail) ,以茲安全</p>
+<p>系統已發送一封確認信至你的帳號信箱,請複製裡面的認證碼,然後貼到以下的方框內</p>
+
+<br>
+<label class="theme">此功能有以下幾個注意事項</label>
+<ul>
+	<li style="margin: 5px 1em;">1. 如果找不到信件，試著找找看垃圾信箱，可能跑到那了。</li>
+	<li style="margin: 5px 1em;">2. 如果你更改了帳號 E-mail，保持登入將會失效，你必須重新認證一次。</li>
+	<li style="margin: 5px 1em;">3. 保持登入會持續一年，時間過後必須重新認證。</li>
+	<li style="margin: 5px 1em;">4. 保持登入只會在同一台電腦上的同一個瀏覽器生效，如果你更換了任何一項，都必須重新認證。</li>
+	<li style="margin: 5px 1em;">5. 瀏覽器必須開啟 cookie 功能，此功能才會生效 (通常瀏覽器預設都是開啟的)。</li>
+	<li style="margin: 5px 1em;">6. 如果你清除了瀏覽器的暫存，此功能可能會失效，得重新認證。</li>
+	<li style="margin: 5px 1em;" class="theme">7. 小心不要在不常用或是公用的電腦上使用此功能，帳號非常可能被盜!!!</li>
+</ul>
+
+
+<form action="{TAG_MANAGE_PATH}manager/reverify-act/" method="post">
+	<table>
+		<tr>
+			<th><label>請在此輸入信件中的認證碼</label></th>
+			<td>
+				<input type="text" name="verify_code" size="150">
+			</td>
+		</tr>
+	</table>
+	
+	<input type="submit" name="send" value="輸入後按此認證">
+	<input type="button" class="goto" name="back" value="跳過此步驟" rel="{TAG_MANAGE_PATH}">
+</form>

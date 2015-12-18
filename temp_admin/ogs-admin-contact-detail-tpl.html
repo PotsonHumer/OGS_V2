@@ -1,0 +1,49 @@
+<h2>聯絡我們管理 > 留言內容</h2>
+
+<table>
+	<tr>
+		<th>姓名</th>
+		<td>{VALUE_NAME}</td>
+		<th>性別</th>
+		<td>{VALUE_GENDER}</td>
+	</tr>
+	<tr>
+		<th>電話</th>
+		<td>{VALUE_TEL}</td>
+		<th>傳真</th>
+		<td>{VALUE_FAX}</td>
+	</tr>
+	<tr>
+		<th>手機</th>
+		<td>{VALUE_CELL}</td>
+		<th>地址</th>
+		<td>{VALUE_ADDRESS}</td>
+	</tr>
+	<tr>
+		<th>信箱</th>
+		<td>{VALUE_EMAIL}</td>
+		<th>時間</th>
+		<td>{VALUE_CREATEDATE}</td>
+	</tr>
+	<tr>
+		<th>內容</th>
+		<td colspan="3">{VALUE_CONTENT}</td>
+	</tr>
+</table>
+
+<form action="{TAG_MANAGE_PATH}contact/reply/" method="post">
+	<table>
+		<tr>
+			<th>回覆內容</th>
+		</tr>
+		<tr>
+			<td>
+				<textarea name="reply" cols="60" rows="5">{VALUE_REPLY}</textarea>
+			</td>
+		</tr>
+	</table>
+	
+	<input type="hidden" name="id" value="{VALUE_ID}">
+	<input type="submit" name="send" value="發送回覆">
+	<input type="button" class="goto" name="back" value="回到列表" rel="{VALUE_BACK_LINK}">
+</form>

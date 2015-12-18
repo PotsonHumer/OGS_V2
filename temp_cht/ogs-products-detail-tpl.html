@@ -1,0 +1,48 @@
+<div id="pic_box">
+	<div id="pic_0" class="fix"><img src="{IMAGE_PATH}" alt="{IMAGE_ALT}" title="{IMAGE_TITLE}" /></div>
+	<div id="pr_title">{VALUE_SUBJECT}</div>
+	<div id="pr_narrative">{VALUE_INFO}</div>
+	<form action="{TAG_ROOT_PATH}cart/add/" method="post">
+		<div class="rom">
+			數量 :
+			<select name="amount">
+				<option value="0">請選擇</option>
+				<!-- START BLOCK : TAG_AMOUNT_LIST -->
+				<option value="{VALUE_AMOUNT}">{VALUE_AMOUNT}</option>
+				<!-- END BLOCK : TAG_AMOUNT_LIST -->
+			</select>
+			<input type="hidden" name="id" value="{VALUE_ID}">
+		</div>
+		<div class="rom">
+			售價 : NT.{VALUE_PRICE} 元 / <font color="#CC0000" {DISCOUNT_NONE}>特價 : NT.{VALUE_DISCOUNT} 元</font>
+		</div>
+		<!-- START BLOCK : TAG_IMAGES -->
+		<div class="pic_s fix"><a href="#"><img src="{IMAGES_PATH}" alt="{IMAGES_ALT}" title="{IMAGES_TITLE}"></a></div>
+		<!-- END BLOCK : TAG_IMAGES -->
+		<!--<input type="submit" value="加入購物車" />-->
+	</form>
+</div>
+
+<div id="pr_explanation">商品內容</div>
+<div id="pr_data">
+	{VALUE_CONTENT}
+</div>
+
+<div style="clear: both;"></div>
+
+<script>
+	$(function(){
+		$(".pic_s a").click(function(E){
+			E.preventDefault();
+
+			var IMG = new Array;
+			IMG["src"] = $(this).find("img").attr("src");
+			IMG["alt"] = $(this).find("img").attr("alt");
+			IMG["title"] = $(this).find("img").attr("title");
+
+			$.each(IMG,function(KEY,VAR){
+				$("#pic_0").find("img").attr(KEY,VAR);
+			});
+		});
+	});
+</script>

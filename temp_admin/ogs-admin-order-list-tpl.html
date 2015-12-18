@@ -1,0 +1,50 @@
+<h2>訂單管理 > 訂單列表</h2>
+
+<!-- START BLOCK : TAG_ORDER_BLOCK -->
+<table>
+	<tr>
+		<th>序列</th>
+		<th>訂單編號</th>
+		<th>訂單狀態</th>
+		<th>付款方式</th>
+		<th>訂購人名稱</th>
+		<th>訂購人電話</th>
+		<th>訂購人手機</th>
+		<th>總價</th>
+		<th>訂購時間</th>
+		<th>管理</th>
+	</tr>
+	<!-- START BLOCK : TAG_ORDER_LIST -->
+	<tr>
+		<td>{VALUE_ROW}</td>
+		<td>{VALUE_SERIAL}</td>
+		<td>{VALUE_STATUS}</td>
+		<td>{VALUE_PAYMENT_TYPE}</td>
+		<td>{VALUE_NAME}</td>
+		<td>{VALUE_TEL}</td>
+		<td>{VALUE_CELL}</td>
+		<td>{VALUE_TOTAL}</td>
+		<td>{VALUE_CREATEDATE}</td>
+		<td>
+			<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}order/detail/{VALUE_SERIAL}/">
+			<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}order/del/{VALUE_ID}/">
+		</td>
+	</tr>
+	<!-- END BLOCK : TAG_ORDER_LIST -->
+</table>
+<!-- END BLOCK : TAG_ORDER_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->
+
+<script>
+	$(function(){
+		$("input[name=del]").click(function(){
+			if(!confirm('確定刪除?')) return false;
+
+			PATH = $(this).attr("rel");
+			location.href = PATH;
+		});
+	});
+</script>

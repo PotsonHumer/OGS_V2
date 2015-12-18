@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- INCLUDE BLOCK : HEADER -->
+
+	<body>
+		<!-- INCLUDE BLOCK : TOP -->
+
+		<!-- INCLUDE BLOCK : NAV -->
+
+		<main class="animate">
+			<!-- INCLUDE BLOCK : MAIN -->
+
+			<!-- INCLUDE BLOCK : PAGE -->
+		</main>
+
+		<!-- INCLUDE BLOCK : FOOTER -->
+	</body>
+</html>
+
+<script>
+	$(function(){
+		$(window).scroll(function(){
+			var W_LEFT = $(this).scrollLeft();
+
+			if(W_LEFT > 0){
+				$("nav").addClass("w_left");
+			}else{
+				$("nav").removeClass("w_left");
+			}
+		});
+	});
+</script>

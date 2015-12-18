@@ -1,0 +1,35 @@
+<div id="footer_box">
+	<div class="footer">
+		<div class="f_link ot">
+			<ul>
+				<li><a href="{TAG_ROOT_PATH}">Index</a></li>
+				<li><a href="{TAG_ROOT_PATH}intro/">About</a></li>
+				<li><a href="{TAG_ROOT_PATH}products/">Product</a></li>
+				<li><a href="{TAG_ROOT_PATH}faq/">Shopping</a></li>
+				<li><a href="{TAG_ROOT_PATH}news/">News</a></li>
+				<li><a href="{TAG_ROOT_PATH}contact/">Contact</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="copyright">&copy; YATAI 2015 HENGZUAN All Rights Reserved.</div>
+</div>
+
+<script>
+	var FOOTER_HANDLE = function(){
+		var WIN_H = $(window).height();
+		var DOC_H = $(document).height();
+
+		if(DOC_H > WIN_H){
+			$("#adv_box").css({ "margin":"0 0 20px 0" });
+			$("#main_box").css({ "margin":"0 0 20px 0" });
+			$("#footer_box").css({ "position":"relative" });
+		}
+	}
+
+	$(function(){
+		FOOTER_HANDLE();
+		$(window).resize(function(){
+			FOOTER_HANDLE();
+		});
+	});
+</script>

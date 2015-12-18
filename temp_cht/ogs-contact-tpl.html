@@ -1,0 +1,17 @@
+<img src="{TAG_THEME_PATH}contact.jpg" />
+<form action="{TAG_ROOT_PATH}contact/add/" method="post">
+    <div class="contact_title">聯絡人資料欄表</div>
+    <div class="input_box">▪ 名　　稱<input type="text" name="name" value="{VALUE_NAME}" placeholder="留下您的姓名、公司名" /><font color="#990000">*必填位置,以確保能聯絡到您。</font></div>
+    <div class="input_box">▪ 性　　別<select name="gender"><option value="null">未選擇</option><option value="1" {VALUE_GENDER_CK1}>男性</option><option value="0" {VALUE_GENDER_CK0}>女性</option></select></div>
+    <div class="input_box">▪ 連絡電話<input type="text" name="tel" value="{VALUE_TEL}" placeholder="區碼+號碼 例:XX+XXXXXXXX" /><font color="#990000">*必填位置,以確保能聯絡到您。</font></div>
+    <div class="input_box">▪ 傳　　真<input type="text" name="fax" placeholder="留下您的傳真" /></div>
+    <div class="input_box">▪ 行　　動<input type="text" name="cell" value="{VALUE_CELL}" placeholder="留下您的行動電話" /></div>
+    <div class="input_box">▪ 聯絡地址<input type="text" name="address" value="{VALUE_ADDRESS}" placeholder="留下您的地址" /><font color="#990000"></font></div>
+    <div class="input_box">▪ 信　　箱<input type="text" name="email" value="{VALUE_EMAIL}" placeholder="留下您的信箱 (E-mail)" /><font color="#990000">*必填位置,以確保能聯絡到您。</font></div>
+    <textarea cols="72" rows="8" placeholder="我們在收到您的留言後，將會盡快與您聯絡" name="content"/></textarea>
+    <div class="button_box">
+        <input type="submit" value="送出" />
+        <input type="reset" value="重填" />
+    </div>
+    <div style="both:clear;"></div>
+</form>

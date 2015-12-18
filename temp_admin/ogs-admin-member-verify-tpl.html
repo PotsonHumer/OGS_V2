@@ -1,0 +1,22 @@
+<h2>會員管理 > 產生認證碼</h2>
+
+<form action="{TAG_MANAGE_PATH}member/verify-act/" method="post">
+	<table>
+		<tr>
+			<th>產生組數 (輸入要產生的數量)</th>
+			<td>
+				<input type="number" name="amount" size="100" min="1" placeholder="請輸入數字">
+			</td>
+		</tr>
+		<tr>
+			<th>發送報單人員</th>
+			<td>
+				<select name="manager_id">
+					{VALUE_MANAGER_ID_OPTION}
+				</select>
+			</td>
+		</tr>
+	</table>
+
+	<input type="submit" name="send" value="按此產生">
+</form>

@@ -1,0 +1,81 @@
+<h2>產品管理 > 產品分類列表</h2>
+
+<!-- INCLUDE BLOCK : TREE -->
+
+<div id="cate">
+	<form action="{TAG_MANAGE_PATH}sk/" method="post">
+		<ul>
+			<li><label>篩選搜尋</label></li>
+			<li>
+				<select name="sk[parent]">
+					<option value="0">查看分類</option>
+					{VALUE_PARENT_OPTION}
+				</select>
+			</li>
+			<li><input type="text" name="sk[subject]" value="{SK_SUBJECT}" placeholder="依分類名稱" size="100"></li>
+			<li><input type="submit" name="gosk" value="搜尋"> <input type="button" class="goto" name="clearsk" value="取消搜尋" rel="{TAG_MANAGE_PATH}products/cate/"></li>
+			<input type="hidden" name="sk[to]" value="{TAG_MANAGE_PATH}products/cate/">
+		</ul>
+	</form>
+	<ul>
+		<li><label>功能選單</label></li>
+		<li><a class="all" href="#">全選</a></li>
+		<li><a href="{TAG_MANAGE_PATH}products/cate-add/">新增分類</a></li>
+		<li><a class="func" href="#" rel="{TAG_MANAGE_PATH}products/cate-multi/sort/">批次排序</a></li>
+		<li><a class="func" href="#" rel="{TAG_MANAGE_PATH}products/cate-multi/status/1/">批次開啟</a></li>
+		<li><a class="func" href="#" title="確定關閉所選項目?" rel="{TAG_MANAGE_PATH}products/cate-multi/status/0/">批次關閉</a></li>
+		<li><a class="func" href="#" title="確定刪除所選項目?" rel="{TAG_MANAGE_PATH}products/cate-multi/del/">批次刪除</a></li>
+	</ul>
+</div>
+
+<!-- START BLOCK : TAG_PRODUCTS_CATE_BLOCK -->
+<form name="func_form" action="{TAG_MANAGE_PATH}products/" method="post">
+	<table>
+		<tr>
+			<th>序列</th>
+			<th>選取</th>
+			<th>排序</th>
+			<th>圖片</th>
+			<th>標題</th>
+			<th>狀態</th>
+			<th>管理</th>
+		</tr>
+		<!-- START BLOCK : TAG_PRODUCTS_CATE_LIST -->
+		<tr>
+			<td class="center">{VALUE_NUMBER}</td>
+			<td class="center">
+				<input type="checkbox" class="id" name="id[{VALUE_ID}]" value="{VALUE_ID}">
+			</td>
+			<td class="center">
+				<input type="text" name="sort[{VALUE_ID}]" value="{VALUE_SORT}" size="50" maxlength="2">
+			</td>
+			<td class="center"><img src="{VALUE_IMAGE}" style="max-height: 50px; max-width: 100px;"></td>
+			<td class="center">{VALUE_SUBJECT}</td>
+			<td class="center {CLASS_STATUS_RED}">{VALUE_STATUS}</td>
+			<td class="center">
+				<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}products/cate-detail/{VALUE_ID}/">
+				<input type="button" class="goto" name="del" value="刪除" rel="{TAG_MANAGE_PATH}products/cate-del/{VALUE_ID}/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_PRODUCTS_CATE_LIST -->
+	</table>
+</form>
+<!-- END BLOCK : TAG_PRODUCTS_CATE_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->
+
+<script>
+	$(function(){
+		$("input[name=del]").click(function(){
+			if(!confirm('確定刪除?')) return false;
+		});
+
+		//----
+		$("select[name=cate]").change(function(){
+			var CATE = $(this).find("option:selected").val();
+			location.href = '{TAG_MANAGE_PATH}products/cate/'+ CATE + '/';
+		});
+	});
+</script>

@@ -1,0 +1,91 @@
+<h2>會員管理 > 會員詳細</h2>
+
+<p>查看會員詳細資料、更改資料</p>
+
+<form action="{TAG_MANAGE_PATH}member/replace/" method="post">
+	<table>
+		<tr>
+			<th>會員名稱</th>
+			<td>
+				<input type="text" name="name" value="{VALUE_NAME}" size="200">
+			</td>
+			<th>公司名稱</th>
+			<td>
+				<input type="text" name="company" value="{VALUE_COMPANY}" size="200">
+			</td>
+		</tr>
+		<tr>
+			<th>帳號</th>
+			<td>
+				<input type="text" name="account" value="{VALUE_ACCOUNT}" size="200" disabled>
+			</td>
+			<th>密碼</th>
+			<td>
+				<input type="button" class="goto" name="reset_password" value="系統重設密碼" rel="{TAG_MANAGE_PATH}member/reset-password/{VALUE_ID}/">
+			</td>
+		</tr>
+		<tr>
+			<th>狀態</th>
+			<td>
+				<select name="status">
+					<option value="1" {VALUE_STATUS_CK1}>啟動</option>
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+				</select>
+			</td>
+			<th>性別</th>
+			<td>
+				<select name="gender">
+					<option value="null">未選擇</option>
+					<option value="0" {VALUE_GENDER_CK0}>女性</option>
+					<option value="1" {VALUE_GENDER_CK1}>男性</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>生日</th>
+			<td>
+				<input type="date" name="birth" value="{VALUE_BIRTH}">
+			</td>
+			<th>※ 電話 (H)</th>
+			<td>
+				<input type="text" name="tel" value="{VALUE_TEL}" size="200">
+			</td>
+		</tr>
+		<tr>
+			<th>電話 (O)</th>
+			<td>
+				<input type="text" name="office" value="{VALUE_OFFICE}" size="200">
+			</td>
+			<th>手機</th>
+			<td>
+				<input type="text" name="cell" value="{VALUE_CELL}" size="200">
+			</td>
+		</tr>
+		<tr>
+			<th>地址</th>
+			<td colspan="3">
+				<input type="text" name="address" value="{VALUE_ADDRESS}" size="400">
+			</td>
+		</tr>
+		<tr>
+			<th>創建時間</th>
+			<td>{VALUE_CREATEDATE}</td>
+			<th>修改時間</th>
+			<td>{VALUE_MODIFYDATE}</td>
+		</tr>
+		<tr>
+			<th>是否認證</th>
+			<td colspan="3">
+				<input type="checkbox" name="verify" value="1" {VALUE_VERIFY} {VALUE_DISABLE}>
+			</td>
+		</tr>
+	</table>
+
+	<p>
+		<input type="hidden" name="id" value="{VALUE_ID}">
+		<input type="submit" name="send" value="儲存">
+		<input type="button" class="goto" name="back" value="返回列表" rel="{VALUE_BACK_LINK}">
+	</p>
+</form>
+
+<script></script>

@@ -1,0 +1,70 @@
+<h2>最新消息管理 > 最新消息列表</h2>
+
+<div id="cate">
+	<!-- START BLOCK : TAG_PARENT_BLOCK -->
+	<ul>
+		<li><label>依分類顯示</label></li>
+		<!-- START BLOCK : TAG_PARENT_LIST -->
+		<li><a href="{TAG_MANAGE_PATH}news/{VALUE_ID}/" class="{VALUE_CURRENT}">{VALUE_SUBJECT}</a></li>
+		<!-- END BLOCK : TAG_PARENT_LIST -->
+		<li><a href="{TAG_MANAGE_PATH}news/" class="{NONE_CURRENT}">全部顯示</a></li>
+	</ul>
+	<!-- END BLOCK : TAG_PARENT_BLOCK -->
+	<ul>
+		<li><label>功能選單</label></li>
+		<li><a class="all" href="#">全選</a></li>
+		<li><a href="{TAG_MANAGE_PATH}news/add/">新增最新消息</a></li>
+		<li><a class="func" href="#" rel="{TAG_MANAGE_PATH}news/multi/sort/">批次排序</a></li>
+		<li><a class="func" href="#" rel="{TAG_MANAGE_PATH}news/multi/status/1/">批次開啟</a></li>
+		<li><a class="func" href="#" title="確定關閉所選項目?" rel="{TAG_MANAGE_PATH}news/multi/status/0/">批次關閉</a></li>
+		<li><a class="func" href="#" title="確定刪除所選項目?" rel="{TAG_MANAGE_PATH}news/multi/del/">批次刪除</a></li>
+	</ul>
+</div>
+
+<!-- START BLOCK : TAG_NEWS_BLOCK -->
+<form name="func_form" action="{TAG_MANAGE_PATH}news/" method="post">
+	<table>
+		<tr>
+			<th>序列</th>
+			<th>選取</th>
+			<th>排序</th>
+			<th>分類</th>
+			<th>標題</th>
+			<th>顯示時間</th>
+			<th>狀態</th>
+			<th>管理</th>
+		</tr>
+		<!-- START BLOCK : TAG_NEWS_LIST -->
+		<tr>
+			<td class="center">{VALUE_NUMBER}</td>
+			<td class="center">
+				<input type="checkbox" class="id" name="id[{VALUE_ID}]" value="{VALUE_ID}">
+			</td>
+			<td class="center">
+				<input type="text" name="sort[{VALUE_ID}]" value="{VALUE_SORT}" size="50" maxlength="2">
+			</td>
+			<td class="center">{VALUE_PARENT}</td>
+			<td class="center">{VALUE_SUBJECT}</td>
+			<td class="center">{VALUE_SHOWDATE}</td>
+			<td class="center {CLASS_STATUS_RED}">{VALUE_STATUS}</td>
+			<td class="center">
+				<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}news/detail/{VALUE_ID}/">
+				<input type="button" class="goto" name="del" value="刪除" rel="{TAG_MANAGE_PATH}news/del/{VALUE_ID}/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_NEWS_LIST -->
+	</table>
+</form>
+<!-- END BLOCK : TAG_NEWS_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->
+
+<script>
+	$(function(){
+		$("input[name=del]").click(function(){
+			if(!confirm('確定刪除?')) return false;
+		});
+	});
+</script>

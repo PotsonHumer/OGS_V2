@@ -1,0 +1,83 @@
+<h2>會員管理 > 註冊新會員</h2>
+
+<p class="theme">(※) 標註星號為必填項目</p>
+
+<form action="{TAG_MANAGE_PATH}member/insert/" method="post">
+	<table>
+		<tr>
+			<th>※ 會員名稱</th>
+			<td>
+				<input type="text" name="name" value="{VALUE_NAME}" size="200">
+			</td>
+			<th>公司名稱</th>
+			<td>
+				<input type="text" name="company" value="{VALUE_COMPANY}" size="200">
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="2">※ 帳號</th>
+			<td rowspan="2">
+				<input type="text" name="account" value="{VALUE_ACCOUNT}" size="200">
+			</td>
+			<th>※ 密碼</th>
+			<td>
+				<input type="text" name="password" value="{VALUE_PASSWORD}" size="200"><br />
+			</td>
+		</tr>	
+		<tr>
+			<th>※ 再次輸入密碼</th>
+			<td>
+				<input type="text" name="match_password" value="" size="200" placeholder="以防打錯，請再次輸入做為比對">
+			</td>
+		</tr>
+		<tr>
+			<th>狀態</th>
+			<td>
+				<select name="status">
+					<option value="1">啟動</option>
+					<option value="0">關閉</option>
+				</select>
+			</td>
+			<th>性別</th>
+			<td>
+				<select name="gender">
+					<option value="null">未選擇</option>
+					<option value="0">女性</option>
+					<option value="1">男性</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>※ 生日</th>
+			<td>
+				<input type="date" name="birth" value="{VALUE_BIRTH}">
+			</td>
+			<th>※ 電話 (H)</th>
+			<td>
+				<input type="text" name="tel" value="{VALUE_TEL}" size="200">
+			</td>
+		</tr>
+		<tr>
+			<th>電話 (O)</th>
+			<td>
+				<input type="text" name="office" value="{VALUE_OFFICE}" size="200">
+			</td>
+			<th>手機</th>
+			<td>
+				<input type="text" name="cell" value="{VALUE_CELL}" size="200">
+			</td>
+		</tr>
+		<tr>
+			<th>地址</th>
+			<td colspan="3">
+				<input type="text" name="address" value="{VALUE_ADDRESS}" size="400">
+			</td>
+		</tr>
+	</table>
+
+	<p>
+		<input type="hidden" name="id" value="{VALUE_ID}">
+		<input type="submit" name="send" value="送出">
+		<input type="button" class="goto" name="back" value="返回列表" rel="{TAG_MANAGE_PATH}member/">
+	</p>
+</form>

@@ -1,0 +1,33 @@
+<!-- START BLOCK : TAG_ORDER_BLOCK -->
+<table>
+	<tr>
+		<th>序列</th>
+		<th>訂單編號</th>
+		<th>訂單狀態</th>
+		<th>付款方式</th>
+		<th>總價</th>
+		<th>訂購時間</th>
+		<th>詳細資料</th>
+	</tr>
+	<!-- START BLOCK : TAG_ORDER_LIST -->
+	<tr>
+		<th>{VALUE_ROW}</th>
+		<th>{VALUE_SERIAL}</th>
+		<th>{VALUE_STATUS}</th>
+		<th>{VALUE_PAYMENT_TYPE}</th>
+		<th>{VALUE_TOTAL}</th>
+		<th>{VALUE_CREATEDATE}</th>
+		<th><input type="button" name="detail" value="詳細資料" rel="{TAG_ROOT_PATH}member/order/{VALUE_ID}/"></th>
+	</tr>
+	<!-- END BLOCK : TAG_ORDER_LIST -->
+</table>
+<!-- END BLOCK : TAG_ORDER_BLOCK -->
+
+<script>
+	$(function(){
+		$("input[name=detail]").click(function(){
+			var PATH = $(this).attr("rel");
+			location.href = PATH;
+		});
+	});
+</script>

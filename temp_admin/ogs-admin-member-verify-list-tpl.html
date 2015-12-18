@@ -1,0 +1,32 @@
+<h2>會員管理 > 認證碼列表</h2>
+
+<p>此處顯示未註冊的認證碼</p>
+
+<table>
+	<tr>
+		<th>NO.</th>
+		<th>認證碼</th>
+		<th>給予報單的管理員 (報單人員)</th>
+		<th>創建時間</th>
+		<th>註銷此認證碼</th>
+	</tr>
+	<!-- START BLOCK : TAG_VERIFY_LIST -->
+	<tr>
+		<td class="center">{VALUE_ROW}</td>
+		<td class="center">{VALUE_VERIFY_CODE}</td>
+		<td class="center">{VALUE_MANAGER_ID}</td>
+		<td class="center">{VALUE_CREATEDATE}</td>
+		<td class="center">
+			<input type="button" class="goto" name="del" value="按此註銷" rel="{TAG_MANAGE_PATH}member/verify-del/{VALUE_ID}/">
+		</td>
+	</tr>
+	<!-- END BLOCK : TAG_VERIFY_LIST -->
+</table>
+
+<script>
+	$(function(){
+		$("input[name=del]").click(function(){
+			if(!confirm('確定註銷?')) return false;
+		});
+	});
+</script>

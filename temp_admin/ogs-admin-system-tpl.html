@@ -1,0 +1,84 @@
+<h2>系統設定</h2>
+
+<form action="{TAG_MANAGE_PATH}system/replace/" method="post">
+	<label>基本設定</label>
+	<table>
+		<tr>
+			<th>網站名稱</th>
+			<td>
+				<input type="text" name="name" value="{VALUE_NAME}" size="300">
+			</td>
+		</tr>
+		<tr>
+			<th>系統 E-mail</th>
+			<td>
+				<input type="text" name="email" value="{VALUE_EMAIL}" size="300" placeholder="發送 詢價、購物、關於我們 E-mail">
+			</td>
+		</tr>
+	</table>
+
+	<input type="hidden" name="callback" value="1">
+	<input type="submit" name="send" value="儲存基本設定">
+</form>
+<br /><br />
+
+<!-- START BLOCK : TAG_SEO_BLOCK -->
+<form action="{TAG_MANAGE_PATH}system/seo/" method="post">
+	<label>各功能主頁 SEO 設定</label>
+
+	<ul id="cate">
+		<!-- START BLOCK : TAG_SEO_TITLE -->
+		<li class="tab_title"><a>{VALUE_NAME}</a></li>
+		<!-- END BLOCK : TAG_SEO_TITLE -->
+	</ul>
+
+	<!-- START BLOCK : TAG_SEO_TAB -->
+	<table class="tab">
+		<tr>
+			<th colspan="4">
+				{VALUE_NAME}
+				<input type="hidden" name="id[]" value="{VALUE_ID}">
+			</th>
+		</tr>
+		<tr>
+			<th>網頁抬頭</th>
+			<td>
+				<input type="text" name="title[]" value="{VALUE_TITLE}">
+			</td>
+			<th>網頁標題 (H1)</th>
+			<td>
+				<input type="text" name="h1[]" value="{VALUE_H1}">
+			</td>
+		</tr>
+		<tr>
+			<th>關鍵字</th>
+			<td>
+				<input type="text" name="keywords[]" value="{VALUE_KEYWORDS}">
+			</td>
+			<th>網頁描述</th>
+			<td>
+				<input type="text" name="description[]" value="{VALUE_DESCRIPTION}">
+			</td>
+		</tr>
+		<tr>
+			<th>簡述</th>
+			<td colspan="3">
+				<textarea class="tiny" name="short_desc[]">{VALUE_SHORT_DESC}</textarea>
+			</td>
+		</tr>
+	</table>
+	<!-- END BLOCK : TAG_SEO_TAB -->
+
+	<input type="hidden" name="callback" value="1">
+	<input type="submit" name="send" value="儲存 SEO 設定">
+</form>
+<!-- END BLOCK : TAG_SEO_BLOCK -->
+
+<script>
+	$(function(){
+		$(document).tab_box({
+			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
+			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+	});
+</script>

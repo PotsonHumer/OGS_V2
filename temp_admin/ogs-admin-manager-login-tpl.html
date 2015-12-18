@@ -1,0 +1,48 @@
+<h2>管理員登入</h2>
+
+<form action="{TAG_MANAGE_PATH}manager/login-act/" method="post">
+	<div class="column">
+		<table>
+			<tr>
+				<th class="right"><label>帳號</label></th>
+				<td>
+					<input type="text" name="account" size="300" placeholder="E-mail">
+				</td>
+			</tr>
+			<tr>
+				<th class="right"><label>密碼</label></th>
+				<td>
+					<input type="password" name="password" size="300">
+				</td>
+			</tr>
+			<tr>
+				<th class="right"><label>保持登入</label></th>
+				<td>
+					<input type="checkbox" name="cookie" value="1">
+				</td>
+			</tr>
+		</table>
+		
+		<div class="clear">
+			<input type="submit" name="send" value="登入">
+			<input type="button" class="goto" name="forget" value="忘記密碼?" rel="{TAG_MANAGE_PATH}manager/forget/">
+		</div>
+	</div>
+</form>
+
+<form action="{TAG_MANAGE_PATH}manager/verify/" method="post">
+	<div class="column">
+		<table>
+			<tr>
+				<th><label>使用認證碼開通帳號</label></th>
+				<td>
+					<input type="text" name="verify" size="200">
+				</td>
+			</tr>
+		</table>
+		
+		<div class="clear">
+			<input type="submit" name="send" value="開通帳號">
+		</div>
+	</div>
+</form>

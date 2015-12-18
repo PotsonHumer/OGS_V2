@@ -1,0 +1,249 @@
+@charset "utf-8";
+/* CSS Document */
+
+h1,h2,h3,p,form{
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+}
+ul,li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+img{
+	border: 0px;
+}
+a{
+	color: #666;
+	text-decoration: none;
+}
+body{
+	background: url(../images/body.jpg) repeat;
+}
+form{
+	padding: 0;
+	margin: 0;
+}
+fieldset{
+	margin: 0;
+	border: #CCC 1px solid;
+	border-radius: 10px;
+	font-family: '微軟正黑體';
+	font-size: 13px;
+	color: #333;
+	margin: 10px 0 10px 5px;
+	padding: 10px 0 10px 10px;
+	width: 600px;
+}
+fieldset legend{
+	font-family: '微軟正黑體';
+	font-size: 15px;
+	color: #900;
+}
+#WP{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.ot{
+	width: 950px;
+	margin: 0 auto 0 auto;
+}
+/* #head_box */
+#head_box{
+	width: 100%;
+	height: 70px;
+	float: left;
+	border-bottom: #CCC 1px solid;
+	background: rgba(255,255,255,0.65);
+}
+#head_box .head.ot{
+	height: 70px;
+}
+#head_box .head.ot .logo{
+	width: 250px;
+	height: 70px;
+	float: left;
+}
+#head_box .head.ot .login_ling{
+	height: 70px;
+	line-height: 70px;
+	float: left;
+	margin-left: 20px;
+}
+#head_box .head.ot .login_ling a{
+	color: #333;
+	font-family: '微軟正黑體';
+	font-size: 14px;
+}
+#head_box .head.ot .login_ling a:hover{
+	color: #F60;
+}
+/* main_box */
+#main_box{
+	float: left;
+	width: 100%;
+}
+#main_box .main.ot{
+}
+#main_box .main.ot form.cc{
+	margin: 20px 0 20px 180px;
+}
+#main_box .main.ot img{
+	float: left;
+}
+#main_box .main.ot form.cc .tnput_t{
+	height: 30px;
+	line-height: 30px;
+	font-family: '微軟正黑體';
+	font-size: 14px;
+	color: #333;
+	margin: 15px 0 0 10px;
+}
+input[type="text"],input[type="password"],input[type="email"],input[type="date"],input[type="tel"]{
+	border: #999 1px solid;
+	border-radius: 10px;
+	box-shadow:1px 1px 3px 2px rgba(20%,20%,40%,0.2) inset;
+	width: 250px;
+	height: 30px;
+	line-height: 30px;
+	font-family: '微軟正黑體';
+	font-size: 13px;
+	color: #333;
+	padding: 0 0 0 10px;
+	font-weight: normal;
+	outline: none;
+}
+form input[type="submit"],input[type="reset"]{
+	margin: 0 10px 0 0;
+	float: left;
+}
+form fieldset input[type="text"].min{
+	width: 150px;
+	margin: 0 0 0 5px;
+	font-family: '微軟正黑體';
+	font-size: 13px;
+}
+form fieldset input[type="text"]{
+	margin-left: 5px;
+	font-family: '微軟正黑體';
+	font-size: 13px;
+}
+#main_box .main.ot .sign_ch{
+	width: 500px;
+	height: 300px;
+	float: left;
+	margin: 50px 0 50px 100px;
+	font-family: '微軟正黑體';
+	font-size: 13px;
+	outline: #999 1px solid;
+	padding: 10px;
+}
+/*footer*/
+#footer_box{
+	width: 100%;
+	float: left;
+	/* background: rgba(255,255,255,0.65); */
+	margin: 10px 0 0 0;
+}
+#footer_box .footer.ot{
+	height: 50px;
+	border-top: #CCC 1px solid;
+	text-align: center;
+}
+#footer_box .footer.ot ul{
+	display: block;
+	margin: 0 0 0 295px;
+	float: left;
+}
+#footer_box .footer.ot ul li{
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+	padding: 0 0 0 5px;
+	float: left;
+	color: #CCC;
+	display: inline-block;
+}
+#footer_box .footer.ot ul li a{
+	font-family: '微軟正黑體';
+	font-size: 13px;
+	color: #999;
+}
+#footer_box .footer.ot ul li a:hover{
+	color: #000;
+}
+#footer_box .footer.ot .opyright{
+	float: left;
+	width: 100%;
+	height: 25px;
+	text-align: center;
+	line-height: 25px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 13px;
+	color: #999;
+}
+/*登入*/
+#login{
+	width: 260px;
+	float: left;
+	margin: 50px 0 50px 350px;
+	background: rgba(255,255,255,0.8);
+	border-radius: 10px;
+}
+#login img{
+	float: left;
+}
+#login form{
+	float: left;
+	width: 260px;
+	margin: 0 0 20px 30px;
+}
+#login form input[type="text"],#login form input[type="password"]{
+	width: 200px;
+	height: 20px;
+	line-height: 20px;
+	background: #333;
+	color: #333;
+	margin-bottom: 5px;
+}
+#login form input[placeholder]{
+	color: #FFF;
+}
+#login form input[type="submit"]{
+	margin-top: 5px;
+	text-align: center;
+}
+#login form input[type="reset"]{
+	margin-top: 5px;
+	text-align: center;
+}
+
+/* NAV */
+nav{
+	margin: 20px 0;
+}
+
+nav li{
+	margin: 0 5px;
+	display: inline-block;
+}
+
+nav li a{
+	color: #333;
+}
+
+nav li a:hover{
+	color: #000;
+}
+
+nav li a:before{
+	content: " [ ";
+}
+
+nav li a:after{
+	content: " ] ";
+}

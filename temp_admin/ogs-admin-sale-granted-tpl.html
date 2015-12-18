@@ -1,0 +1,41 @@
+<h2>會員管理 > 已發送獎金列表</h2>
+
+<ul id="cate">
+	<li><label>選擇發送時間</label></li>
+	<li>
+		<select name="date">
+			<option value="0">未選擇</option>
+			{VALUE_DATE_OPTION}
+		</select>
+	</li>
+	<li><label>選擇會員</label></li>
+	<li>
+		<select name="m_id">
+			<option value="0">未選擇</option>
+			{VALUE_M_ID_OPTION}
+		</select>
+	</li>
+</ul>
+
+<!-- START BLOCK : TAG_GRANT_BLOCK -->
+<table>
+	<tr>
+		<th>序列</th>
+		<th>帳號</th>
+		<th>會員名稱</th>
+		<th>所屬階層</th>
+		<th>發送獎金</th>
+	</tr>
+	<tr>
+		<td class="center">{VALUE_NUMBER}</td>
+		<td class="center">{VALUE_ACCOUNT}</td>
+		<td class="center">{VALUE_NAME}</td>
+		<td class="center">{VALUE_LEVEL}</td>
+		<td class="center">{VALUE_GRANTED}</td>
+	</tr>
+</table>
+<!-- END BLOCK : TAG_GRANT_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->

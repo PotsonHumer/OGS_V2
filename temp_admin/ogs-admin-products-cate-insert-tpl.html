@@ -1,0 +1,83 @@
+<h2>產品管理 > 新增分類</h2>
+
+<p class="theme">(※) 標註星號為必填項目</p>
+
+<form action="{TAG_MANAGE_PATH}products/cate-insert/" method="post">
+	<ul id="cate">
+		<li><a class="tab_title">分類設定</a></li>
+		<li><a class="tab_title">SEO 設定</a></li>
+	</ul>
+
+	<div class="tab">
+		<table>
+			<tr>
+				<th>※ 標題</th>
+				<td>
+					<input type="text" name="subject" value="{VALUE_SUBJECT}" size="200">
+				</td>
+				<th>所屬分類</th>
+				<td>
+					<select name="parent">
+						<option value="null">主分類</option>
+						{VALUE_PARENT_OPTION}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>狀態</th>
+				<td>
+					<select name="status">
+						<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+						<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					</select>
+				</td>
+				<th>排序</th>
+				<td>
+					<input type="number" name="sort" value="{VALUE_SORT}" maxlength="2" size="100">
+				</td>
+			</tr>
+			<tr>
+				<th>圖片</th>
+				<td colspan="3">
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="tab">
+		<!-- INCLUDE BLOCK : SEO -->
+	</div>
+
+	<input type="submit" name="send" value="確定新增">
+	<input type="button" class="goto" name="back" value="回到列表" rel="{TAG_MANAGE_PATH}products/cate/">
+	<input type="hidden" name="callback" value="1">
+</form>
+
+<script>
+	$(function(){
+		$(document).tab_box({
+			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
+			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+
+		//----
+		var GETSORT = function(){
+			$(document).get_box({
+				CLICK : false, // 按鍵後才啟動功能 , true => 按鍵啟動  , false => 直接啟動
+				CALL : $("select[name=parent]").find("option:selected").val(), // key 值
+				PHP : "{TAG_MANAGE_PATH}products/getSort/products_cate/", // 取值目標
+				FUNC : "", // func 附值
+				AFTER : function() {  }, // 動作後執行擴充
+			}, function(DATA){
+				//callback
+				$("input[name=sort]").val(DATA);
+			});
+		}
+
+		GETSORT();
+		$("select[name=parent]").change(function(){
+			GETSORT();
+		});
+	});
+</script>

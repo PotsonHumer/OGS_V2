@@ -1,0 +1,77 @@
+<h2>管理員管理 > 權限列表</h2>
+
+<div id="cate">
+	<ul>
+		<li><a href="#" name="add" rel="row_table">新增權限</a></li>
+	</ul>
+</div>
+
+<!-- START BLOCK : TAG_LEVEL_BLOCK -->
+<form name="func_form" action="{TAG_MANAGE_PATH}manager/level-modify/" method="post">
+	<table id="row_table">
+		<tr>
+			<th>名稱</th>
+			<th>狀態</th>
+			<th>權限設定</th>
+			<th>刪除</th>
+		</tr>
+		<!-- START BLOCK : TAG_LEVEL_LIST -->
+		<tr class="row">
+			<td>
+				<input type="text" name="name[]" value="{VALUE_NAME}" size="100">
+			</td>
+			<td>
+				<select name="status[]">
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+					<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+				</select>
+			</td>
+			<td>
+				<ul>
+					<!-- START BLOCK : TAG_LEVEL_SETTING -->
+					<li style="float: left; margin: 0 15px; {VALUE_SETTING_LINEUP}"><label>{VALUE_SETTING_NAME}</label> <input type="checkbox" name="class[{VALUE_SETTING_CLASS}][]" value="1" {VALUE_SETTING_CK}> </li>
+					<!-- END BLOCK : TAG_LEVEL_SETTING -->
+				</ul>
+			</td>
+			<td class="center">
+				<input type="hidden" name="id[]" value="{VALUE_ID}">
+				<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}manager/level-del/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_LEVEL_LIST -->
+	</table>
+
+	<input type="submit" value="儲存">
+</form>
+<!-- END BLOCK : TAG_LEVEL_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->
+
+<script>
+	$(function(){
+		js_add_row(
+			'<tr class="row">'+
+				'<td>'+
+					'<input type="text" name="name[]" size="100">'+
+				'</td>'+
+				'<td>'+
+					'<select name="status[]">'+
+						'<option value="0">關閉</option>'+
+						'<option value="1">開啟</option>'+
+					'</select>'+
+				'</td>'+
+				'<td>'+
+					'<ul>'+
+						'{JS_LEVEL_SETTING}'+
+					'</ul>'+
+				'</td>'+
+				'<td class="center">'+
+					'<input type="hidden" name="id[]">'+
+					'<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}manager/level-del/">'+
+				'</td>'+
+			'</tr>'
+		);
+	});
+</script>

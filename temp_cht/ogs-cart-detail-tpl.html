@@ -1,0 +1,125 @@
+<h1>購物車</h1>
+
+<p>確認您的購買資料</p>
+
+<table>
+	<tr>
+		<th>序列</th>
+		<th>產品圖片</th>
+		<th>產品名稱</th>
+		<th>產品規格</th>
+		<th>數量</th>
+		<th>單價</th>
+		<th>小計</th>
+	</tr>
+	<!-- START BLOCK : TAG_CAR_LIST -->
+	<tr>
+		<td>{VALUE_ROW}</td>
+		<td><img src="{VALUE_IMAGE}" width="100"></td>
+		<td>{VALUE_NAME}</td>
+		<td>{VALUE_SPEC}</td>
+		<td>{VALUE_AMOUNT}</td>
+		<td>{VALUE_PRICE}</td>
+		<td>{VALUE_SUBTOTAL}</td>
+	</tr>
+	<!-- END BLOCK : TAG_CAR_LIST -->
+	<tr>
+		<td colspan="6" style="text-align: right;">總計：</td>
+		<td>{VALUE_TOTAL}</td>
+		<td></td>
+	</tr>
+</table>
+
+<br />
+
+<form name="detail" action="{TAG_ROOT_PATH}cart/finish/" method="post">
+	<table>
+		<tr>
+			<th colspan="2">訂購人資料</th>
+		</tr>
+		<!-- START BLOCK : TAG_FIRST_BLOCK -->
+		<tr>
+			<th>帳號 (E-mail)：</th>
+			<td><input type="text" name="account"></td>
+		</tr>
+		<tr>
+			<th>密碼：</th>
+			<td><input type="password" name="password"></td>
+		</tr>
+		<tr>
+			<th>再次輸入密碼：</th>
+			<td><input type="password" name="match_password"></td>
+		</tr>
+		<!-- END BLOCK : TAG_FIRST_BLOCK -->
+		<tr>
+			<th>姓名：</th>
+			<td><input type="text" name="name" value="{VALUE_NAME}"></td>
+		</tr>
+		<tr>
+			<th>電話：</th>
+			<td><input type="text" name="tel" value="{VALUE_TEL}"></td>
+		</tr>
+		<tr>
+			<th>手機：</th>
+			<td><input type="text" name="cell" value="{VALUE_CELL}"></td>
+		</tr>
+		<tr>
+			<th>地址：</th>
+			<td><input type="text" name="address" value="{VALUE_ADDRESS}"></td>
+		</tr>
+		<!-- START BLOCK : TAG_MAIL_BLOCK -->
+		<tr>
+			<th>E-mail：</th>
+			<td><input type="text" name="email" value="{VALUE_EMAIL}"></td>
+		</tr>
+		<!-- END BLOCK : TAG_MAIL_BLOCK -->
+		<tr>
+			<th colspan="2">收件人資料</th>
+		</tr>
+		<tr>
+			<th>與訂購人相同：</th>
+			<td><input type="checkbox" name="same" value="1"></td>
+		</tr>
+		<tr>
+			<th>姓名：</th>
+			<td><input type="text" name="add_name"></td>
+		</tr>
+		<tr>
+			<th>電話：</th>
+			<td><input type="text" name="add_tel"></td>
+		</tr>
+		<tr>
+			<th>手機：</th>
+			<td><input type="text" name="add_cell"></td>
+		</tr>
+		<tr>
+			<th>地址：</th>
+			<td><input type="text" name="add_address"></td>
+		</tr>
+		<tr>
+			<th>E-mail：</th>
+			<td><input type="text" name="add_email"></td>
+		</tr>
+	</table>
+	<input type="submit" name="send" value="完成訂購">
+	<!--<input type="hidden" name="first" value="{VALUE_FIRST}">-->
+</form>
+
+<script>
+	$(function(){
+		$("input[name=same]").click(function(){
+			var CHECK = $("input[name=same]:checked").length;
+			var FIELD = '["name","tel","cell","address"]';
+			var FIELD_ARRAY = JSON.parse(FIELD);
+			
+			$.each(FIELD_ARRAY,function(KEY,VALUE){
+				if(CHECK){
+					var FIELD_VAR = $("input[name="+ VALUE +"]").val();
+					$("input[name=add_"+ VALUE +"]").val(FIELD_VAR);
+				}else{
+					$("input[name=add_"+ VALUE +"]").val('');
+				}
+			});
+		});
+	});
+</script>

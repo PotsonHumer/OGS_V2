@@ -1,0 +1,102 @@
+/* 銷售關係表 CSS */
+
+.pyramid{
+	position: relative;
+	/*width: 98%;*/
+	padding: 10px;
+	border: 1px solid #333;
+	box-shadow: 2px 2px 5px #CCC;
+}
+
+.pyramid ul{
+	position: relative;
+	display: block;
+	margin: 10px 0;
+	height: 70px;
+	text-align: center;
+	clear: both;
+	overflow: hidden;
+}
+
+.pyramid li .content *{
+	font-size: 16px;
+	color: #FFF;
+}
+
+.pyramid li .content{
+	padding: 1em 0 0 0;
+	color: #FFF;
+}
+
+.pyramid li{
+	height: 70px;
+	/*border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;*/
+	box-sizing: border-box;
+	float: left;
+}
+
+.pyramid li.used{
+	border-radius: 5px;
+	border-right: 1px solid #FFF;
+	background: #6eadff;
+}
+
+.pyramid .unit{
+	margin: auto;
+	width: 150px;
+	height: 70px;
+	padding: 10px;
+	box-sizing: border-box;
+	white-space: nowrap;
+}
+
+.pyramid li.current,.pyramid li.current .content,/*.pyramid li.current .unit,*/.hover_box{
+	border-radius: 5px;
+	background: #d435fc;
+}
+
+.pyramid.narrow{
+	width: 90% !important;
+}
+
+.pyramid.narrow .level ul:nth-child(9) ~ ul{
+	display: none;
+}
+
+.pyramid.narrow .unit{
+	width: auto;
+	overflow: hidden;
+	padding: 0;
+}
+
+.pyramid.narrow li.used:hover{
+	min-width: 150px !important;
+}
+
+.has_box{
+	border-radius: 5px;
+	background: #6eadff;
+}
+
+.has_box,.hover_box{
+	padding: 5px 10px;
+	display: inline-block;
+	color: #FFF;
+}
+
+.pyramid p{
+	margin: 0 0 10px 0;
+}
+
+.level_show{
+	position: absolute;
+	width: 100px;
+	left: 50%;
+	top: 0;
+	margin-left: -50px;
+	font-size: 0.8em;
+	background: #FFF;
+	padding: 0 3px;
+	opacity: 0.8;
+}

@@ -1,0 +1,46 @@
+<h2>管理員管理 > 管理員列表</h2>
+
+<div id="cate">
+	<ul>
+		<li><label>功能選單</label></li>
+		<li><a href="{TAG_MANAGE_PATH}manager/add/">新增管理員</a></li>
+		<li><a href="{TAG_MANAGE_PATH}manager/quick/">新增自行認證管理員</a></li>
+	</ul>
+</div>
+
+<!-- START BLOCK : TAG_MANAGER_BLOCK -->
+<table>
+	<tr>
+		<th>帳號 (E-mail)</th>
+		<th>名稱</th>
+		<th>狀態</th>
+		<th>管理權限</th>
+		<th>管理</th>
+	</tr>
+	<!-- START BLOCK : TAG_MANAGER_LIST -->
+	<tr>
+		<td class="center">{VALUE_ACCOUNT}</td>
+		<td class="center">{VALUE_NAME}</td>
+		<td class="center {CLASS_STATUS_RED}">{VALUE_STATUS}</td>
+		<td class="center">{VALUE_LEVEL}</td>
+		<td class="center">
+			<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}manager/detail/{VALUE_ID}/">
+			<input type="button" class="goto" name="ban" value="封鎖" rel="{TAG_MANAGE_PATH}manager/ban/{VALUE_ID}/">
+		</td>
+	</tr>
+	<!-- END BLOCK : TAG_MANAGER_LIST -->
+</table>
+<!-- END BLOCK : TAG_MANAGER_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->
+
+<script>
+	$(function(){
+		$("input[name=ban]").click(function(){
+			if(!confirm('注意! 一旦封鎖將無法回復! 確定封鎖?')) return false;
+		});
+	});
+</script>
+

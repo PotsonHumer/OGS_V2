@@ -1,0 +1,56 @@
+<h2>管理員管理 > 管理員資料管理</h2>
+
+<form action="{TAG_MANAGE_PATH}manager/modify/" method="post">
+	<table>
+		<tr>
+			<th>帳號 (E-mail)</th>
+			<td>
+				<input type="text" name="account" value="{VALUE_ACCOUNT}" size="200">
+			</td>
+			<th>名稱</th>
+			<td>
+				<input type="text" name="name" value="{VALUE_NAME}" size="150">
+			</td>
+		</tr>
+		<tr>
+			<th>狀態</th>
+			<td>
+				<select name="status">
+					<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+				</select>
+			</td>
+			<th>權限</th>
+			<td>
+				<select name="level">
+					<option value="null">無權限</option>
+					{VALUE_LEVEL_OPTION}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>更改密碼</th>
+			<td>
+				<label>輸入原密碼</label><input type="password" name="old_password" size="100"><br /><br />
+				<label>輸入新密碼</label><input type="password" name="password" size="100"><br />
+				<label>再輸入一次</label><input type="password" name="match_password" size="100">
+			</td>
+			<th>關閉帳號</th>
+			<td>
+				<input type="button" class="goto" name="ban" value="封鎖此管理員" rel="{TAG_MANAGE_PATH}manager/ban/{VALUE_ID}/">
+			</td>
+		</tr>
+	</table>
+
+	<input type="hidden" name="id" value="{VALUE_ID}">
+	<input type="submit" name="send" value="儲存修改">
+	<input type="button" class="goto" name="back" value="回到列表" rel="{TAG_MANAGE_PATH}manager/">
+</form>
+
+<script>
+	$(function(){
+		$("input[name=ban]").click(function(){
+			if(!confirm('注意! 一旦封鎖將無法回復! 確定封鎖?')) return false;
+		});
+	});
+</script>

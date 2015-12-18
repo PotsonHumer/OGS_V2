@@ -1,0 +1,63 @@
+<h2>會員管理 > 會員列表</h2>
+
+<div id="cate">
+	<form action="{TAG_MANAGE_PATH}sk/" method="post">
+		<ul>
+			<li><label>篩選搜尋</label></li>
+			<li><input type="text" name="sk[account]" value="{SK_ACCOUNT}" placeholder="依帳號" size="100"></li>
+			<li><input type="text" name="sk[name]" value="{SK_NAME}" placeholder="依會員名稱" size="100"></li>
+			<li><input type="text" name="sk[email]" value="{SK_EMAIL}" placeholder="依 E-mail" size="300"></li>
+			<li><input type="submit" name="gosk" value="搜尋"> <input type="button" class="goto" name="clearsk" value="取消搜尋" rel="{TAG_MANAGE_PATH}member/"></li>
+			<li><input type="button" class="goto" name="add" value="增加會員" rel="{TAG_MANAGE_PATH}member/add/"></li>
+		</ul>
+		<input type="hidden" name="sk[to]" value="{TAG_MANAGE_PATH}member/">
+	</form>
+</div>
+
+<!-- START BLOCK : TAG_MEMBER_BLOCK -->
+<table>
+	<tr>
+		<th>序列</th>
+		<th>會員名稱</th>
+		<th>性別</th>
+		<th>帳號</th>
+		<th>電話</th>
+		<th>E-mail</th>
+		<th>認證</th>
+		<th>狀態</th>
+		<th>管理</th>
+	</tr>
+	<!-- START BLOCK : TAG_MEMBER_LIST -->
+	<tr>
+		<td class="center">{VALUE_NUMBER}</td>
+		<td>{VALUE_NAME}</td>
+		<td>{VALUE_GENDER}</td>
+		<td>{VALUE_ACCOUNT}</td>
+		<td>{VALUE_TEL}</td>
+		<td>{VALUE_EMAIL}</td>
+		<td>{VALUE_VERIFY}</td>
+		<td class="{CLASS_STATUS_RED}">{VALUE_STATUS}</td>
+		<td>
+			<input type="button" class="goto" name="sale" value="以此會員開啟組織表" rel="{TAG_MANAGE_PATH}sale/{VALUE_ID}/">
+			<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}member/detail/{VALUE_ID}/">
+			<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}member/del/{VALUE_ID}/">
+		</td>
+	</tr>
+	<!-- END BLOCK : TAG_MEMBER_LIST -->
+</table>
+<!-- END BLOCK : TAG_MEMBER_BLOCK -->
+
+<!-- START BLOCK : TAG_NONE -->
+<p class="red">尚無資料</p>
+<!-- END BLOCK : TAG_NONE -->
+
+<script>
+	$(function(){
+		$("input[name=del]").click(function(){
+			if(!confirm('確定刪除?')) return false;
+
+			PATH = $(this).attr("rel");
+			location.href = PATH;
+		});
+	});
+</script>

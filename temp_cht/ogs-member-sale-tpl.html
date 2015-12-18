@@ -1,0 +1,130 @@
+<!-- START BLOCK : TAG_SALE_BLOCK -->
+<div class="pyramid narrow animate" style="width: {PYRAMID_WIDTH}px;">
+	<p>會員厲屬列表 <a class="span exp_btn" href="#"> [ 展開顯示 ] </a> <a class="span nar_btn" href="#"> [ 縮小整頁顯示 ] </a></p>
+	<p class="float_l"><label>顏色表示</label> <span class="span has_box">已註冊會員</span><span class="span hover_box">相關階層</span></p>
+	<div class="level">
+		<!-- START BLOCK : TAG_SALE_LEVEL -->
+		<ul>
+			<div class="level_show">第{VALUE_LEVEL}層</div>
+			<!-- START BLOCK : TAG_SALE_UNIT -->
+			<li class="{TAG_USED}" style="width: calc(100% / {PYRAMID_SPLIT});" rel="{PYRAMID_SPLIT}">
+				<div class="unit fix {CONTENT_EMPTY}">
+					<!-- START BLOCK : TAG_SALE_CONTENT -->
+					<p class="content">
+						<a>{VALUE_ACCOUNT}</a>
+						<!-- START BLOCK : TAG_BONUS_BLOCK -->
+						<br />累計獎金：{VALUE_BONUS}
+						<!-- END BLOCK : TAG_BONUS_BLOCK -->
+					</p>
+					<!-- END BLOCK : TAG_SALE_CONTENT -->
+				</div>
+			</li>
+			<!-- END BLOCK : TAG_SALE_UNIT -->
+		</ul>
+		<!-- END BLOCK : TAG_SALE_LEVEL -->
+	</div>
+</div>
+<!-- END BLOCK : TAG_SALE_BLOCK -->
+
+<script>
+	var expansion = function(OBJ,EXP_TIME){
+		var SPLIT = OBJ.attr("rel");
+		var LI_W = OBJ.width();
+		var EXP_CUT = 150 * EXP_TIME;
+		
+		if(LI_W < 150){
+			OBJ.css({ "min-width":"150px" });
+			OBJ.parent("ul").find("li").css({ "width":"calc((100% - "+ EXP_CUT +"px) / "+ (SPLIT - EXP_TIME) +")" });
+		}
+	}
+
+	var narrow = function(){
+		$(".pyramid.narrow ul").each(function(KEY){
+			var SPLIT = Math.pow(2,KEY);
+			$(this).find('li').css({ "width":"calc(100% / "+ SPLIT +")" });
+		});
+
+		$(".pyramid.narrow li").css({ "min-width":"0" });
+	}
+
+	var clearCurrent = function(OBJ){
+		OBJ.parents(".pyramid").find("li").removeClass("current");
+		narrow();
+	}
+
+	$(function(){
+		$(".pyramid li").click(function(E){
+			E.preventDefault();
+
+			clearCurrent($(this));
+			var NOW_LEVEL = $(this).parent("ul");
+			var LEVEL = $(".pyramid ul").index(NOW_LEVEL);
+
+			$(this).addClass("current");
+			var UNIT = NOW_LEVEL.find("li").index(NOW_LEVEL.find("li.current"));
+			var NOW_UNIT = UNIT;
+
+			for(var I=(LEVEL - 1);I >= 0;I--){
+				var PREV_LEVEL = I;
+				var PREV_UNIT = Math.floor(UNIT / 2);
+
+				var EXP_OBJ = $(".pyramid ul:eq("+ PREV_LEVEL +")").find("li:eq("+ PREV_UNIT +")");
+				EXP_OBJ.addClass("current");
+				expansion(EXP_OBJ,1);
+
+				UNIT = PREV_UNIT;
+			}
+
+			expansion($(this),1);
+
+			var NEXT_OBJ = NOW_LEVEL.next("ul");
+			if(NEXT_OBJ.length){
+				var NEXT_LEVEL = LEVEL - -1;
+				var NEXT_UNIT_2 = ((NOW_UNIT - -1) * 2) - 1;
+				var NEXT_UNIT_1 = NEXT_UNIT_2 - 1;
+
+				var NEXT_OBJ_1 = $(".pyramid ul:eq("+ NEXT_LEVEL +")").find("li:eq("+ NEXT_UNIT_1 +")");
+				NEXT_OBJ_1.addClass("current");
+				expansion(NEXT_OBJ_1,2);
+
+				var NEXT_OBJ_2 = $(".pyramid ul:eq("+ NEXT_LEVEL +")").find("li:eq("+ NEXT_UNIT_2 +")");
+				NEXT_OBJ_2.addClass("current");
+				expansion(NEXT_OBJ_2,2);
+			}
+		});
+
+		$(".exp_btn").click(function(E){
+			E.preventDefault();
+
+			if(!confirm("確定展開? 注意!! 可能會很長喔~~")) return false;
+			$(this).parents(".pyramid").removeClass("narrow");
+		});
+
+		$(".nar_btn").click(function(E){
+			E.preventDefault();
+			$(this).parents(".pyramid").addClass("narrow");
+		});
+
+		$(".pyramid li").dblclick(function(){
+			var GOTO = $(this).find("a").attr("href");
+			location.href = GOTO;
+		});
+
+		$(".pyramid li.used").hover(function(){
+			var CURRENT_NOW = $(this).attr("class").search('current');
+			var EXP_COUNT = $(this).parent("ul").find("li.current").length;
+			EXP_COUNT = (CURRENT_NOW >= 0)?EXP_COUNT:++EXP_COUNT;
+			expansion($(this),EXP_COUNT);
+		},function(){
+			var EXP_COUNT = $(this).parent("ul").find("li.current").length;
+			var SPLIT = $(this).attr("rel");
+
+			if(EXP_COUNT > 0){
+				$(this).parent("ul").find("li").css({ "width":"calc(100% / "+ SPLIT +")","min-width":"0" });
+				expansion($(this).parent("ul").find("li.current"),EXP_COUNT);
+			}else{
+				$(this).parent("ul").find("li").css({ "width":"calc(100% / "+ SPLIT +")","min-width":"0" });
+			}
+		});
+	});
+</script>

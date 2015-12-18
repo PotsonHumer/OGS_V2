@@ -1,0 +1,19 @@
+Options ExecCGI Includes IncludesNOEXEC SymLinksIfOwnerMatch -Indexes
+
+RewriteEngine On
+
+#替圖片加上浮水印
+#RewriteCond %{REQUEST_FILENAME} \.(jpg|jpeg|png|gif)$ [NC]
+#RewriteCond %{REQUEST_FILENAME} files [NC]
+#RewriteRule ^([^*]+)$ watermark.php?path=$0 [L]
+#RewriteRule ^(watermark.php)$  $1 [L]
+
+#RewriteCond %{QUERY_STRING} (RID=(.+))
+#RewriteRule ^([^*]+)$  index.php?RID=%2 [L]
+
+RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
+#RewriteRule ^404.html$  404.htm [L]
+RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
+RewriteRule ^([^*]+)$  index.php [L]
+
+ErrorDocument 404 /404.html

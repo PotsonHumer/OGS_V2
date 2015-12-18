@@ -1,0 +1,74 @@
+<h2>最新消息管理 > 新增最新消息</h2>
+
+<p class="theme">(※) 標註星號為必填項目</p>
+
+<form action="{TAG_MANAGE_PATH}news/insert/" method="post">
+	<ul id="cate">
+		<li><a class="tab_title">最新消息設定</a></li>
+		<li><a class="tab_title">SEO 設定</a></li>
+	</ul>
+
+	<div class="tab">
+		<table>
+			<tr>
+				<th>※ 所屬分類</th>
+				<td>
+					<select name="parent">
+						<option value="0">未選擇</option>
+						{VALUE_PARENT_OPTION}
+					</select>
+				</td>
+				<th>※ 標題</th>
+				<td>
+					<input type="text" name="subject" value="{VALUE_SUBJECT}" size="200">
+				</td>
+			</tr>
+			<tr>
+				<th>狀態</th>
+				<td>
+					<select name="status">
+						<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+						<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					</select>
+				</td>
+				<th>排序</th>
+				<td>
+					<input type="number" name="sort" value="{VALUE_SORT}" maxlength="2" size="100">
+				</td>
+			</tr>
+			<tr>
+				<th>顯示時間</th>
+				<td>
+					<input type="date" name="showdate" value="{VALUE_SHOWDATE}">
+				</td>
+				<th>圖片</th>
+				<td>
+					<!-- INCLUDE BLOCK : IMAGE -->
+				</td>
+			</tr>
+			<tr>
+				<th>※ 內容</th>
+				<td colspan="3">
+					<textarea class="tiny" name="content">{VALUE_CONTENT}</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="tab">
+		<!-- INCLUDE BLOCK : SEO -->
+	</div>
+
+	<input type="submit" name="send" value="確定新增">
+	<input type="button" class="goto" name="back" value="回到列表" rel="{TAG_MANAGE_PATH}news/">
+	<input type="hidden" name="callback" value="1">
+</form>
+
+<script>
+	$(function(){
+		$(document).tab_box({
+			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
+			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+	});
+</script>

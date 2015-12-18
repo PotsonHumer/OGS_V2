@@ -1,0 +1,66 @@
+<!-- START BLOCK : TAG_TREE_BLOCK -->
+<ul id="tree">
+	<li class="icon-layers">分類樹狀圖</li>
+	<!-- START BLOCK : TAG_TREE_LIST -->
+	<li class="{TREE_CURRENT}" rel="level{TREE_LEVEL}"><a class="no-brackets icon- {TREE_CURRENT}" href="{TREE_LINK}">{TREE_SUBJECT}</a></li>
+	<!-- END BLOCK : TAG_TREE_LIST -->
+</ul>
+
+<script>
+	var LEVEL = function(OBJ){
+		var NOW_LEVEL_STR = OBJ.attr("rel");
+
+		if(isset(NOW_LEVEL_STR)){
+			return NOW_LEVEL_STR.replace('level','')
+		}
+	}
+
+	$(function(){
+		var NOW_LEVEL = LEVEL($("#tree li.theme"));
+		$("#tree li.theme").show().prevUntil("#tree li[rel=level0]").each(function(){
+			if(NOW_LEVEL >= LEVEL($(this))){
+				$(this).slideDown();
+			}
+
+			if(NOW_LEVEL > LEVEL($(this))){
+				$(this).addClass("open");
+			}
+		});
+
+		$("#tree li.theme").show().nextUntil("#tree li[rel=level0]").each(function(){
+			if(NOW_LEVEL == LEVEL($(this))){
+				$(this).slideDown();
+			}
+		});
+
+		$("#tree li").click(function(E){
+			E.preventDefault();
+			var NOW_LEVEL = LEVEL($(this));
+			var OPEN = $(this).hasClass('open');
+
+			if(OPEN){
+				$(this).removeClass("open");
+			}else{
+				$(this).addClass("open");
+			}
+
+			$(this).nextUntil("#tree li[rel=level"+ NOW_LEVEL +"]").each(function(){
+				var EACH_LEVEL = LEVEL($(this));
+
+				if(NOW_LEVEL <= EACH_LEVEL){
+					if(OPEN){
+						$(this).slideUp().removeClass("open");
+					}else{
+						$(this).slideDown().addClass("open");
+					}
+				}
+			});
+		});
+
+		$("#tree li").dblclick(function(){
+			var GOTO = $(this).find("a").attr('href');
+			location.href = GOTO;
+		});
+	});
+</script>
+<!-- END BLOCK : TAG_TREE_BLOCK -->

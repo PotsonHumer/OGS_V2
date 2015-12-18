@@ -1,0 +1,29 @@
+		<form class="cc" action="{TAG_ROOT_PATH}member/modify/" method="post">
+			<!--<div class="tnput_t">推薦人 : <input type="text" placeholder="請填入介紹人的帳號" name="referrals" value="{VALUE_REFERRALS}" disabled /> * 必填欄位</div>-->
+			<div class="tnput_t">帳　號 : <input type="text" placeholder="請填入自行取名的帳號 (最少6個英數)" name="account" value="{VALUE_ACCOUNT}" disabled /> * 必填欄位</div>
+
+			<div class="tnput_t">姓　名 : <input type="text" placeholder="填寫正確姓名，以確保會員使用權益" name="name" value="{VALUE_NAME}" /> * 必填欄位</div>
+			<div class="tnput_t">性　別 : <input type="radio" value="1" name="gender" {VALUE_GENDER_CK1} />男<input type="radio" value="0" name="gender" {VALUE_GENDER_CK0} />女</div>
+			<div class="tnput_t">出生日期 : <input type="date" placeholder="" name="birth" value="{VALUE_BIRTH}" /> * 必填欄位</div>
+			<div class="tnput_t">ＩＤ身分證字號 : <input type="text" placeholder="填寫正確字號，以確保會員使用權益" name="identity" value="{VALUE_IDENTITY}" /> * 必填欄位</div>
+			<div class="tnput_t">連絡電話 : <input type="tel" placeholder="填寫正確字號，以確保會員使用權益" name="tel" value="{VALUE_TEL}" /> * 必填欄位</div>
+			<div class="tnput_t">連絡地址 : <input type="text" placeholder="請填寫完整地址" name="address" value="{VALUE_ADDRESS}" /></div>
+			<div class="tnput_t">QQ通訊 : <input type="text" placeholder="QQ或微信" name="qq" value="{VALUE_QQ}" /></div>
+			<div class="tnput_t">信　箱 : <input type="email" placeholder="填寫正確信箱，以方便連絡" name="email" value="{VALUE_EMAIL}" /> * 必填欄位</div>
+			<fieldset>
+				<legend>個人匯款資料(需確實填寫正確)</legend>
+				銀行資料，戶名 : <input type="text" placeholder="填寫戶名" name="bank_name" class="min" value="{VALUE_BANK_NAME}"><br /><br />
+				銀行帳號 : <input type="text" placeholder="填寫銀行帳號" name="bank_account" value="{VALUE_BANK_ACCOUNT}"> * 必填欄位，以確保獎金能正確匯入<br /><br />
+				開戶行名稱 : <input type="text" placeholder="填寫行號" name="line_number" class="min" value="{VALUE_LINE_NUMBER}">
+				支行名稱 : <input type="text" placeholder="填寫支行名稱" name="branch" class="min" value="{VALUE_BRANCH}">
+			</fieldset>
+			<fieldset>
+				<legend>更改密碼 (如果不需要更改密碼，請不要填寫此區)</legend>
+				<div class="tnput_t">舊密碼 : <input type="password" placeholder="原本的密碼" name="old_password" maxlength="8" /> * 必填欄位</div>
+				<div class="tnput_t">新密碼 : <input type="password" placeholder="設置8位碼、如不需修改請勿填寫" name="password" maxlength="8" /> * 必填欄位</div>
+				<div class="tnput_t">再輸入 : <input type="password" placeholder="再次輸入同上密碼" name="password_match" maxlength="8" /> * 必填欄位</div>
+			</fieldset>
+
+			<div class="tnput_t"><input type="submit" value="修改資料" /></div>
+			<input type="hidden" name="callback" value="1">
+		</form>

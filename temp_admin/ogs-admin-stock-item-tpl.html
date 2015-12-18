@@ -1,0 +1,74 @@
+<h2>庫存管理 > 規格項目設定</h2>
+
+<p>設定規格項目</p>
+
+<!-- START BLOCK : TAG_CATE_BLOCK -->
+<ul id="cate">
+	<li><label>選擇類別</label></li>
+	<li><a href="{TAG_MANAGE_PATH}stock/item/" {VALUE_ALL_CURRENT}>顯示全部</a></li>
+	<!-- START BLOCK : TAG_CATE_LIST -->
+	<li><a href="{TAG_MANAGE_PATH}stock/item/{VALUE_CATE_ID}/" {VALUE_CATE_CURRENT}>{VALUE_CATE_NAME}</a></li>
+	<!-- END BLOCK : TAG_CATE_LIST -->
+</ul>
+<!-- END BLOCK : TAG_CATE_BLOCK -->
+
+<form action="{TAG_MANAGE_PATH}stock/item-replace/" method="post">
+	<table id="row_table">
+		<tr>
+			<th>排序</th>
+			<th>所屬類別</th>
+			<th>項目名稱</th>
+			<th>狀態</th>
+			<th>刪除</th>
+		</tr>
+
+		<!-- START BLOCK : TAG_STOCK_TIEM -->
+		<tr class="row">
+			<td><span class="icon-shuffle">按此拖曳改變排序</span></td>
+			<td><select name="cate[]"><option value="null">選擇分類</option>{VALUE_CATE_OPTION}</select></td>
+			<td>
+				<input type="text" name="name[]" value="{VALUE_NAME}" size="200">
+			</td>
+			<td>
+				<select name="status[]">
+					<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+				</select>
+			</td>
+			<td>
+				<input type="hidden" name="id[]" value="{VALUE_ID}">
+				<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}stock/item-del/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_STOCK_TIEM -->
+	</table>
+
+	<p>
+		<input type="button" name="add" value="增加類別" rel="row_table">
+		<input type="submit" name="send" value="儲存">
+	</p>
+</form>
+
+<script>
+	$(function(){
+		js_add_row(
+			'<tr class="row">'+
+				'<td><span class="icon-shuffle">按此拖曳改變排序</span></td>'+
+				'<td><select name="cate[]"><option value="null">選擇分類</option>{JS_CATE_OPTION}</select></td>'+
+				'<td>'+
+					'<input type="text" name="name[]" value="{VALUE_NAME}" size="200">'+
+				'</td>'+
+				'<td>'+
+					'<select name="status[]">'+
+						'<option value="1" {VALUE_STATUS_CK1}>開啟</option>'+
+						'<option value="0" {VALUE_STATUS_CK0}>關閉</option>'+
+					'</select>'+
+				'</td>'+
+				'<td>'+
+					'<input type="hidden" name="id[]" value="{VALUE_ID}">'+
+					'<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}stock/cate-del/">'+
+				'</td>'+
+			'</tr>'
+		);
+	});
+</script>

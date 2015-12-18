@@ -1,0 +1,57 @@
+<table>
+	<tr>
+		<th>序列</th>
+		<th>產品圖片</th>
+		<th>產品名稱</th>
+		<th>數量</th>
+		<th>單價</th>
+		<th>小計</th>
+		<th>刪除</th>
+	</tr>
+	<!-- START BLOCK : TAG_CAR_LIST -->
+	<tr>
+		<td>{VALUE_ROW}</td>
+		<td><img src="{VALUE_IMAGE}" width="100"></td>
+		<td>{VALUE_NAME}</td>
+		<td>
+			<select name="amount" rel="{TAG_ROOT_PATH}cart/modify/{VALUE_ID}/">
+				{VALUE_AMOUNT_OPTION}
+			</select>
+		</td>
+		<td>{VALUE_PRICE}</td>
+		<td>{VALUE_SUBTOTAL}</td>
+		<td>
+			<input type="button" name="del" value="刪除" rel="{TAG_ROOT_PATH}cart/del/{VALUE_ID}/">
+		</td>
+	</tr>
+	<!-- END BLOCK : TAG_CAR_LIST -->
+	<tr>
+		<td colspan="6" style="text-align: right;">總計：</td>
+		<td>{VALUE_TOTAL}</td>
+		<td></td>
+	</tr>
+</table>
+
+<input type="button" name="next" value="下一步" rel="{TAG_ROOT_PATH}cart/detail/">
+
+<script>
+	$(function(){
+		$("select[name=amount]").change(function(){
+			var AMOUNT = $(this).find("option:selected").val();
+			var PATH = $(this).attr("rel");
+			location.href = PATH + AMOUNT + '/';
+		});
+
+		$("input[name=del]").click(function(){
+			if(!confirm('確定刪除?')) return false;
+
+			var PATH = $(this).attr("rel");
+			location.href = PATH;
+		});
+
+		$("input[name=next]").click(function(){
+			var PATH = $(this).attr("rel");
+			location.href = PATH;
+		});
+	});
+</script>

@@ -1,0 +1,115 @@
+<h2>庫存管理 > 規格綁定設定</h2>
+
+<p>設定產品規格</p>
+
+<!-- START BLOCK : TAG_CATE_BLOCK -->
+<ul id="cate">
+	<li><label>產品分類</label></li>
+	<li><a href="{TAG_MANAGE_PATH}stock/item/" {VALUE_ALL_CURRENT}>顯示全部</a></li>
+	<!-- START BLOCK : TAG_CATE_LIST -->
+	<li><a href="{TAG_MANAGE_PATH}stock/item/{VALUE_CATE_ID}/" {VALUE_CATE_CURRENT}>{VALUE_CATE_NAME}</a></li>
+	<!-- END BLOCK : TAG_CATE_LIST -->
+</ul>
+<!-- END BLOCK : TAG_CATE_BLOCK -->
+
+<div class="column">
+	<table>
+		<!--
+		<tr>
+			<th>產品名稱</th>
+			<th>規格管理</th>
+		</tr>
+		-->
+		
+		<!-- START BLOCK : TAG_P_LIST -->
+		<tr {VALUE_P_CURRENT}>
+			<td><a href="{VALUE_P_LINK}" target="_blank">{VALUE_P_NAME}</a></td>
+			<td>
+				<input type="button" name="stock_path" value="規格管理" rel="{TAG_MANAGE_PATH}stock/{VALUE_P_ID}/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_P_LIST -->
+	</table>
+</div>
+
+<div class="column">
+	<!-- START BLOCK : TAG_NONE_STOCK -->
+	<p class="icon-arrow-left">請先點選 "規格管理"</p>
+	<!-- END BLOCK : TAG_NONE_STOCK -->
+	
+	<!-- START BLOCK : TAG_STOCK_BLOCK -->
+	<p>{VALUE_P_NAME}</p>
+
+	<form action="{TAG_MANAGE_PATH}stock/replace/" method="post">
+		<table id="row_table">
+			<tr>
+				<th>排序</th>
+				<th>規格 (不選擇則不會納入組合)</th>
+				<th>名稱</th>
+				<th>狀態</th>
+				<th>價格</th>
+				<th>庫存</th>
+				<th>刪除</th>
+			</tr>
+
+			<!-- START BLOCK : TAG_STOCK_LIST -->
+			<tr class="row">
+				<td><span class="icon-shuffle">按此拖曳改變排序</span></td>
+				<td>{VALUE_STOCK_SELECT}</td>
+				<td><input type="text" name="name[]" value="{VALUE_NAME}" size="250" placeholder="如不填內容 系統將用規格名稱組合"></td>
+				<td>
+					<select name="status[]">
+						<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+						<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+					</select>
+				</td>
+				<td><input type="text" name="price[]" value="{VALUE_PRICE}" size="100"></td>
+				<td><input type="text" name="amount[]" value="{VALUE_AMOUNT}"  size="50"></td>
+				<td>
+					<input type="hidden" name="p_id[]" value="{VALUE_P_ID}">
+					<input type="hidden" name="id[]" value="{VALUE_ID}">
+					<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}stock/del/">
+				</td>
+			</tr>
+			<!-- END BLOCK : TAG_STOCK_LIST -->
+		</table>
+
+		<p>
+			<input type="button" name="add" value="增加規格" rel="row_table">
+			<input type="submit" name="send" value="儲存">
+		</p>
+	</form>
+	<!-- END BLOCK : TAG_STOCK_BLOCK -->
+</div>
+
+<hr class="clear">
+
+<script>
+	$(function(){
+		$("input[name=stock_path]").click(function(){
+			var PATH = $(this).attr("rel");
+			location.href = PATH;
+		});
+
+		js_add_row(
+			'<tr class="row">'+
+				'<td><span class="icon-shuffle">按此拖曳改變排序</span></td>'+
+				'<td>{JS_STOCK_SELECT}</td>'+
+				'<td><input type="text" name="name[]" size="250" placeholder="如不填內容 系統將用規格名稱組合"></td>'+
+				'<td>'+
+					'<select name="status[]">'+
+						'<option value="1">開啟</option>'+
+						'<option value="0">關閉</option>'+
+					'</select>'+
+				'</td>'+
+				'<td><input type="text" name="price[]" size="100"></td>'+
+				'<td><input type="text" name="amount[]" size="50"></td>'+
+				'<td>'+
+					'<input type="hidden" name="p_id[]" value="{JS_P_ID}">'+
+					'<input type="hidden" name="id[]">'+
+					'<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}stock/del/">'+
+				'</td>'+
+			'</tr>'
+		);
+	});
+</script>
