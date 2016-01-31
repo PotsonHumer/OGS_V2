@@ -15,7 +15,8 @@
 		# 引號處理
 		private static function strslashes($var=false){
 			if(!get_magic_quotes_gpc()){
-				return addslashes($var); //stripslashes
+				#return addslashes($var); //stripslashes
+				return filter_var($var, FILTER_SANITIZE_MAGIC_QUOTES);
 			}else{
 				return $var;
 			}
