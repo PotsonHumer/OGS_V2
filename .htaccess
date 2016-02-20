@@ -18,7 +18,7 @@
 #    ExpiresByType image/png "access plus 1 week"
 #</IfModule>
 
-Options ExecCGI Includes IncludesNOEXEC SymLinksIfOwnerMatch -Indexes
+Options +ExecCGI +Includes +IncludesNOEXEC +SymLinksIfOwnerMatch -Indexes
 RewriteEngine On
 
 #替圖片加上浮水印
@@ -30,13 +30,13 @@ RewriteEngine On
 #RewriteCond %{QUERY_STRING} (RID=(.+))
 #RewriteRule ^([^*]+)$  index.php?RID=%2 [L]
 
-RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
+#RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
 #RewriteRule ^404.html$  404.htm [L]
-RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
+#RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
 #RewriteRule ^([^*]+)$  index.php [L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [L]
 
-ErrorDocument 404 /404.html
+ErrorDocument 404 /404.htm
