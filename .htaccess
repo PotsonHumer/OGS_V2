@@ -1,6 +1,6 @@
 #啟用傳輸壓縮
 #用來代替上方的原有壓縮方式
-#AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/x-javascript
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/x-javascript
 
 #伺服端設定靜態資源到期日
 #<IfModule mod_expires.c>
@@ -27,12 +27,11 @@ RewriteEngine On
 #RewriteRule ^([^*]+)$ watermark.php?path=$0 [L]
 #RewriteRule ^(watermark.php)$  $1 [L]
 
-#RewriteCond %{QUERY_STRING} (RID=(.+))
-#RewriteRule ^([^*]+)$  index.php?RID=%2 [L]
+RewriteCond %{QUERY_STRING} (RID=(.+))
+RewriteRule ^([^*]+)$  index.php?RID=%2 [L]
 
-#RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
-#RewriteRule ^404.html$  404.htm [L]
-#RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
+RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
+RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
 #RewriteRule ^([^*]+)$  index.php [L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
