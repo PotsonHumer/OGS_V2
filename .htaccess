@@ -33,6 +33,10 @@ RewriteEngine On
 RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
 #RewriteRule ^404.html$  404.htm [L]
 RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
-RewriteRule ^([^*]+)$  index.php [L]
+#RewriteRule ^([^*]+)$  index.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [L]
 
 ErrorDocument 404 /404.html
