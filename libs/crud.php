@@ -59,12 +59,14 @@
 
 									if(is_array($var)){
 										$equation = 'in';
-										$var = "('".implode("','",$var)."')";
+										foreach($var as $varItem){
+											$newVar[] = self::strslashes($var);
+										}
+										$var = "('".implode("','",$newVar)."')";
 									}else{
-										$var = "'{$var}'";
+										$var = "'".self::strslashes($var)."'";
+										#$var = "'{$var}'";
 									}
-
-									$var = self::strslashes($var);
 
 									$equation = (isset($equation))?" {$equation} ":' = ';
 									$where_array[] = $field.$equation."{$var}";
