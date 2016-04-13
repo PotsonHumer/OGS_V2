@@ -320,30 +320,64 @@
 	        $replace_option = array(
 	            'in' => array(
 	                'pattern' => array(
-	                    '%(https://)('.self::$cfg["url"].')*('.self::$cfg["file"].')((file/|tiny_mce/|tinymce/)[^\s"><]+\.(png|gif|jpg|jpeg|js|css))%i',
-	                    '%(https://)('.self::$cfg["url"].')*('.self::$cfg["root"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
-	                    '%(https://)('.self::$cfg["url"].')*('.self::$cfg["file"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
-	                    '%(http://)('.self::$cfg["url"].')*('.self::$cfg["file"].')((file/|tiny_mce/|tinymce/)[^\s"><]+\.(png|gif|jpg|jpeg|js|css))%i',
-	                    '%(http://)('.self::$cfg["url"].')*('.self::$cfg["root"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
-	                    '%(http://)('.self::$cfg["url"].')*('.self::$cfg["file"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
-	                    '%('.self::$cfg["file"].')((file/|tiny_mce/|tinymce/)[^\s"><]+\.(png|gif|jpg|jpeg|js|css))%i',
-	                    '%('.self::$cfg["root"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
-	                    '%('.self::$cfg["file"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
-	                    '%(["\'])(\.\./)*(file/[^"\']+)%i',
-	                    '%(["\'])(\.\./)*(images/[^"\']+)%i',
+						'%(https://'.self::$cfg['url'].')('.self::$cfg['file'].')((file/|tiny_mce/|tinymce/))%i',
+						'%(https://'.self::$cfg['url'].')('.self::$cfg['root'].')([^"><]+)%i',
+						'%(https://'.self::$cfg['url'].')('.self::$cfg['file'].')([^"><]+)%i',
+						'%((http://)*'.self::$cfg['url'].')('.self::$cfg['file'].')((file/|tiny_mce/|tinymce/))%i',
+						'%((http://)*'.self::$cfg['url'].')('.self::$cfg['root'].')([^"><]+)%i',
+						'%((http://)*'.self::$cfg['url'].')('.self::$cfg['file'].')([^"><]+)%i',
+						'%('.self::$cfg['file'].')((file/|tiny_mce/|tinymce/))%i',
+						'%^('.self::$cfg['root'].')([^"><]+)%i',
+						'%^('.self::$cfg['file'].')([^"><]+)%i',
+						'%(\A|=\s*\\\*[\'"])(\.\./|'.self::$cfg['file'].')*(file/[^"\']+)%i',
+						'%(\A|=\s*\\\*[\'"])(\.\./|'.self::$cfg['root'].')*(images/[^"\']+)%i',
+						'%((href|src)\s*=\s*(\\\?("|\')))('.self::$cfg['root'].')([^"><]+)(\3)%i',
+						'%((href|src)\s*=\s*(\\\?("|\')))('.self::$cfg['file'].')([^"><]+)(\3)%i',
+						'%(>\s*)('.self::$cfg['root'].')([^><]+)(\s*<)%i',
+						'%(>\s*)('.self::$cfg['file'].')([^><]+)(\s*<)%i',
+
+						# old
+	                    #'%(https://)('.self::$cfg["url"].')*('.self::$cfg["file"].')((file/|tiny_mce/|tinymce/)[^\s"><]+\.(png|gif|jpg|jpeg|js|css))%i',
+	                    #'%(https://)('.self::$cfg["url"].')*('.self::$cfg["root"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
+	                    #'%(https://)('.self::$cfg["url"].')*('.self::$cfg["file"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
+	                    #'%(http://)('.self::$cfg["url"].')*('.self::$cfg["file"].')((file/|tiny_mce/|tinymce/)[^\s"><]+\.(png|gif|jpg|jpeg|js|css))%i',
+	                    #'%(http://)('.self::$cfg["url"].')*('.self::$cfg["root"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
+	                    #'%(http://)('.self::$cfg["url"].')*('.self::$cfg["file"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
+	                    #'%('.self::$cfg["file"].')((file/|tiny_mce/|tinymce/)[^\s"><]+\.(png|gif|jpg|jpeg|js|css))%i',
+	                    #'%('.self::$cfg["root"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
+	                    #'%('.self::$cfg["file"].')([^\s"><]+\.(png|gif|jpg|jpeg))%i',
+	                    #'%(["\'])(\.\./)*(file/[^"\']+)%i',
+	                    #'%(["\'])(\.\./)*(images/[^"\']+)%i',
 	                ),
 	                'replace' => array(
-	                    '{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
-	                    '{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_ROOT_PATH}$4',
-	                    '{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
-	                    '{TAG_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
+	                    '{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_FILE_ROOT}$3',
+	                    '{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_ROOT_PATH}$3',
+	                    '{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_FILE_ROOT}$3',
+	                    '{TAG_SCHEME}{TAG_SERVER}{TAG_FILE_ROOT}$4',
 	                    '{TAG_SCHEME}{TAG_SERVER}{TAG_ROOT_PATH}$4',
-	                    '{TAG_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
-	                    '{TAG_FILE_PATH}$2',
+	                    '{TAG_SCHEME}{TAG_SERVER}{TAG_FILE_ROOT}$4',
+	                    '{TAG_FILE_ROOT}$2',
 	                    '{TAG_ROOT_PATH}$2',
-	                    '{TAG_FILE_PATH}$2',
-	                    '$1{TAG_FILE_PATH}$3',
+	                    '{TAG_FILE_ROOT}$2',
+	                    '$1{TAG_FILE_ROOT}$3',
 	                    '$1{TAG_ROOT_PATH}$3',
+	                    '$1{TAG_ROOT_PATH}$6$3',
+	                    '$1{TAG_FILE_ROOT}$6$3',
+	                    '>{TAG_ROOT_PATH}$3<',
+	                    '>{TAG_FILE_ROOT}$3<',
+
+	                    # old
+	                    #'{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
+	                    #'{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_ROOT_PATH}$4',
+	                    #'{TAG_SECURE_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
+	                    #'{TAG_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
+	                    #'{TAG_SCHEME}{TAG_SERVER}{TAG_ROOT_PATH}$4',
+	                    #'{TAG_SCHEME}{TAG_SERVER}{TAG_FILE_PATH}$4',
+	                    #'{TAG_FILE_PATH}$2',
+	                    #'{TAG_ROOT_PATH}$2',
+	                    #'{TAG_FILE_PATH}$2',
+	                    #'$1{TAG_FILE_PATH}$3',
+	                    #'$1{TAG_ROOT_PATH}$3',
 	                )
 	            ),
 	            'out' => array(
@@ -369,7 +403,6 @@
 	        );
 	        return preg_replace( $replace_option[$put]['pattern'] , $replace_option[$put]['replace'] , $content);
 	    }
-
 		# eval 組合方法 start----------------------------------------------------------------------------
 
 		function call_function($class,$function,$args){
