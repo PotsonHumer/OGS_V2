@@ -66,8 +66,15 @@
 			CHECK::is_must($_POST["callback"]);
 
 			if(CHECK::is_pass()){
+				$systemExist = CRUD::dataFetch('system',array('id'=> '1'));
+
 				$args = array_merge($_POST,array('id' => '1'));
-				CRUD::dataUpdate('system',$args);
+
+				if($systemExist){
+					CRUD::dataUpdate('system',$args);
+				}else{
+					CRUD::dataInsert('system',$args);
+				}
 
 				if(!empty(DB::$error)){
 					$msg = array(DB::$error,CORE::$manage.'system/');
