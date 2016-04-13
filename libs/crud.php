@@ -271,7 +271,7 @@
 			$rsnum = DB::num($sql);
 
 			if($goFetch){
-				return array($sql,$rsnum);
+				return array($sql,$rsnum,$select);
 			}else{
 				return $rsnum;
 			}
@@ -279,7 +279,7 @@
 
 		# 取得各表資料
 		public static function dataFetch($tb_name,$sk=false,$fetch=false,$sort=false,$limit=false,$page=false){
-			list($sql,$rsnum) = self::dataNum($tb_name,$sk,$fetch,$sort,$limit,true);
+			list($sql,$rsnum,$select) = self::dataNum($tb_name,$sk,$fetch,$sort,$limit,true);
 
 			if($page){
 				if(is_numeric($page) && $page > 0) PAGE::$num = $page;
