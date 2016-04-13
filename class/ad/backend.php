@@ -9,6 +9,7 @@
 			$nav_class = 'AD';
 
 			switch($func){
+				/*
 				case "cate":
 					$nav_func = "CATE";
 					self::$temp["MAIN"] = 'ogs-admin-ad-cate-list-tpl.html';
@@ -40,6 +41,7 @@
 					self::$temp["MAIN"] = self::$temp_option["MSG"];
 					parent::multi('ad_cate',CORE::$manage.'ad/cate/');
 				break;
+				*/
 				case "add":
 					self::$temp["MAIN"] = 'ogs-admin-ad-insert-tpl.html';
 					self::$temp["IMAGE"] = self::$temp_option["IMAGE"];
@@ -219,6 +221,7 @@
 		# 項目
 
 		# 分類選單
+		/*
 		private static function cate_select($parent=null){
 			$rsnum = CRUD::dataFetch('ad_cate',array("langtag" => CORE::$langtag),false,array('sort' => CORE::$cfg["sort"]));
 			if(!empty($rsnum)){
@@ -257,16 +260,17 @@
 
 			if(!$current) VIEW::assignGlobal("NONE_CURRENT",'theme');
 		}
+		*/
 
 		# 列表
-		private static function row($parent=false){
-			if(!empty($parent)){
-				$sk = array('langtag' => CORE::$langtag,'parent' => $parent);
+		private static function row($cateID=false){
+			if(!empty($cateID)){
+				$sk = array('langtag' => CORE::$langtag,'cateID' => $cateID);
 			}else{
 				$sk = array('langtag' => CORE::$langtag);
 			}
 
-			self::cate_list($parent); # 分類選單
+			AD::cateList($cateID); # 分類選單
 
 			$rsnum = CRUD::dataFetch('ad',$sk,false,array('sort' => CORE::$cfg["sort"]),false,true);
 			if(!empty($rsnum)){
@@ -277,10 +281,11 @@
 					VIEW::newBlock("TAG_AD_LIST");
 					foreach($row as $field => $var){
 						switch($field){
-							case "parent":
-								CRUD::dataFetch('ad_cate',array('id' => $var),array('subject'));
-								list($parent) = CRUD::$data;
-								VIEW::assign("VALUE_".strtoupper($field),$parent["subject"]);
+							case "cateID":
+								#CRUD::dataFetch('ad_cate',array('id' => $var),array('subject'));
+								#list($cateID) = CRUD::$data;
+								#VIEW::assign("VALUE_".strtoupper($field),$cateID["subject"]);
+								VIEW::assign('VALUE_'.strtoupper($field),CORE::$cfg['ad_cate'][$var]);
 							break;
 							case "status":
 								$status = ($var)?self::$lang["status_on"]:self::$lang["status_off"];
@@ -313,13 +318,13 @@
 			VIEW::assignGlobal(array(
 				"VALUE_SORT" => ++$rsnum,
 				"VALUE_SHOWDATE" => date("Y-m-d"),
-				"VALUE_PARENT_OPTION" => self::cate_select(),
+				"VALUE_CATEID_OPTION" => AD::cateSelect(),
 			));
 		}
 
 		# 執行新增
 		private static function insert(){
-			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["parent"]);
+			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["cateID"]);
 
 			if(CHECK::is_pass()){
 				CRUD::dataInsert('ad',$_POST,true,false,true);
@@ -342,15 +347,13 @@
 
 		# 詳細
 		private static function detail($id){
-			#OGSADMIN::language_select('ad',$id);
-
 			$rsnum = CRUD::dataFetch('ad',array('id' => $id));
 			if(!empty($rsnum)){
 				list($row) = CRUD::$data;
 				foreach($row as $field => $var){
 					switch($field){
-						case "parent":
-							VIEW::assignGlobal("VALUE_".strtoupper($field)."_OPTION",self::cate_select($var));
+						case "cateID":
+							VIEW::assignGlobal("VALUE_".strtoupper($field)."_OPTION",AD::cateSelect($var));
 						break;
 						case "status":
 							VIEW::assignGlobal("VALUE_".strtoupper($field)."_CK".$var,'selected');
@@ -380,7 +383,7 @@
 
 		# 修改
 		private static function modify(){
-			CHECK::is_must($_POST["callback"],$_POST["id"],$_POST["subject"],$_POST["parent"]);
+			CHECK::is_must($_POST["callback"],$_POST["id"],$_POST["subject"],$_POST["cateID"]);
 			$check = CHECK::is_pass();
 			$rsnum = CRUD::dataFetch('ad',array('id' => $_POST["id"]));
 

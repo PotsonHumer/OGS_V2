@@ -7,9 +7,9 @@
 		<tr>
 			<th>※ 所屬分類</th>
 			<td>
-				<select name="parent">
+				<select name="cateID">
 					<option value="0">未選擇</option>
-					{VALUE_PARENT_OPTION}
+					{VALUE_CATEID_OPTION}
 				</select>
 			</td>
 			<th>※ 標題</th>
@@ -21,8 +21,8 @@
 			<th>狀態</th>
 			<td>
 				<select name="status">
-					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
 					<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
 					<option value="2" {VALUE_STATUS_CK2}>依照時間</option>
 				</select>
 			</td>
@@ -51,12 +51,14 @@
 				<input type="date" name="limitdate" value="{VALUE_LIMITDATE}">
 			</td>
 		</tr>
+		<!--
 		<tr>
 			<th>內容</th>
 			<td colspan="3">
 				<textarea class="tiny" name="content">{VALUE_CONTENT}</textarea>
 			</td>
 		</tr>
+		-->
 	</table>
 
 	<input type="submit" name="send" value="修改">

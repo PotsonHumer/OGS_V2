@@ -1,15 +1,15 @@
 <h2>廣告管理 > 廣告列表</h2>
 
 <div id="cate">
-	<!-- START BLOCK : TAG_PARENT_BLOCK -->
+	<!-- START BLOCK : TAG_CATE_BLOCK -->
 	<ul>
 		<li><label>依分類顯示</label></li>
-		<!-- START BLOCK : TAG_PARENT_LIST -->
-		<li><a href="{TAG_MANAGE_PATH}ad/{VALUE_ID}/" class="{VALUE_CURRENT}">{VALUE_SUBJECT}</a></li>
-		<!-- END BLOCK : TAG_PARENT_LIST -->
-		<li><a href="{TAG_MANAGE_PATH}ad/" class="{NONE_CURRENT}">全部顯示</a></li>
+		<li class="{NONE_CURRENT}"><a href="{TAG_MANAGE_PATH}ad/">全部顯示</a></li>
+		<!-- START BLOCK : TAG_CATE_LIST -->
+		<li class="{VALUE_CURRENT}"><a href="{TAG_MANAGE_PATH}ad/{VALUE_ID}/">{VALUE_SUBJECT}</a></li>
+		<!-- END BLOCK : TAG_CATE_LIST -->
 	</ul>
-	<!-- END BLOCK : TAG_PARENT_BLOCK -->
+	<!-- END BLOCK : TAG_CATE_BLOCK -->
 	<ul>
 		<li><label>功能選單</label></li>
 		<li><a class="all" href="#">全選</a></li>
@@ -44,7 +44,7 @@
 			<td class="center">
 				<input type="text" name="sort[{VALUE_ID}]" value="{VALUE_SORT}" size="50" maxlength="2">
 			</td>
-			<td class="center">{VALUE_PARENT}</td>
+			<td class="center">{VALUE_CATEID}</td>
 			<td class="center"><img src="{VALUE_IMAGE}" style="max-height: 50px; max-width: 100px;"></td>
 			<td class="center">{VALUE_SUBJECT}</td>
 			<td class="center">{VALUE_STARTDATE} ~ {VALUE_LIMITDATE}</td>
