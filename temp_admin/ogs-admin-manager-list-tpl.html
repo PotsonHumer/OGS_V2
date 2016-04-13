@@ -16,6 +16,7 @@
 		<th>狀態</th>
 		<th>管理權限</th>
 		<th>管理</th>
+		<th>封鎖</th>
 	</tr>
 	<!-- START BLOCK : TAG_MANAGER_LIST -->
 	<tr>
@@ -25,7 +26,11 @@
 		<td class="center">{VALUE_LEVEL}</td>
 		<td class="center">
 			<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}manager/detail/{VALUE_ID}/">
+		</td>
+		<td class="center">
+			<!-- START BLOCK : TAG_MANAGE_BAN_BTN -->
 			<input type="button" class="goto" name="ban" value="封鎖" rel="{TAG_MANAGE_PATH}manager/ban/{VALUE_ID}/">
+			<!-- END BLOCK : TAG_MANAGE_BAN_BTN -->
 		</td>
 	</tr>
 	<!-- END BLOCK : TAG_MANAGER_LIST -->

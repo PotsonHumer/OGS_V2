@@ -205,6 +205,12 @@
 					VIEW::newBlock("TAG_MANAGER_LIST");
 					foreach($row as $field => $var){
 						switch($field){
+							case "id":
+								if($var != 1){
+									VIEW::newBlock('TAG_MANAGE_BAN_BTN');
+									VIEW::gotoBlock('TAG_MANAGER_LIST');
+								}
+							break;
 							case "level":
 								$level_rsnum = CRUD::dataFetch('level',array('id' => $var));
 								$var = (!empty($level_rsnum))?CRUD::$data[0]["name"]:'無權限';
@@ -226,7 +232,7 @@
 
 		# 新增自行認證管理員
 		private static function quick(){
-			VIEW::assign("VALUE_LEVEL_OPTION",self::level_select());
+			VIEW::assignGlobal("VALUE_LEVEL_OPTION",self::level_select());
 		}
 
 		# 新增自行認證管理員
@@ -278,7 +284,7 @@
 		# 新增管理員
 		private static function add(){
 			CRUD::args_output(true,true);
-			VIEW::assign("VALUE_LEVEL_OPTION",self::level_select());
+			VIEW::assignGlobal("VALUE_LEVEL_OPTION",self::level_select());
 		}
 
 		# 執行新增
@@ -320,13 +326,17 @@
 				foreach($row as $field => $var){
 					switch($field){
 						case "status":
-							VIEW::assign("VALUE_".strtoupper($field)."_CK".$var,'selected');
+							VIEW::assignGlobal("VALUE_".strtoupper($field)."_CK".$var,'selected');
 						break;
 						case "level":
-							VIEW::assign("VALUE_".strtoupper($field)."_OPTION",self::level_select($var));
+							VIEW::assignGlobal("VALUE_".strtoupper($field)."_OPTION",self::level_select($var));
 						break;
+						case "id":
+							if($var != 1){
+								VIEW::newBlock("TAG_MANAGE_BAN_BTN");
+							}
 						default:
-							VIEW::assign("VALUE_".strtoupper($field),$var);
+							VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
 						break;
 					}
 				}
@@ -375,7 +385,7 @@
 					}
 				}
 			}else{
-				$msg = (empty($rsnum))?self::$lang["password_error"]:CHECK::$alert;
+				$msg = (!empty($rsnum))?self::$lang["password_error"]:CHECK::$alert;
 				$path = CORE::$manage.'manager/';
 			}
 
