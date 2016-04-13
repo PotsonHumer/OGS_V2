@@ -238,3 +238,18 @@
 			$(this).parents(".images_block").find(".images_box").prev("input").val("");
 		});
 	}
+
+	// 多重語系修改
+	function multiChange(){
+		$("input[name=multiBtn]").click(function(){
+			if(confirm('系統將目前的資料儲存至所有語系版本，確定要執行？')){
+				var originPath = $(this).parents('form').attr('action');
+				var pathArray = originPath.split('/');
+				pathArray[pathArray.length - 2] = 'multiChange';
+
+				var multiChangePath = pathArray.join('/');
+
+				$(this).parents('form').attr('action',multiChangePath).submit();
+			}
+		});
+	}

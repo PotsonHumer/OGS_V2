@@ -37,6 +37,17 @@
 					self::$temp["MAIN"] = self::$temp_option["MSG"];
 					parent::multi('intro',CORE::$manage.'intro/');
 				break;
+				case "multiChange":
+					self::$temp["MAIN"] = self::$temp_option["MSG"];
+					$idArray = parent::multiChange('intro');
+
+					if(is_array($idArray)){
+						foreach($idArray as $id){
+							$_POST['id'] = $id;
+							self::modify();
+						}
+					}
+				break;
 				default:
 					self::$temp["MAIN"] = 'ogs-admin-intro-list-tpl.html';
 					self::row();
@@ -128,6 +139,8 @@
 					VIEW::assignGlobal("VALUE_BACK_LINK",CORE::$manage."intro/");
 				}
 
+				parent::$langID = $row['lang_id'];
+
 				SEO::load($row["seo_id"]);
 				SEO::output();
 			}else{
@@ -149,7 +162,8 @@
 					$path = CORE::$manage.'intro/';
 				}else{
 					$msg = self::$lang["modify_done"];
-					$path = CORE::$manage."intro/detail/{$_POST['id']}/";
+					#$path = CORE::$manage."intro/detail/{$_POST['id']}/";
+					$path = $_SERVER['HTTP_REFERER'];
 				}
 			}else{
 				if(empty($rsnum)){

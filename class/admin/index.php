@@ -187,6 +187,19 @@
 			}
 			echo ++$rsnum;
 		}
+
+		# 多重語系修改
+		public static function multiChange($tb_name,$eval){
+			if(empty($_POST['id'])) return false;
+
+			$rsnum = CRUD::dataFetch($tb_name,array('id' => $_POST['id']));
+			if(!empty($rsnum)) list($row) = CRUD::$data;
+
+			$rsnum = CRUD::dataFetch('lang',array('id' => $row['lang_id']));
+			if(!empty($rsnum)) list($lang) = CRUD::$data;
+
+			return json_decode($lang['related'],true);
+		}
 		
 	}
 

@@ -60,7 +60,7 @@
 	# key : 語系目錄參數 , value : 語系檔案參數 ,資料庫語系參數
 	$config["lang"] = array(
 		'cht' => array('cht','cht'),
-		#'eng' => array('eng','eng'),
+		'eng' => array('eng','eng'),
 	);
 
 
