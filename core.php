@@ -120,7 +120,7 @@
 
 			SYSTEM::setting(); # 取得系統設定
 			new SEO; # 啟動 SEO 功能檢測
-			#new MAIL; # 啟動 phpmailer
+			new MAIL; # 啟動 phpmailer
 			new CRUMBS; # 啟動 麵包屑功能
 			
 			#### 各語系資源分開增加路徑 ####
@@ -162,7 +162,7 @@
 		# 信件方法 (來源位置,寄送位置,內容,抬頭,寄件者名稱)
 		public static function mail_handle($from,$to,$mail_content,$mail_subject,$mail_name){
 
-			#return MAIL::handle($from,$to,$mail_content,$mail_subject,$mail_name);
+			return MAIL::handle($from,$to,$mail_content,$mail_subject,$mail_name);
 
 	        $from_email=explode(",",$from);
 	        $mail_subject = "=?UTF-8?B?".base64_encode($mail_subject)."?=";
