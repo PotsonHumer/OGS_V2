@@ -1,7 +1,7 @@
 <?php
 
 	$config["root"] = "/V2/";
-	$config["url"] = "59.126.99.159";
+	$config["url"] = "ogsysvm.cloudapp.net";
 	$config["host"] = 'http://'.$config["url"].$config["root"];
 	$config["manage"] = "ogsadmin/";
 	
