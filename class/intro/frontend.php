@@ -18,6 +18,8 @@
 			self::row();
 			self::nav();
 
+			CORE::res_init('about/data','css');
+
 			new VIEW(CORE::$temp_option["HULL"],self::$temp,false,false);
 		}
 
@@ -56,7 +58,7 @@
 					VIEW::assign(array(
 						"VALUE_NAV_SUBJECT" => $row["subject"],
 						"VALUE_NAV_LINK" => CORE::$root.'intro/'.SEO::link($row).'/',
-						"VALUE_NAV_CURRENT" => (self::$id == $row["id"])?'current':'',
+						"VALUE_NAV_CURRENT" => (empty(self::$id) && ++$i == 1 || self::$id == $row["id"])?'active':'',
 					));
 				}
 			}
