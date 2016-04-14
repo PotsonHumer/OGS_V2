@@ -184,7 +184,8 @@
 					$path = CORE::$manage.'faq/cate/';
 				}else{
 					$msg = self::$lang["modify_done"];
-					$path = CORE::$manage."faq/cate-detail/{$_POST['id']}/";
+					#$path = CORE::$manage."faq/cate-detail/{$_POST['id']}/";
+					$path = $_SERVER['HTTP_REFERER'];
 				}
 			}else{
 				if(empty($rsnum)){
