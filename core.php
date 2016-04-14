@@ -403,6 +403,15 @@
 	        );
 	        return preg_replace( $replace_option[$put]['pattern'] , $replace_option[$put]['replace'] , $content);
 	    }
+
+	    # 載入共通資源
+	    public static function common_resource(){
+	    	$resource = array('bootstrap.min','swiper','template');
+	    	foreach($resource as $rs){
+	    		self::res_init($rs,'css');
+	    	}
+	    }
+
 		# eval 組合方法 start----------------------------------------------------------------------------
 
 		function call_function($class,$function,$args){

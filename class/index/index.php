@@ -13,9 +13,14 @@
 
 			NEWS::idx_row();
 
+<<<<<<< HEAD
 			new AD;
 
 			CORE::res_init('super_slide','marquee','box');
+=======
+			CORE::common_resource();
+			CORE::res_init('index','css');
+>>>>>>> 435bcb6... 修改共通資源載入方法
 
 			new VIEW('ogs-index-tpl.html',$temp,false,false);
 		}

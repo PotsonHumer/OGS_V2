@@ -14,6 +14,8 @@
 			list($cate,$args) = CORE::$args;
 			self::$temp = CORE::$temp_main;
 			
+			CORE::common_resource();
+			
 			self::$temp["MAIN"] = 'ogs-news-tpl.html';
 
 			if(!empty($cate)){

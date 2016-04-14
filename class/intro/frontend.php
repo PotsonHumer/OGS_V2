@@ -18,6 +18,7 @@
 			self::row();
 			self::nav();
 
+			CORE::common_resource();
 			CORE::res_init('about/data','css');
 
 			new VIEW(CORE::$temp_option["HULL"],self::$temp,false,false);
