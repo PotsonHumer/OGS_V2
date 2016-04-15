@@ -243,6 +243,8 @@
 			static $css_title;
 			static $js_title;
 			static $custom_title;
+
+			if(self::$bgend) self::$mobileDir = '';
 			
 			$new_title = func_get_args();
 			$res_type = array_pop($new_title); # 最後一個值為資源類型
