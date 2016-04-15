@@ -28,7 +28,7 @@
 				foreach(self::$data as $key => $args){
 					VIEW::newBlock("TAG_CRUMBS_LIST");
 					foreach($args as $field => $var){
-						VIEW::assign("CRUMBS_".strtoupper($field),mb_substr($var, 0, 20, 'UTF-8'));
+						VIEW::assign("CRUMBS_".strtoupper($field),$var);
 					}
 				}
 			}
