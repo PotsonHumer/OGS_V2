@@ -490,7 +490,7 @@ footer{
 
 /* media */
 #nav_menu{
-	display: none;
+	/* display: none; */
 }
 
 @media screen and (max-width: 900px){
@@ -507,7 +507,7 @@ footer{
 
 	header ul{
 		right: auto;
-		left: 50px;
+		/* left: 50px; */
 	}
 
 	header h1{
@@ -515,7 +515,7 @@ footer{
 	}
 
 	header h1:before{
-		content: 'OGS';
+		/* content: 'OGS'; */
 		font-size: 16px;
 	}
 
