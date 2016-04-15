@@ -20,7 +20,7 @@
 			$temp_admin, # 後台樣板
 			$bgend, # 後台啟動標籤
 			$mobile, # 手機標記
-			$mobileDir = 'mobile/'; # 預設手機資源目錄
+			$mobileDir; # 預設手機資源目錄
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -32,6 +32,7 @@
 			# 偵測是否為手機
 			$detect = new Mobile_Detect;
 			self::$mobile = $detect->isMobile();
+			self::$mobileDir = (self::$mobile)?'mobile/':'';
 
 			new ROUTER;
 			self::permanent();
