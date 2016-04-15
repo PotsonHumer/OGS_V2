@@ -19,7 +19,8 @@
 			$temp_option, # 選項樣板
 			$temp_admin, # 後台樣板
 			$bgend, # 後台啟動標籤
-			$mobile; # 手機標記
+			$mobile, # 手機標記
+			$mobileDir = 'mobile/'; # 預設手機資源目錄
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -110,14 +111,12 @@
 
 		# 常駐程序
 		private static function permanent(){
-			$mobileDir = (self::$mobile)?'mobile/':'';
-
 			$router_array = array_keys(self::$cfg["lang"]);
 			self::$root = (self::$cfg["router"] == $router_array[0])?self::$cfg["root"]:self::$cfg["root"].self::$cfg["router"].'/';
 			self::$manage = self::$root.self::$cfg["manage"];
 			self::$prefix = self::$cfg["prefix"];
 			self::$langtag = self::$cfg["langtag"];
-			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/'.$mobileDir;
+			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/'.self::$mobileDir;
 			self::$admin_temp = self::$path.self::$cfg["admin_temp"];
 			self::$lang = include self::$path.'lang/lang-'.self::$cfg["langfix"].'.php';
 
@@ -140,7 +139,7 @@
 				"TAG_ROOT_PATH" => self::$root,
 				"TAG_MANAGE_PATH" => self::$manage,
 				"TAG_THEME_PATH" => self::$cfg["images"],
-				"TAG_CSS_PATH" => self::$cfg["css"].$mobileDir,
+				"TAG_CSS_PATH" => self::$cfg["css"].self::$mobileDir,
 				"TAG_JS_PATH" => self::$cfg["js"],
 				"TAG_FILE_PATH" => self::$cfg["file"],
 				"TAG_URL_PATH" => 'http://'.self::$cfg["url"].'/',
@@ -284,7 +283,7 @@
 							$res_insert .= '<script src="'.self::$cfg["js"].'box_serial/'.$value.'_box.js" type="text/javascript"></script>'."\n";
 						break;
 						case "css":
-							$res_insert .= '<link href="'.self::$cfg["css"].$value.'.css" rel="stylesheet" type="text/css" />'."\n";
+							$res_insert .= '<link href="'.self::$cfg["css"].self::$mobileDir.$value.'.css" rel="stylesheet" type="text/css" />'."\n";
 						break;
 						case "js":
 							$res_insert .= '<script src="'.self::$cfg["js"].$value.'.js" type="text/javascript"></script>'."\n";
