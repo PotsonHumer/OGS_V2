@@ -45,6 +45,9 @@
 		'verify_code_denied' => '無可用認證碼',
 		'password_error' => '密碼錯誤',
 
+		// 信件頁腳提示
+		'mail_footer' => '此信件為系統產生，請不要直接回覆，謝謝。',
+
 		// 訂單功能
 		'order_status' => array(
 			0 => '新訂單',

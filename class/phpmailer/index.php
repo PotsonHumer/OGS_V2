@@ -35,7 +35,13 @@
 
 			#self::$call->SetFrom($from,$mail_name);
 			self::$call->Subject = "=?utf-8?B?".base64_encode($mail_subject)."?="; # 此處為寄出後收件者顯示寄件者的電子郵件標題
-			self::$call->Body = $mail_content;   //信件內容 
+
+			$mail_footer = '
+				<hr>
+				<p>'.CORE::$lang['mail_footer'].'</p>
+			';
+
+			self::$call->Body = $mail_content.$mail_footer;   //信件內容 
 			self::$call->IsHTML(true);
 
 			# BCC (隱密副件)
