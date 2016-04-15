@@ -18,7 +18,8 @@
 			$temp_main, # 主要樣板
 			$temp_option, # 選項樣板
 			$temp_admin, # 後台樣板
-			$bgend; # 後台啟動標籤
+			$bgend, # 後台啟動標籤
+			$mobile; # 手機標記
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -26,6 +27,10 @@
 
 			self::auto_include();
 			self::$db = new DB(self::$cfg["connect"]);
+
+			# 偵測是否為手機
+			$detect = new Mobile_Detect;
+			self::$mobile = $detect->isMobile();
 
 			new ROUTER;
 			self::permanent();
@@ -105,15 +110,14 @@
 
 		# 常駐程序
 		private static function permanent(){
-			$detect = new Mobile_Detect;
-			$tempMobile = ($detect->isMobile())?'mobile/':'';
+			$mobileDir = (self::$mobile)?'mobile/':'';
 
 			$router_array = array_keys(self::$cfg["lang"]);
 			self::$root = (self::$cfg["router"] == $router_array[0])?self::$cfg["root"]:self::$cfg["root"].self::$cfg["router"].'/';
 			self::$manage = self::$root.self::$cfg["manage"];
 			self::$prefix = self::$cfg["prefix"];
 			self::$langtag = self::$cfg["langtag"];
-			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/'.$tempMobile;
+			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/'.$mobileDir;
 			self::$admin_temp = self::$path.self::$cfg["admin_temp"];
 			self::$lang = include self::$path.'lang/lang-'.self::$cfg["langfix"].'.php';
 
@@ -136,7 +140,7 @@
 				"TAG_ROOT_PATH" => self::$root,
 				"TAG_MANAGE_PATH" => self::$manage,
 				"TAG_THEME_PATH" => self::$cfg["images"],
-				"TAG_CSS_PATH" => self::$cfg["css"],
+				"TAG_CSS_PATH" => self::$cfg["css"].$mobileDir,
 				"TAG_JS_PATH" => self::$cfg["js"],
 				"TAG_FILE_PATH" => self::$cfg["file"],
 				"TAG_URL_PATH" => 'http://'.self::$cfg["url"].'/',
