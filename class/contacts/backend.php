@@ -9,6 +9,19 @@
 			$nav_class = 'CONTACT';
 
 			switch($func){
+				case "subject":
+					$nav_class = 'CONTACT_SUBJECT';
+					self::$temp["MAIN"] = 'ogs-admin-contact-subject-tpl.html';
+					self::subject();
+				break;
+				case "subject_replace":
+					self::$temp["MAIN"] = self::$temp_option["MSG"];
+					self::subject_replace();
+				break;
+				case "subject_del":
+					self::$temp["MAIN"] = self::$temp_option["MSG"];
+					self::subject_del($id);
+				break;
 				case "detail":
 					self::$temp["MAIN"] = 'ogs-admin-contact-detail-tpl.html';
 					self::detail($id);
@@ -32,6 +45,41 @@
 			}
 
 			self::nav_current($nav_class,$nav_func);
+		}
+
+		# 設定主題
+		private static function subject(){
+			$rsnum = CRUD::dataFetch('contact_subject',false,false,array('sort' => CORE::$cfg["sort"]));
+			if(!empty($rsnum)){
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $row){
+					VIEW::newBlock('TAG_CONTACT_SUBJECT_LIST');
+					foreach($row as $field => $var){
+						VIEW::assign('VALUE_'.strtoupper($field),$var);
+					}
+				}
+			}
+
+			VIEW::assignGlobal('ADD_SORT',($rsnum + 1));
+		}
+
+		# 儲存主題
+		private static function subject_replace(){
+			CHECK::is_must($_POST['subject']);
+			if(CHECK::is_pass()){
+				CRUD::dataInsert('contact_subject',$_POST,true);
+				$msg = self::$lang["modify_done"];
+			}else{
+				$msg = self::$lang["no_args"];
+			}
+
+			CORE::msg($msg,CORE::$manage.'contact/subject/');
+		}
+
+		# 刪除主題
+		private static function subject_del($id){
+			CRUD::dataDel('contact_subject',array('id' => $id));
+			CORE::msg(self::$lang["del_done"],CORE::$manage.'contact/subject/');
 		}
 
 		# 聯絡我們列表
