@@ -105,12 +105,15 @@
 
 		# 常駐程序
 		private static function permanent(){
+			$detect = new Mobile_Detect;
+			$tempMobile = ($detect->isMobile())?'mobile/':'';
+
 			$router_array = array_keys(self::$cfg["lang"]);
 			self::$root = (self::$cfg["router"] == $router_array[0])?self::$cfg["root"]:self::$cfg["root"].self::$cfg["router"].'/';
 			self::$manage = self::$root.self::$cfg["manage"];
 			self::$prefix = self::$cfg["prefix"];
 			self::$langtag = self::$cfg["langtag"];
-			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/';
+			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/'.$tempMobile;
 			self::$admin_temp = self::$path.self::$cfg["admin_temp"];
 			self::$lang = include self::$path.'lang/lang-'.self::$cfg["langfix"].'.php';
 
