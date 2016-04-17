@@ -18,7 +18,9 @@
 			$temp_main, # 主要樣板
 			$temp_option, # 選項樣板
 			$temp_admin, # 後台樣板
-			$bgend; # 後台啟動標籤
+			$bgend, # 後台啟動標籤
+			$mobile, # 手機標記
+			$mobileDir; # 預設手機資源目錄
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -26,6 +28,11 @@
 
 			self::auto_include();
 			self::$db = new DB(self::$cfg["connect"]);
+
+			# 偵測是否為手機
+			$detect = new Mobile_Detect;
+			self::$mobile = $detect->isMobile();
+			self::$mobileDir = (self::$mobile)?'mobile/':'';
 
 			new ROUTER;
 			self::permanent();
@@ -110,7 +117,7 @@
 			self::$manage = self::$root.self::$cfg["manage"];
 			self::$prefix = self::$cfg["prefix"];
 			self::$langtag = self::$cfg["langtag"];
-			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/';
+			self::$temp = self::$path.self::$cfg["temp_path"].'_'.self::$cfg["router"].'/'.self::$mobileDir;
 			self::$admin_temp = self::$path.self::$cfg["admin_temp"];
 			self::$lang = include self::$path.'lang/lang-'.self::$cfg["langfix"].'.php';
 
@@ -133,7 +140,7 @@
 				"TAG_ROOT_PATH" => self::$root,
 				"TAG_MANAGE_PATH" => self::$manage,
 				"TAG_THEME_PATH" => self::$cfg["images"],
-				"TAG_CSS_PATH" => self::$cfg["css"],
+				"TAG_CSS_PATH" => self::$cfg["css"].self::$mobileDir,
 				"TAG_JS_PATH" => self::$cfg["js"],
 				"TAG_FILE_PATH" => self::$cfg["file"],
 				"TAG_URL_PATH" => 'http://'.self::$cfg["url"].'/',
@@ -236,6 +243,8 @@
 			static $css_title;
 			static $js_title;
 			static $custom_title;
+
+			if(self::$bgend) self::$mobileDir = '';
 			
 			$new_title = func_get_args();
 			$res_type = array_pop($new_title); # 最後一個值為資源類型
@@ -277,7 +286,7 @@
 							$res_insert .= '<script src="'.self::$cfg["js"].'box_serial/'.$value.'_box.js" type="text/javascript"></script>'."\n";
 						break;
 						case "css":
-							$res_insert .= '<link href="'.self::$cfg["css"].$value.'.css" rel="stylesheet" type="text/css" />'."\n";
+							$res_insert .= '<link href="'.self::$cfg["css"].self::$mobileDir.$value.'.css" rel="stylesheet" type="text/css" />'."\n";
 						break;
 						case "js":
 							$res_insert .= '<script src="'.self::$cfg["js"].$value.'.js" type="text/javascript"></script>'."\n";
