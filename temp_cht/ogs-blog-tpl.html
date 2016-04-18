@@ -1,15 +1,56 @@
+<div class="main_left">
+	<div class="article_box">
 
-<!-- START BLOCK : TAG_NEWS_LIST -->
-<div class="article_box" style="position: relative;">
-	<a href="{VALUE_LINK}" style="position: absolute; top: 0; top: 20px; width: 100%; height: calc(100% - 40px); z-index: 2; display: block;"></a>
-	<img src="{VALUE_IMAGE}" alt="{VALUE_ALT}" title="{VALUE_TITLE}" />
-	<div class="article"> 
-		<h2 class="main_title">{VALUE_SUBJECT}</h2>
-		<time>{VALUE_SHOWDATE}</time>
-		<p>{VALUE_CONTENT}</p> 
+		<!-- START BLOCK : TAG_BLOG_LIST -->
+		<div class="article" style="position: relative;">
+			<a href="{VALUE_LINK}" style="position: absolute; width: 100%; height: 100%; z-index: 2; top: 0; left: 0;"></a>
+			<img src="{VALUE_IMAGE}" alt="{VALUE_ALT}" title="{VALUE_TITLE}" />
+			<div class="main_box">
+				<h2>{VALUE_SUBJECT}</h2>
+				<p class="type">{VALUE_PARENT}</p>
+				<p>{VALUE_CONTENT}</p>
+				<p class="hot">
+					<!-- START BLOCK : TAG_SCORE_BLOCK -->
+					推薦指數({VALUE_SCORE})
+					<span>
+						<!-- START BLOCK : TAG_SCORE_STAR -->
+						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+						<!-- END BLOCK : TAG_SCORE_STAR -->
+					</span>
+					<!-- END BLOCK : TAG_SCORE_BLOCK -->
+					<!-- START BLOCK : TAG_VIEW_BLOCK -->
+					<span>(瀏覽數 {VALUE_VIEW_TOTAL})</span>
+					<!-- END BLOCK : TAG_VIEW_BLOCK -->
+				</p>
+			</div>
+		</div>
+		<!-- END BLOCK : TAG_BLOG_LIST -->
+
 	</div>
 </div>
-<!-- END BLOCK : TAG_NEWS_LIST -->
+
+<div class="main_right">
+	<h2 class="title_2">文章分類</h2>
+	<ul class="right_nav">
+		<li><a href="{TAG_ROOT_PATH}blog/">所有分類(39)</a></li>
+		<!-- START BLOCK : TAG_NAV_LIST -->
+		<li><a href="{VALUE_NAV_LINK}" {VALUE_NAV_CURRENT}>{VALUE_NAV_SUBJECT}</a></li>
+		<!-- END BLOCK : TAG_NAV_LIST -->
+	</ul>
+
+	<!-- START BLOCK : TAG_HOT_BLOCK -->
+	<h2 class="title_2">熱門文章</h2>
+	<ul class="hot_article">
+		<!-- START BLOCK : TAG_HOT_LIST -->
+		<li style="position: relative;">
+			<a href="{VALUE_LINK}" style="position: absolute; width: 100%; height: 100%; z-index: 2; top: 0; left: 0;"></a>
+			<img src="{VALUE_IMAGE}" alt="{VALUE_ALT}" title="{VALUE_TITLE}">
+			<p>{VALUE_SUBJECT}</p>
+		</li>
+		<!-- END BLOCK : TAG_HOT_LIST -->
+	</ul>
+	<!-- END BLOCK : TAG_HOT_BLOCK -->
+</div>
 
 <!-- START BLOCK : TAG_NONE -->
 <p>尚無資料</p>

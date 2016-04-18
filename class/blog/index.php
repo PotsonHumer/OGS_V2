@@ -25,26 +25,26 @@
 
 		# 資料項目連結
 		public static function dataLink($parent,$data=false){
-			$rsnum = CRUD::dataFetch('news_cate',array('id' => $parent));
+			$rsnum = CRUD::dataFetch('blog_cate',array('id' => $parent));
 			if(!empty($rsnum)){
 				list($cate) = CRUD::$data;
 				$parentLink = SEO::link($cate);
 			}
 			
 			if(!$data){
-				return CORE::$root."news/{$parentLink}/";
+				return CORE::$root."blog/{$parentLink}/";
 			}else{
 				$link = SEO::link($data);
-				return CORE::$root."news/{$parentLink}/{$link}/";
+				return CORE::$root."blog/{$parentLink}/{$link}/";
 			}
 		}
 
 		# 首頁列表
 		public static function idx_row(){
-			$rsnum = CRUD::dataFetch('news',array('status' => '1','langtag' => CORE::$langtag),false,array('sort' => CORE::$cfg["sort"]),'0,4');
+			$rsnum = CRUD::dataFetch('blog',array('status' => '1','langtag' => CORE::$langtag),false,array('sort' => CORE::$cfg["sort"]),'0,4');
 			if(!empty($rsnum)){
 				foreach(CRUD::$data as $key => $row){
-					VIEW::newBlock("IDX_NEWS_LIST");
+					VIEW::newBlock("IDX_BLOG_LIST");
 					foreach($row as $field => $var){
 						switch($field){
 							case "showdate":
