@@ -74,7 +74,20 @@
 			CHECK::is_email($_POST["email"]);
 
 			if(CHECK::is_pass()){
-				CRUD::dataInsert('feedback',$_POST);
+				foreach($_POST as $field => $var){
+					switch($field){
+						case "name":
+						case "content":
+						case "gender":
+							$insert[$field] = strip_tags($var);
+						break;
+						default:
+							$insert[$field] = $var;
+						break;
+					}
+				}
+
+				CRUD::dataInsert('feedback',$insert);
 				if(!empty(DB::$error)){
 					$msg = 'Error! '.DB::$error;
 				}else{
