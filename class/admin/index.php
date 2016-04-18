@@ -38,6 +38,8 @@
 				'member' => true,
 				'contact' => true,
 				'sk' => false,
+				'blog' => true,
+				'feedback' => true,
 			);
 
 			MANAGER::ban_check();
