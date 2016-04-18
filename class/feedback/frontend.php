@@ -15,7 +15,7 @@
 			self::$m_id = SESS::get('m_id');
 			self::$temp = CORE::$temp_main;
 
-			#CRUMBS::fetch('feedback');
+			CRUMBS::fetch('feedback');
 
 			switch($args){
 				case "list": # 顯示反饋
