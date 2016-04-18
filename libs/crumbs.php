@@ -50,6 +50,9 @@
 					case "news":
 						self::newsFetch($row);
 					break;
+					case "blog":
+						self::blogFetch($row);
+					break;
 					case "faq":
 						self::faqFetch($row);
 					break;
@@ -75,6 +78,23 @@
 			if($row["parent"]){
 				# 項目
 				CRUD::dataFetch("news_cate",array('id' => $row["parent"]));
+				list($cateRow) = CRUD::$data;
+
+				self::make($cateRow["subject"],NEWS::dataLink($cateRow["id"]));
+				self::make($row["subject"],NEWS::dataLink($cateRow["id"],$row));
+			}else{
+				# 分類
+				if(!empty($row["id"])) self::make($row["subject"],NEWS::dataLink($row["id"]));
+			}
+		}
+
+		# 部落格
+		private static function blogFetch($row=false){
+			self::make(CORE::$lang["blog"],CORE::$root.'blog/');
+
+			if($row["parent"]){
+				# 項目
+				CRUD::dataFetch("blog_cate",array('id' => $row["parent"]));
 				list($cateRow) = CRUD::$data;
 
 				self::make($cateRow["subject"],NEWS::dataLink($cateRow["id"]));
