@@ -17,6 +17,11 @@
 
 			CRUMBS::fetch('feedback');
 
+			SEO::load('feedback');
+			if(empty(SEO::$data["h1"])) SEO::$data["h1"] = CORE::$lang['feedback'];
+
+			SEO::output();
+
 			switch($args){
 				case "list": # 顯示反饋
 					self::$temp["MAIN"] = 'ogs-feedback-list-tpl.html';
