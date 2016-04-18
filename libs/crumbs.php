@@ -97,11 +97,11 @@
 				CRUD::dataFetch("blog_cate",array('id' => $row["parent"]));
 				list($cateRow) = CRUD::$data;
 
-				self::make($cateRow["subject"],NEWS::dataLink($cateRow["id"]));
-				self::make($row["subject"],NEWS::dataLink($cateRow["id"],$row));
+				self::make($cateRow["subject"],BLOG::dataLink($cateRow["id"]));
+				self::make($row["subject"],BLOG::dataLink($cateRow["id"],$row));
 			}else{
 				# 分類
-				if(!empty($row["id"])) self::make($row["subject"],NEWS::dataLink($row["id"]));
+				if(!empty($row["id"])) self::make($row["subject"],BLOG::dataLink($row["id"]));
 			}
 		}
 
