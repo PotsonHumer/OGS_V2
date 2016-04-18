@@ -29,9 +29,10 @@
 			<th>選取</th>
 			<th>排序</th>
 			<th>分類</th>
-			<th>熱門文章</th>
 			<th>標題</th>
-			<th>顯示時間</th>
+			<th>評分</th>
+			<th>總瀏覽數</th>
+			<th>熱門文章</th>
 			<th>狀態</th>
 			<th>管理</th>
 		</tr>
@@ -44,10 +45,11 @@
 			<td class="center">
 				<input type="text" name="sort[{VALUE_ID}]" value="{VALUE_SORT}" size="50" maxlength="2">
 			</td>
-			<td class="center {CLASS_HOT_RED}">{VALUE_HOT}</td>
 			<td class="center">{VALUE_PARENT}</td>
 			<td class="center">{VALUE_SUBJECT}</td>
-			<td class="center">{VALUE_SHOWDATE}</td>
+			<td class="center">{VALUE_SCORE}</td>
+			<td class="center">{VALUE_VIEW_TOTAL}</td>
+			<td class="center {CLASS_HOT_RED}">{VALUE_HOT}</td>
 			<td class="center {CLASS_STATUS_RED}">{VALUE_STATUS}</td>
 			<td class="center">
 				<input type="button" class="goto" name="modify" value="管理" rel="{TAG_MANAGE_PATH}blog/detail/{VALUE_ID}/">

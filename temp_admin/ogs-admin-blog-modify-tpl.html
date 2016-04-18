@@ -44,9 +44,19 @@
 				<td>
 					<input type="number" name="sort" value="{VALUE_SORT}" maxlength="2" size="100">
 				</td>
-				<th>顯示時間</th>
+				<th>評分 (推薦指數)</th>
 				<td>
-					<input type="date" name="showdate" value="{VALUE_SHOWDATE}">
+					<input type="number" name="score" value="{VALUE_SCORE}" max="5" maxlength="1" size="50" value="{VALUE_SCORE}">
+					<p>填入 1 ~ 5 分數</p>
+				</td>
+			</tr>
+			<tr>
+				<th>實際瀏覽人數</th>
+				<td>{VALUE_VIEW_NUMBER}</td>
+				<th>自訂瀏覽人數</th>
+				<td>
+					<input type="number" name="view_custom" value="{VALUE_VIEW_CUSTOM}" size="100">
+					<p>填入後瀏覽數將以此為基數</p>
 				</td>
 			</tr>
 			<tr>

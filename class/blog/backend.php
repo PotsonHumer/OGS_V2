@@ -302,7 +302,10 @@
 						}
 					}
 
-					VIEW::assign('VALUE_NUMBER',PAGE::$start + (++$i));
+					VIEW::assign(array(
+						'VALUE_NUMBER' => PAGE::$start + (++$i),
+						'VALUE_VIEW_TOTAL' => number_format($row['view_custom'] + $row['view_number']),
+					));
 				}
 			}else{
 				VIEW::newBlock("TAG_NONE");
