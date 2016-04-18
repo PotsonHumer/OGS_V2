@@ -136,7 +136,7 @@
 			}else{
 				VIEW::newBlock("TAG_LEVEL_BLOCK");
 				VIEW::newBlock("TAG_LEVEL_LIST");
-				self::level_setting($row["class"]);
+				self::level_setting();
 			}
 
 			VIEW::assignGlobal("JS_LEVEL_SETTING",self::level_setting(false,true));

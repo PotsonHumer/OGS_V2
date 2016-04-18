@@ -122,7 +122,11 @@
 				unset($class[$funcname]);
 			}
 
-			OGSADMIN::$class = array_keys($class);
+			foreach($class as $className => $classActive){
+				if($classActive) $classUse[] = $className;
+			}
+
+			OGSADMIN::$class = $classUse;
 		}
 
 		# 檢查是否符合權限
