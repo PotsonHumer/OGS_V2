@@ -45,6 +45,7 @@
 					break;
 					case "sitemap":
 					case "contact":
+					case "feedback":
 						self::make(CORE::$lang[$func],CORE::$root.$func.'/');
 					break;
 					case "news":

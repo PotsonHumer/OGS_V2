@@ -24,6 +24,7 @@
 		'order' => '訂單功能',
 		'manager' => '管理員功能',
 		'blog' => '部落格',
+		'feedback' => '意見反饋',
 
 		// 會員功能
 		'regist_mail' => '會員認證信',
