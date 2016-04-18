@@ -100,6 +100,7 @@
 					if(!empty($row['score'])){
 						VIEW::newBlock('TAG_SCORE_BLOCK');
 						VIEW::assign('VALUE_SCORE',$row['score']);
+						$score = 0;
 
 						while(++$score <= $row['score']){
 							VIEW::newBlock('TAG_SCORE_STAR');
