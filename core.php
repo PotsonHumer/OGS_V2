@@ -20,7 +20,8 @@
 			$temp_admin, # 後台樣板
 			$bgend, # 後台啟動標籤
 			$mobile, # 手機標記
-			$mobileDir; # 預設手機資源目錄
+			$mobileDir, # 預設手機資源目錄
+			$directInclude = true; # 直接載入 css|js 資源
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -283,31 +284,41 @@
 					
 					switch($res_type){
 						case "box":
-							$res_insert .= '<script src="'.self::$cfg["js"].'box_serial/'.$value.'_box.js" type="text/javascript"></script>'."\n";
+							$res_path = self::$cfg["js"].'box_serial/'.$value.'_box.js';
+							$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
 						break;
 						case "css":
-							$res_insert .= '<link href="'.self::$cfg["css"].self::$mobileDir.$value.'.css" rel="stylesheet" type="text/css" />'."\n";
+							$res_path = self::$cfg["css"].self::$mobileDir.$value.'.css';
+							$res_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
 						break;
 						case "js":
-							$res_insert .= '<script src="'.self::$cfg["js"].$value.'.js" type="text/javascript"></script>'."\n";
+							$res_path = self::$cfg["js"].$value.'.js';
+							$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
 						break;
 						case "custom":
 							$value_array = explode(".",$value);
 							$custom_type = array_pop($value_array);
-							
+							$res_path = $value;
+
 							switch($custom_type){
 								case "css":
-									$res_insert .= '<link href="'.$value.'" rel="stylesheet" type="text/css" />'."\n";
+									$res_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
 								break;
 								case "js":
-									$res_insert .= '<script src="'.$value.'" type="text/javascript"></script>'."\n";
+									$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
 								break;
 							}
 						break;
 					}
+
+					if(self::$directInclude && !self::$bgend) $direct_insert .= DINCLUDE::allHandle($res_path);
 				}
 				
-				VIEW::assignGlobal($res_tag,$res_insert);
+				if(self::$directInclude && !self::$bgend){
+					VIEW::assignGlobal($res_tag,$direct_insert);
+				}else{
+					VIEW::assignGlobal($res_tag,$res_insert);
+				}
 			}
 		}
 
