@@ -134,6 +134,29 @@
 				return $path;
 			}
 		}
+
+		# 縮放圖片
+		public static function resize($path=false,$width=false,$height=false){
+			$path = self::absolute_path($path);
+			$imagick = new Imagick($path);
+			#$imagick->resizeImage($width,$height,Imagick::FILTER_LANCZOS,false);
+
+			$imagick->scaleImage($width,$height);
+
+			$filename = basename($path);
+			$file_extension = strtolower(substr(strrchr($filename,"."),1));
+
+			switch($file_extension){
+			    case "gif": $ctype="image/gif"; break;
+			    case "png": $ctype="image/png"; break;
+			    case "jpeg":
+			    case "jpg": $ctype="image/jpeg"; break;
+			    default:
+			}
+
+			header('Content-type: '.$ctype);
+			echo $imagick->getImageBlob();
+		}
 	}
 
 ?>
