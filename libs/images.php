@@ -157,6 +157,22 @@
 			header('Content-type: '.$ctype);
 			echo $imagick->getImageBlob();
 		}
+
+		# 縮放路徑處裡
+		public static function resizePath($path=false,$width=false,$height=false){
+			if(empty($path)) return self::absolute_path(CORE::$cfg["noimg"]);
+
+			if(preg_match('/^http/',$path)){
+				if(preg_match('/^http:\/\/'.CORE::$cfg["url"].'/',$path)){
+					$relativePath = str_replace(CORE::$cfg['host'],'/',$path);
+					return CORE::$root.'imghandle/resize/'.$width.'/'.$height.'/'.$relativePath.'/';
+				}else{
+					return $path;
+				}
+			}else{
+
+			}
+		}
 	}
 
 ?>
