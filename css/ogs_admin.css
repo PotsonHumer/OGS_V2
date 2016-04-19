@@ -55,7 +55,7 @@ a.no-brackets_all:before,a.no-brackets_all:after{
 }
 
 a:hover{
-	color: #d42a99;
+	color: #81D8D0;
 }
 
 *:after,*:before{
@@ -73,7 +73,7 @@ a:hover{
 }
 
 .theme{
-	color: #d42a99 !important;
+	color: #81D8D0 !important; /*origin #d42a99*/
 }
 
 hr{
@@ -137,7 +137,7 @@ h2:before{
 	content: ' ';
 	margin: 0 5px;
 	padding: 0 2px;
-	background: #d42a99;
+	background: #81D8D0;
 }
 
 .animate{
@@ -163,7 +163,7 @@ header:after{
 	height: 2px;
 	left: 0;
 	bottom: -2px;
-	background: #d42a99;
+	background: #81D8D0;
 }
 
 header:before,header ul:before{
@@ -252,11 +252,11 @@ nav.w_left:before,nav.w_left:after{
 nav label{
 	display: block;
 	width: 100%;
-	background: #d42a99;
+	background: #81D8D0;
 	margin: 5px 0;
 	padding: 5px 10px;
 	box-sizing: border-box;
-	color: #FFF;
+	color: #000;
 	cursor: pointer;
 }
 
@@ -270,7 +270,7 @@ nav ul ul li{
 }
 
 nav ul ul li a.current{
-	color: #d42a99 !important;
+	color: #66ada6 !important;
 }
 
 nav > ul > li > ul{
@@ -301,8 +301,8 @@ td{
 }
 
 th{
-	color: #FFF;
-	background: #d42a99;
+	color: #000;
+	background: #81D8D0;
 }
 
 tr:hover,tr.current{
@@ -310,7 +310,7 @@ tr:hover,tr.current{
 }
 
 tr.current *{
-	color: #d42a99 !important;
+	color: #66ada6 !important;
 }
 
 /* page */
@@ -327,7 +327,7 @@ tr.current *{
 }
 
 #page li.current a{
-	color: #d42a99;
+	color: #66ada6;
 }
 
 /* main */
@@ -368,7 +368,7 @@ main{
 */
 
 #cate li.current *{
-	color: #d42a99 !important;
+	color: #66ada6 !important;
 }
 
 /* images_block */
@@ -438,7 +438,7 @@ main{
 
 /* other */
 .tab_title.current{
-	color: #d42a99 !important;
+	color: #66ada6 !important;
 }
 
 /* footer */
