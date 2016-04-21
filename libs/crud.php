@@ -60,7 +60,7 @@
 									if(is_array($var)){
 										$equation = 'in';
 										foreach($var as $varItem){
-											$newVar[] = self::strslashes($var);
+											$newVar[] = self::strslashes($varItem);
 										}
 										$var = "('".implode("','",$newVar)."')";
 									}else{
