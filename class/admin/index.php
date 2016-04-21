@@ -56,6 +56,8 @@
 			MANAGER::level_check($func); # 權限檢查
 
 			self::language_select();
+
+			if(!CORE::$mobile) VIEW::assignGlobal('TAG_PC','pc');
 			
 			if(!CHECK::is_ajax()){
 				new VIEW(self::$temp_option["HULL"],self::$temp,false,1);
