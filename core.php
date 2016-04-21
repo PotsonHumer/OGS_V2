@@ -251,6 +251,25 @@
 			$res_type = array_pop($new_title); # 最後一個值為資源類型
 			
 			switch($res_type){
+				case "footer_box":
+					$res_tag = "TAG_BOX_FOOTER";
+					$res_title = 'box_title';
+				break;
+				case "footer_css":
+					$res_tag = "TAG_CSS_FOOTER";
+					$res_title = 'css_title';
+				break;
+				case "footer_js":
+					$res_tag = "TAG_JS_FOOTER";
+					$res_title = 'js_title';
+				break;
+				case "footer_custom":
+					$res_tag = "TAG_CUSTOM_FOOTER";
+					$res_title = 'custom_title';
+				break;
+
+				###########################################
+
 				case "box":
 					$res_tag = "TAG_JS_BOX";
 					$res_title = 'box_title';
