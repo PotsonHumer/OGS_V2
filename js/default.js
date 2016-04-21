@@ -131,7 +131,7 @@
 						var OBJ = $(".save");
 					break;
 					case 49:
-						//var OBJ = $("#nav_close");
+						var OBJ = $('#nav_menu');
 					break;
 				}
 				

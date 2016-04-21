@@ -19,12 +19,15 @@
 	$(function(){
 		$("#nav_menu").click(function(){
 			var MENU_HOVER = $("nav").attr("class");
+			var TAG_PC = ('{TAG_PC}' == 'pc')?true:false;
 
-			if(isset(MENU_HOVER) && MENU_HOVER.search("hover") >= 0){
+			if(isset(MENU_HOVER) && MENU_HOVER.search("hover") >= 0 || MENU_HOVER.search("pc") >= 0){
 				$("nav").removeClass("hover");
+				if(TAG_PC) $("nav").removeClass("pc");
 				$(this).removeClass("theme");
 			}else{
 				$("nav").addClass("hover");
+				if(TAG_PC) $("nav").addClass("pc");
 				$(this).addClass("theme");
 			}
 		});
