@@ -4,6 +4,7 @@
 		
 		public static $output;
 		public static $parameter;
+		public static $noTrans = false;
 		private static $tpl;
 		
 		// 主要樣板,附加樣板,輸出方式 (false => 直接輸出 , true => 回傳輸出),樣板類型 (false => 一般樣板, 1 => 後台樣板, 2 => 自訂樣板)
@@ -60,7 +61,8 @@
 			if(!$output_type){
 				if(CORE::$cfg["langfix"] == 'chs' && !CORE::$bgend){
 					self::$output = self::$tpl->getOutputContent();
-					echo BIG2GB::go(self::$output);
+					$output = BIG2GB::go(self::$output);
+					echo self::noTransGo($output);
 				}else{
 					self::$tpl->printToScreen();
 				}
@@ -123,6 +125,39 @@
 			}else{
 				self::$parameter[][3] = array($value => $value_sec);
 			}
+		}
+
+		#######################################################
+		# 不經繁簡翻譯字串
+
+		# 載入字串
+		public function noTrans($s=false){
+			if(empty($s)) return false;
+
+			$noTrans = SESS::get('noTrans');
+			$keys = count($noTrans) + 1;
+			SESS::write('noTrans',$keys,$s);
+
+			return true;
+		}
+
+		# 執行反譯
+		public function noTransGo($output){
+			if(self::$noTrans){
+				$noTrans = SESS::get('noTrans');
+				if(is_array($noTrans) && count($noTrans)){
+					foreach($noTrans as $key => $s){
+						#preg_replace('[\\]*', '\\\\', $s);
+						$GBs = BIG2GB::go($s);
+						$output = preg_replace('/('.$GBs.')+/', $s, $output);
+					}
+				}
+
+				self::$noTrans = false;
+				SESS::del('noTrans');
+			}
+
+			return $output;
 		}
 	}
 ?>
