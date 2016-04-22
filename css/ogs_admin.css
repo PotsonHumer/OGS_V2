@@ -76,11 +76,15 @@ a:hover{
 	color: #d42a99 !important;
 }
 
+p.theme{
+	color: #66ada6 !important;
+}
+
 hr{
 	height: 1px;
 	border: none;
 	background: #CCC;
-	margin: 10px 0;
+	margin: 2em 0;
 }
 
 hr:before{
