@@ -14,7 +14,11 @@
 				$addon = (!empty($selfRow["parent"]))?" and parent = '{$selfRow["parent"]}'":" and parent IS NULL";
 			}
 
-			$rsnum = CRUD::dataFetch($tb_name,array('langtag' => $langtag,'custom' => "id != '{$id}' {$addon}"),false,array('sort' => CORE::$cfg["sort"]));
+			if(!empty($selfRow['lang_id']) && !empty($selfRow['langtag'])){
+				$addon .= " and langtag = '{$langtag}'";
+			}
+
+			$rsnum = CRUD::dataFetch($tb_name,array('custom' => "id != '{$id}' {$addon}"),false,array('sort' => CORE::$cfg["sort"]));
 			if(!empty($rsnum)){
 				$dataRow = CRUD::$data;
 				foreach($dataRow as $key => $row){
