@@ -9,6 +9,10 @@
 
 			switch($func){
 				case "seo":
+					self::$temp["MAIN"] = 'ogs-admin-system-seo-tpl.html';
+					self::row();
+				break;
+				case "seo-replace":
 					self::$temp["MAIN"] = self::$temp_option["MSG"];
 					self::seo();
 				break;
@@ -108,15 +112,15 @@
 
 					CRUD::dataUpdate('seo',$args);
 					if(!empty(DB::$error)){
-						$msg = array(DB::$error,CORE::$manage.'system/');
+						$msg = array(DB::$error,CORE::$manage.'system/seo/');
 						CORE::msg($msg);
 						return false;
 					}
 				}
 
-				$msg = array(self::$lang["modify_done"],CORE::$manage.'system/');
+				$msg = array(self::$lang["modify_done"],CORE::$manage.'system/seo/');
 			}else{
-				$msg = array(CHECK::$alert,CORE::$manage.'system/');
+				$msg = array(CHECK::$alert,CORE::$manage.'system/seo/');
 			}
 
 			CORE::msg($msg);
