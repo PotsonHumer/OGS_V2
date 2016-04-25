@@ -40,7 +40,7 @@
 				foreach($dataRow as $key => $row){
 					VIEW::newBlock("TAG_FAQ_LIST");
 					foreach($row as $field => $var){
-						VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
+						VIEW::assign("VALUE_".strtoupper($field),$var);
 					}
 				}
 			}else{
