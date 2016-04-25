@@ -165,6 +165,8 @@
 
 				SEO::load($row["seo_id"]);
 				SEO::output();
+
+				parent::$langID = $row['lang_id'];
 			}else{
 				self::$temp["MAIN"] = self::$temp_option["MSG"];
 				CORE::msg(self::$lang["no_args"],CORE::$manage.'faq/cate/');
@@ -322,6 +324,7 @@
 			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["content"],$_POST["parent"]);
 
 			if(CHECK::is_pass()){
+				CRUD::$parent_tb_name = 'faq_cate';
 				CRUD::dataInsert('faq',$_POST,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
@@ -365,6 +368,8 @@
 				}else{
 					VIEW::assignGlobal("VALUE_BACK_LINK",CORE::$manage."faq/");
 				}
+
+				parent::$langID = $row['lang_id'];
 			}else{
 				self::$temp["MAIN"] = self::$temp_option["MSG"];
 				CORE::msg(self::$lang["no_args"],CORE::$manage.'faq/');
@@ -378,7 +383,7 @@
 			$rsnum = CRUD::dataFetch('faq',array('id' => $_POST["id"]));
 
 			if($check && !empty($rsnum)){
-				CRUD::dataUpdate('faq',$_POST,true);
+				CRUD::dataUpdate('faq',$_POST);
 				if(!empty(DB::$error)){
 					$msg = DB::$error;
 					$path = CORE::$manage.'faq/';

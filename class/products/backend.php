@@ -223,6 +223,8 @@
 
 				SEO::load($row["seo_id"]);
 				SEO::output();
+
+				parent::$langID = $row['lang_id'];
 			}else{
 				self::$temp["MAIN"] = self::$temp_option["MSG"];
 				CORE::msg(self::$lang["no_args"],CORE::$manage.'products/cate/');
@@ -340,6 +342,7 @@
 			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["content"],$_POST["parent"]);
 
 			if(CHECK::is_pass()){
+				CRUD::$parent_tb_name = 'products_cate';
 				CRUD::dataInsert('products',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
@@ -388,6 +391,8 @@
 				if(!empty($sk_args)) $sk = "{$sk_args}/";
 
 				VIEW::assignGlobal("VALUE_BACK_LINK",CORE::$manage."products/{$sk}{$page}");
+
+				parent::$langID = $row['lang_id'];
 			}else{
 				self::$temp["MAIN"] = self::$temp_option["MSG"];
 				CORE::msg(self::$lang["no_args"],CORE::$manage.'products/');

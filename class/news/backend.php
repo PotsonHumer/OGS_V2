@@ -167,6 +167,8 @@
 
 				SEO::load($row["seo_id"]);
 				SEO::output();
+
+				parent::$langID = $row['lang_id'];
 			}else{
 				self::$temp["MAIN"] = self::$temp_option["MSG"];
 				CORE::msg(self::$lang["no_args"],CORE::$manage.'news/cate/');
@@ -372,6 +374,8 @@
 				}else{
 					VIEW::assignGlobal("VALUE_BACK_LINK",CORE::$manage."news/");
 				}
+
+				parent::$langID = $row['lang_id'];
 			}else{
 				self::$temp["MAIN"] = self::$temp_option["MSG"];
 				CORE::msg(self::$lang["no_args"],CORE::$manage.'news/');
