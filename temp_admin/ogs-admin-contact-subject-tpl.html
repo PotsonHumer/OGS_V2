@@ -10,30 +10,43 @@
 		<!-- START BLOCK : TAG_CONTACT_SUBJECT_LIST -->
 		<tr>
 			<td class="center">
-				<input type="number" name="sort" value="{VALUE_SORT}" size="50">
+				<input type="number" name="sort[]" value="{VALUE_SORT}" size="50">
 			</td>
 			<td class="center">
-				<input type="text" name="subject" value="{VALUE_SUBJECT}" size="200">
+				<input type="text" name="subject[]" value="{VALUE_SUBJECT}" size="200">
 			</td>
 			<td class="center">
+				<input type="hidden" name="id[]" value="{VALUE_ID}" size="50">
 				<input type="button" class="goto" name="del" value="刪除" rel="{TAG_MANAGE_PATH}contact/subject_del/{VALUE_ID}/">
 			</td>
 		</tr>
 		<!-- END BLOCK : TAG_CONTACT_SUBJECT_LIST -->
+	</table>
+	<input type="submit" value="儲存">
+</form>
 
-		<tr id="newOen">
+<hr />
+
+<h2>新增主題</h2>
+
+<form name="func_form" action="{TAG_MANAGE_PATH}contact/subject_replace/" method="post">
+	<table>
+		<tr>
+			<th>排序</th>
+			<th>主題名稱</th>
+		</tr>
+		<tr>
 			<td class="center">
 				<input type="number" name="sort" value="{ADD_SORT}" size="50">
 			</td>
 			<td class="center">
 				<input type="text" name="subject" value="{ADD_SUBJECT}" placeholder="新增主題" size="200">
 			</td>
-			<td class="center"></td>
 		</tr>
-
 	</table>
 
-	<input type="submit" value="儲存">
+	<input type="hidden" name="id" value="">
+	<input type="submit" value="新增">
 </form>
 
 <script>
