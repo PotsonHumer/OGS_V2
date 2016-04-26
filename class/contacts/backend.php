@@ -79,6 +79,8 @@
 						break;
 					}
 				}
+
+				$msg = self::$lang["modify_done"];
 			}else{
 				CHECK::is_must($_POST['subject']);
 				if(CHECK::is_pass()){
