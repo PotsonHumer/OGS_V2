@@ -173,15 +173,33 @@
 		public static function args_output($output=false,$tpl=false,$args=false){
 			if(!$output){
 				$sess_args = ($args !== false)?$args:$_REQUEST;
-				SESS::write('last_args',$sess_args);
+				if(is_array($sess_args)){
+					foreach($sess_args as $field => $var){
+						$newArgs[$field] = urlencode($var);
+					}
+
+					$newArgsJson = json_encode($newArgs);
+				}else{
+					$newArgsJson = json_encode(urlencode($sess_args));
+				}
+
+				SESS::write('last_args',urlencode($newArgsJson));
 			}else{
 				$output_args = ($args !== false)?$args:SESS::get('last_args');
-				CHECK::is_array_exist($output_args);
+
+				if(!empty($output_args)){
+					$argsArray = json_decode(urldecode($output_args),true);
+				}
+
+				CHECK::is_array_exist($argsArray);
 				if(CHECK::is_pass()){
-					self::$args = $output_args;
+					self::$args = $argsArray;
 
 					if($tpl){
-						foreach($output_args as $field => $value){
+						foreach($argsArray as $field => $value){
+
+							$value = urldecode($value);
+
 							switch($field){
 								case "filename":
 								case "title":

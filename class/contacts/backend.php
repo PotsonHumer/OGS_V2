@@ -49,7 +49,7 @@
 
 		# 設定主題
 		private static function subject(){
-			$rsnum = CRUD::dataFetch('contact_subject',false,false,array('sort' => CORE::$cfg["sort"]));
+			$rsnum = CRUD::dataFetch('contact_subject',array('langtag' => CORE::$langtag),false,array('sort' => CORE::$cfg["sort"]));
 			if(!empty($rsnum)){
 				$dataRow = CRUD::$data;
 				foreach($dataRow as $row){
@@ -65,13 +65,33 @@
 
 		# 儲存主題
 		private static function subject_replace(){
-			CHECK::is_must($_POST['subject']);
-			if(CHECK::is_pass()){
-				CRUD::dataInsert('contact_subject',$_POST,true);
+			if(is_array($_POST['id'])){
+				foreach($_POST['id'] as $key => $ID){
+					$newArgs = array(
+						'subject' => $_POST['subject'][$key],
+						'sort' => $_POST['sort'][$key],
+						'email' => $_POST['email'][$key],
+						'id' => $ID,
+					);
+
+					CRUD::dataUpdate('contact_subject',$newArgs);
+					if(!empty(DB::$error)){
+						break;
+					}
+				}
+
 				$msg = self::$lang["modify_done"];
 			}else{
-				$msg = self::$lang["no_args"];
+				CHECK::is_must($_POST['subject']);
+				if(CHECK::is_pass()){
+					CRUD::dataInsert('contact_subject',$_POST,true);
+					$msg = self::$lang["modify_done"];
+				}else{
+					$msg = self::$lang["no_args"];
+				}
 			}
+
+			if(!empty(DB::$error)) $msg = DB::$error;
 
 			CORE::msg($msg,CORE::$manage.'contact/subject/');
 		}

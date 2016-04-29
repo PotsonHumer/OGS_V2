@@ -16,7 +16,7 @@
 				$nowDate = date("Y-m-d");
 
 				foreach($dataRow as $key => $cate){
-					$rsnum = CRUD::dataFetch('ad',array('parent' => $cate["id"],'custom' => "status = '1' or (status = '2' and startdate <= '{$nowDate}' and limitdate >= '{$nowDate}')"));
+					$rsnum = CRUD::dataFetch('ad',array('langtag' => CORE::$langtag,'parent' => $cate["id"],'custom' => "status = '1' or (status = '2' and startdate <= '{$nowDate}' and limitdate >= '{$nowDate}')"));
 					if(!empty($rsnum)){
 						VIEW::newBlock("TAG_AD_BLOCK".$cate["id"]);
 						foreach(CRUD::$data as $key => $row){

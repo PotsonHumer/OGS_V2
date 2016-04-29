@@ -254,20 +254,20 @@
 			
 			switch($res_type){
 				case "footer_box":
-					$res_tag = "TAG_BOX_FOOTER";
-					$res_title = 'box_title';
+					$footer_tag = "TAG_BOX_FOOTER";
+					$res_title = 'box_footer';
 				break;
 				case "footer_css":
-					$res_tag = "TAG_CSS_FOOTER";
-					$res_title = 'css_title';
+					$footer_tag = "TAG_CSS_FOOTER";
+					$res_title = 'css_footer';
 				break;
 				case "footer_js":
-					$res_tag = "TAG_JS_FOOTER";
-					$res_title = 'js_title';
+					$footer_tag = "TAG_JS_FOOTER";
+					$res_title = 'js_footer';
 				break;
 				case "footer_custom":
-					$res_tag = "TAG_CUSTOM_FOOTER";
-					$res_title = 'custom_title';
+					$footer_tag = "TAG_CUSTOM_FOOTER";
+					$res_title = 'custom_footer';
 				break;
 
 				###########################################
@@ -295,26 +295,29 @@
 			}else{
 				$$res_title = $new_title;
 			}
-			
+
 			if(count($$res_title)){
 				# 利用翻轉刪除重複的值
 				$$res_title = array_flip($$res_title);
 				$$res_title = array_flip($$res_title);
 				
 				foreach($$res_title as $key => $value){
-					
+
 					switch($res_type){
 						case "box":
 							$res_path = self::$cfg["js"].'box_serial/'.$value.'_box.js';
 							$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$footer = false;
 						break;
 						case "css":
 							$res_path = self::$cfg["css"].self::$mobileDir.$value.'.css';
 							$res_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
+							$footer = false;
 						break;
 						case "js":
 							$res_path = self::$cfg["js"].$value.'.js';
 							$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$footer = false;
 						break;
 						case "custom":
 							$value_array = explode(".",$value);
@@ -329,16 +332,58 @@
 									$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
 								break;
 							}
+
+							$footer = false;
+						break;
+
+						case "footer_box":
+							$res_path = self::$cfg["js"].'box_serial/'.$value.'_box.js';
+							$footer_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$footer = true;
+						break;
+						case "footer_css":
+							$res_path = self::$cfg["css"].self::$mobileDir.$value.'.css';
+							$footer_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
+							$footer = true;
+						break;
+						case "footer_js":
+							$res_path = self::$cfg["js"].$value.'.js';
+							$footer_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$footer = true;
+						break;
+						case "footer_custom":
+							$value_array = explode(".",$value);
+							$custom_type = array_pop($value_array);
+							$res_path = $value;
+
+							switch($custom_type){
+								case "css":
+									$footer_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
+								break;
+								case "js":
+									$footer_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+								break;
+							}
+
+							$footer = true;
 						break;
 					}
 
-					if(self::$directInclude && !self::$bgend) $direct_insert .= DINCLUDE::allHandle($res_path);
+					if(self::$directInclude && !self::$bgend){
+						if(!$footer){
+							$direct_insert .= DINCLUDE::allHandle($res_path);
+						}else{
+							$direct_footer .= DINCLUDE::allHandle($res_path);
+						}
+					}
 				}
 				
 				if(self::$directInclude && !self::$bgend){
 					VIEW::assignGlobal($res_tag,$direct_insert);
+					VIEW::assignGlobal($footer_tag,$direct_footer);
 				}else{
 					VIEW::assignGlobal($res_tag,$res_insert);
+					VIEW::assignGlobal($footer_tag,$footer_insert);
 				}
 			}
 		}

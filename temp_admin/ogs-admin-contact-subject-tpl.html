@@ -5,35 +5,56 @@
 		<tr>
 			<th>排序</th>
 			<th>主題名稱</th>
+			<th>管理員 E-mail</th>
 			<th>刪除</th>
 		</tr>
 		<!-- START BLOCK : TAG_CONTACT_SUBJECT_LIST -->
 		<tr>
 			<td class="center">
-				<input type="number" name="sort" value="{VALUE_SORT}" size="50">
+				<input type="number" name="sort[]" value="{VALUE_SORT}" size="50">
 			</td>
 			<td class="center">
-				<input type="text" name="subject" value="{VALUE_SUBJECT}" size="200">
+				<input type="text" name="subject[]" value="{VALUE_SUBJECT}" size="200">
 			</td>
 			<td class="center">
+				<input type="email" name="email[]" value="{VALUE_EMAIL}" placeholder="系統會將聯絡我們來函發送至此設定 e-mail，未填入則以 '系統設定' E-mail 為主。" size="500">
+			</td>
+			<td class="center">
+				<input type="hidden" name="id[]" value="{VALUE_ID}" size="50">
 				<input type="button" class="goto" name="del" value="刪除" rel="{TAG_MANAGE_PATH}contact/subject_del/{VALUE_ID}/">
 			</td>
 		</tr>
 		<!-- END BLOCK : TAG_CONTACT_SUBJECT_LIST -->
+	</table>
+	<input type="submit" value="儲存">
+</form>
 
-		<tr id="newOen">
+<hr />
+
+<h2>新增主題</h2>
+
+<form name="func_form" action="{TAG_MANAGE_PATH}contact/subject_replace/" method="post">
+	<table>
+		<tr>
+			<th>排序</th>
+			<th>主題名稱</th>
+			<th>管理員 E-mail</th>
+		</tr>
+		<tr>
 			<td class="center">
 				<input type="number" name="sort" value="{ADD_SORT}" size="50">
 			</td>
 			<td class="center">
 				<input type="text" name="subject" value="{ADD_SUBJECT}" placeholder="新增主題" size="200">
 			</td>
-			<td class="center"></td>
+			<td class="center">
+				<input type="email" name="email" value="{VALUE_EMAIL}" placeholder="系統會將聯絡我們來函發送至此設定 e-mail，未填入則以 '系統設定' E-mail 為主。" size="500">
+			</td>
 		</tr>
-
 	</table>
 
-	<input type="submit" value="儲存">
+	<input type="hidden" name="id" value="">
+	<input type="submit" value="新增">
 </form>
 
 <script>
