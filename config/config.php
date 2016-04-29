@@ -110,6 +110,8 @@
 
 	$config["sess"] = 'OGSV2';
 
+	$config["loadScreen"] = false;
+
 	
 	#### country ####
 	$config["country"] = array(
