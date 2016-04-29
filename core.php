@@ -148,6 +148,8 @@
 				"TAG_REAL_PATH" => self::$cfg["root"],
 				"TAG_NO_IMG" => self::$cfg["noimg"],
 			));
+
+			new LOAD;
 		}
 
 		# 系統訊息
