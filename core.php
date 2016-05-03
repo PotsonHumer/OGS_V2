@@ -21,7 +21,7 @@
 			$bgend, # 後台啟動標籤
 			$mobile, # 手機標記
 			$mobileDir, # 預設手機資源目錄
-			$directInclude = true; # 直接載入 css|js 資源
+			$directInclude = false; # 直接載入 css|js 資源
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -492,7 +492,7 @@
 
 	    # 載入共通資源
 	    public static function common_resource(){
-	    	$resource = array('bootstrap.min','swiper','template');
+	    	$resource = array();
 	    	foreach($resource as $rs){
 	    		self::res_init($rs,'css');
 	    	}
