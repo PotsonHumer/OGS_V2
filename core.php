@@ -20,8 +20,7 @@
 			$temp_admin, # 後台樣板
 			$bgend, # 後台啟動標籤
 			$mobile, # 手機標記
-			$mobileDir, # 預設手機資源目錄
-			$directInclude = false; # 直接載入 css|js 資源
+			$mobileDir; # 預設手機資源目錄
 
 		function __construct(){
 			self::$path = ROOT_PATH;
@@ -369,7 +368,7 @@
 						break;
 					}
 
-					if(self::$directInclude && !self::$bgend){
+					if(self::$cfg['directInclude'] && !self::$bgend){
 						if(!$footer){
 							$direct_insert .= DINCLUDE::allHandle($res_path);
 						}else{
@@ -378,7 +377,7 @@
 					}
 				}
 				
-				if(self::$directInclude && !self::$bgend){
+				if(self::$cfg['directInclude'] && !self::$bgend){
 					VIEW::assignGlobal($res_tag,$direct_insert);
 					VIEW::assignGlobal($footer_tag,$direct_footer);
 				}else{
