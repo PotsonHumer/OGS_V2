@@ -15,8 +15,6 @@
 
 			new AD;
 
-			CORE::res_init('super_slide','marquee','box');
-
 			CORE::common_resource();
 
 			new VIEW('ogs-index-tpl.html',$temp,false,false);
