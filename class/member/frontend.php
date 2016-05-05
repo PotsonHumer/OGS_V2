@@ -181,6 +181,11 @@
 					CORE::msg(CORE::$lang["verify_done"],CORE::$root.'member/');
 					return true;
 				}
+			}else{
+				if(CRUD::dataFetch('member',array('verify_code' => $verify_code,'verify' => '1'))){
+					CORE::msg(CORE::$lang["verify_already"],CORE::$root.'member/');
+					return true;
+				}
 			}
 
 			CORE::msg(CORE::$lang["verify_error"],CORE::$root.'member/');
