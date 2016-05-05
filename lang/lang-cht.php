@@ -77,6 +77,7 @@
 		'no_args' => '失去參數...',
 		'no_args_start' => '資料尚未填齊，請確實填寫有※號著名的欄位(必填)',
 		'args_error' => '參數錯誤',
+		'verify_already' => '您已經過認證',
 		'verify_done' => '認證成功',
 		'verify_none' => '尚未認證',
 		'verify_error' => '認證失敗',
