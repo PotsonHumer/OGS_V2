@@ -110,7 +110,9 @@
 
 	$config["sess"] = 'OGSV2';
 
-	$config["loadScreen"] = false;
+	$config["loadScreen"] = false; # 啟用讀取畫面
+
+	$config["directInclude"] = false; # 直接載入 css|js 資源
 
 	
 	#### country ####

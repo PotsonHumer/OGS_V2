@@ -27,7 +27,7 @@
 
 		# 預設的 js
 		private static function loadJs(){
-			if(empty(self::$js)) self::$js = '$(function(){$(\'#loadCover\').hide();});';
+			if(empty(self::$js)) self::$js = '$(window).load(function(){$(\'#loadCover\').hide();});';
 			return '<script>'.self::$js.'</script>';
 		}
 
