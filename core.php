@@ -489,13 +489,30 @@
 	        return preg_replace( $replace_option[$put]['pattern'] , $replace_option[$put]['replace'] , $content);
 	    }
 
-	    # 載入共通資源
-	    public static function common_resource(){
-	    	$resource = array();
-	    	foreach($resource as $rs){
-	    		self::res_init($rs,'css');
-	    	}
-	    }
+		# 載入共通資源
+		public static function common_resource($args=false){
+			$default = array(
+				#'css' => array('style'),
+				#'footer_css' => array('add'),
+				#'footer_js' => array('touch','main','add')
+			);
+
+			if(is_array($default)) $resource = $default;
+
+			if(is_array($args)){
+				foreach($args as $name => $type){
+					$resource[$type][] = $name;
+				}
+			}
+
+			if(is_array($resource)){
+				foreach($resource as $type => $nameArray){
+					if(!is_array($nameArray)) continue;
+					$paramater = array_merge($nameArray,array($type));
+					call_user_func_array(array(self,'res_init'),$paramater);
+				}
+			}
+		}
 
 		# eval 組合方法 start----------------------------------------------------------------------------
 
