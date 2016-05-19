@@ -189,7 +189,7 @@
 	var seekRS = function(OBJ){
 		return '<tr>'+
 			'<td><input type="checkbox" name="related[]" value="'+ OBJ.id +'"></td>'+
-			'<td>'+ OBJ.subject +'</td>'+
+			'<td>'+ decodeURIComponent(OBJ.subject) +'</td>'+
 			'<td>'+ OBJ.image +'</td>'+
 			'<td><a href="'+ OBJ.link +'" target="_blank">查看產品</a></td>'+
 		'</tr>'
