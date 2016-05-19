@@ -54,7 +54,7 @@
 					self::$temp["MAIN"] = 'ogs-admin-products-insert-tpl.html';
 					self::$temp["SEO"] = self::$temp_option["SEO"];
 					self::$temp["IMAGE"] = self::$temp_option["IMAGE"];
-					CORE::res_init('tab','box');
+					CORE::res_init('tab','get','box');
 					self::add();
 				break;
 				case "insert":
@@ -65,7 +65,7 @@
 					self::$temp["MAIN"] = 'ogs-admin-products-modify-tpl.html';
 					self::$temp["SEO"] = self::$temp_option["SEO"];
 					self::$temp["IMAGE"] = self::$temp_option["IMAGE"];
-					CORE::res_init('tab','box');
+					CORE::res_init('tab','get','box');
 					self::detail($args);
 				break;
 				case "modify":
@@ -82,6 +82,9 @@
 				break;
 				case "getSort":
 					parent::getSort($args);
+				break;
+				case "seek":
+					self::seek($args);
 				break;
 				default:
 					self::$temp["MAIN"] = 'ogs-admin-products-list-tpl.html';
@@ -343,6 +346,13 @@
 
 			if(CHECK::is_pass()){
 				CRUD::$parent_tb_name = 'products_cate';
+
+				if(is_array($_POST['related'])){
+					$_POST['related'] = json_encode($_POST['related']);
+				}else{
+					$_POST['related'] = '';
+				}
+
 				CRUD::dataInsert('products',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
@@ -368,6 +378,9 @@
 				list($row) = CRUD::$data;
 				foreach($row as $field => $var){
 					switch($field){
+						case "related":
+							PRODUCTS::related($var);
+						break;
 						case "parent":
 							VIEW::assignGlobal("VALUE_".strtoupper($field)."_OPTION",self::cate_select($var));
 						break;
@@ -406,6 +419,12 @@
 			$rsnum = CRUD::dataFetch('products',array('id' => $_POST["id"]));
 
 			if($check && !empty($rsnum)){
+				if(is_array($_POST['related'])){
+					$_POST['related'] = json_encode($_POST['related']);
+				}else{
+					$_POST['related'] = '';
+				}
+
 				CRUD::dataUpdate('products',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					$msg = DB::$error;
@@ -447,6 +466,50 @@
 
 			CORE::msg($msg,$path);
 		}
+
+		# 搜尋關聯產品
+		private static function seek($id=false){
+			if(empty($_POST['call'])) echo 'NONE';
+			$seekStr = $_POST['call'];
+
+			if(!empty($id)){
+				$rsnum = CRUD::dataFetch('products',array('id' => $id),array('related'));
+				if(!empty($rsnum)){
+					list($nowRow) = CRUD::$data;
+					if(!empty($nowRow['related'])){
+						$relatedArray = json_decode($nowRow['related'],true);
+						$seekFilter = "id NOT IN('".implode("','",$relatedArray)."','".$id."')";
+
+						$sk = array('status' => '1','langtag' => CORE::$langtag,'subject' => '%'.$seekStr.'%','custom' => $seekFilter);
+					}else{
+						$sk = array('status' => '1','langtag' => CORE::$langtag,'subject' => '%'.$seekStr.'%','id' => "!{$id}");
+					}
+				}
+			}
+
+			if(empty($sk) || !is_array($sk)) $sk = array('status' => '1','langtag' => CORE::$langtag,'subject' => '%'.$seekStr.'%');
+
+			$rsnum = CRUD::dataFetch('products',$sk);
+			if(!empty($rsnum)){
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $key => $row){
+					foreach($row as $field => $var){
+						$output[$key][$field] = rawurlencode($var);
+					}
+
+					IMAGES::load('products',$row["id"]);
+					list($image) = IMAGES::$data;
+					$output[$key]['image'] = '<img src="'.$image['path'].'" style="width: 100px;">';
+					$output[$key]['link'] = PRODUCTS::dataLink($row['parent'],$row);
+				}
+
+				if(is_array($output)){
+					echo json_encode($output);
+				}
+			}else{
+				echo 'NONE';
+			}
+		}		
 	}
 
 ?>

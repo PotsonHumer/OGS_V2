@@ -167,6 +167,8 @@
 					VIEW::newBlock("TAG_AMOUNT_LIST");
 					VIEW::assign("VALUE_AMOUNT",$i);
 				}
+
+				PRODUCTS::related($row['related']);
 			}
 		}
 	}
