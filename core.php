@@ -500,8 +500,19 @@
 			if(is_array($default)) $resource = $default;
 
 			if(is_array($args)){
-				foreach($args as $name => $type){
-					$resource[$type][] = $name;
+				foreach($args as $type => $items){
+					switch(true){
+						case (is_array($items)):
+							if(is_array($resource[$type])){
+								$resource[$type] = array_merge($resource[$type],$items);
+							}else{
+								$resource[$type] = (is_array($items))?$items:array($items);
+							}
+						break;
+						case (!empty($items)):
+							$resource[$type][] = $items;
+						break;
+					}
 				}
 			}
 
