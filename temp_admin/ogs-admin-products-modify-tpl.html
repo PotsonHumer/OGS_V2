@@ -5,6 +5,7 @@
 <form action="{TAG_MANAGE_PATH}products/modify/" method="post">
 	<ul id="cate">
 		<li><a class="tab_title">產品設定</a></li>
+		<li><a class="tab_title">關聯產品</a></li>
 		<li><a class="tab_title">圖片設定</a></li>
 		<li><a class="tab_title">SEO 設定</a></li>
 	</ul>
@@ -60,6 +61,43 @@
 				</td>
 			</tr>
 		</table>
+	</div>
+
+	<div class="tab">
+		<!-- START BLOCK : TAG_RELATED_BLOCK -->
+		<hr />
+		<h2>已經關聯的產品</h2>
+		<table>
+			<tr>
+				<th>選擇</th>
+				<th>產品名稱</th>
+				<th>小圖</th>
+				<th>連結</th>
+			</tr>
+			<!-- START BLOCK : TAG_RELATED_LIST -->
+			<tr>
+				<td><input type="checkbox" name="related[]" value="{VALUE_ID}" checked></td>
+				<td>{VALUE_SUBJECT}</td>
+				<td><img src="{VALUE_IMAGE}" style="width: 100px;"></td>
+				<td><a href="{VALUE_LINK}" target="_blank">查看產品</a></td>
+			</tr>
+			<!-- END BLOCK : TAG_RELATED_LIST -->
+		</table>
+		<hr />
+		<!-- END BLOCK : TAG_RELATED_BLOCK -->
+
+		<table>
+			<tr>
+				<th>搜尋產品</th>
+				<td>
+					<input type="text" name="related_seek" size="200">
+					<p>輸入產品的名稱進行搜尋</p>
+				</td>
+			</tr>
+		</table>
+
+		<div id="seekRs">
+		</div>
 	</div>
 
 	<div class="tab">
@@ -134,10 +172,61 @@
 </form>
 
 <script>
+	var seekTable = function(){
+		return '<hr />'+
+		'<h2>搜尋結果</h2>'+
+		'<table id="seekTable">'+
+			'<tr>'+
+				'<th>選擇</th>'+
+				'<th>產品名稱</th>'+
+				'<th>小圖</th>'+
+				'<th>連結</th>'+
+			'</tr>'+
+		'</table>'+
+		'<hr />'
+	}
+
+	var seekRS = function(OBJ){
+		return '<tr>'+
+			'<td><input type="checkbox" name="related[]" value="'+ OBJ.id +'"></td>'+
+			'<td>'+ OBJ.subject +'</td>'+
+			'<td>'+ OBJ.image +'</td>'+
+			'<td><a href="'+ OBJ.link +'" target="_blank">查看產品</a></td>'+
+		'</tr>'
+	}
+
 	$(function(){
 		$(document).tab_box({
 			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
 			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+
+		$("input[name=related_seek]").keyup(function(){
+			var STR = $(this).val();
+			if(isset(STR)){
+				$(document).get_box({
+					CLICK : false, // 按鍵後才啟動功能 , true => 按鍵啟動  , false => 直接啟動
+					CALL : STR, // key 值
+					PHP : "{TAG_MANAGE_PATH}products/seek/{VALUE_ID}", // 取值目標
+					FUNC : "", // func 附值
+					AFTER : function() {  }, // 動作後執行擴充
+				}, function(DATA){
+					//callback
+					//var SEEK = encodeURIComponent(DATA);
+					$("#seekRs").html("");
+
+					if(DATA != 'NONE'){
+						$("#seekRs").append(seekTable);
+
+						var seekOBJ = JSON.parse(DATA);
+						$.each(seekOBJ,function(KEY,VAL){
+							$("#seekTable").append(seekRS(VAL));
+						});
+					}else{
+						$("#seekRs").append('<hr /><h2>搜尋結果</h2>查無產品<hr />');
+					}
+				});
+			}
 		});
 	});
 </script>
