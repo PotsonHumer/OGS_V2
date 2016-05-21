@@ -482,11 +482,15 @@ footer{
 #tree li[rel=level3]{margin-left: calc(1.5em * 4);}
 #tree li[rel=level4]{margin-left: calc(1.5em * 5);}
 
-#tree li a:before{
+#tree li span{
+	cursor: pointer;
+}
+
+#tree li span:before{
 	content: "\e044";
 }
 
-#tree li.open a:before{
+#tree li.open span:before{
 	content: "\e045";
 }
 

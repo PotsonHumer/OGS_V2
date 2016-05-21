@@ -58,7 +58,7 @@
 		}
 
 		# 分類樹狀結構清單
-		public static function tree($parent='null',$level=0){
+		public static function tree($from='pc',$parent='null',$level=0){
 			static $i;
 
 			SK::fetch();
@@ -69,15 +69,25 @@
 
 				$dataRow = CRUD::$data;
 				foreach($dataRow as $key => $row){
+
+					switch($from){
+						case "pc":
+							$link = CORE::$manage."products/cate/sk-parent:{$row["id"]}/";
+						break;
+						case "p":
+							$link = CORE::$manage."products/sk-parent:{$row["id"]}/";
+						break;
+					}
+
 					VIEW::newBlock("TAG_TREE_LIST");
 					VIEW::assign(array(
 						"TREE_SUBJECT" => $row["subject"],
-						"TREE_LINK" => CORE::$manage."products/cate/sk-parent:{$row["id"]}/",
+						"TREE_LINK" => $link,
 						"TREE_LEVEL" => $level,
 						"TREE_CURRENT" => (SK::$args["parent"] == $row["id"])?'theme':'',
 					));
 
-					self::tree($row["id"],($level + 1));
+					self::tree($from,$row["id"],($level + 1));
 				}
 			}
 		}

@@ -2,7 +2,9 @@
 <ul id="tree">
 	<li class="icon-layers">分類樹狀圖</li>
 	<!-- START BLOCK : TAG_TREE_LIST -->
-	<li class="{TREE_CURRENT}" rel="level{TREE_LEVEL}"><a class="no-brackets icon- {TREE_CURRENT}" href="{TREE_LINK}">{TREE_SUBJECT}</a></li>
+	<li class="{TREE_CURRENT}" rel="level{TREE_LEVEL}">
+		<span class="icon-"></span><a class="no-brackets_all {TREE_CURRENT}" href="{TREE_LINK}">{TREE_SUBJECT}</a>
+	</li>
 	<!-- END BLOCK : TAG_TREE_LIST -->
 </ul>
 
@@ -33,18 +35,20 @@
 			}
 		});
 
-		$("#tree li").click(function(E){
+		$("#tree li span").click(function(E){
 			E.preventDefault();
-			var NOW_LEVEL = LEVEL($(this));
-			var OPEN = $(this).hasClass('open');
+
+			var This = $(this).parent('li');
+			var NOW_LEVEL = LEVEL(This);
+			var OPEN = This.hasClass('open');
 
 			if(OPEN){
-				$(this).removeClass("open");
+				This.removeClass("open");
 			}else{
-				$(this).addClass("open");
+				This.addClass("open");
 			}
 
-			$(this).nextUntil("#tree li[rel=level"+ NOW_LEVEL +"]").each(function(){
+			This.nextUntil("#tree li[rel=level"+ NOW_LEVEL +"]").each(function(){
 				var EACH_LEVEL = LEVEL($(this));
 
 				if(NOW_LEVEL <= EACH_LEVEL){
@@ -57,10 +61,12 @@
 			});
 		});
 
+		/*
 		$("#tree li").dblclick(function(){
 			var GOTO = $(this).find("a").attr('href');
 			location.href = GOTO;
 		});
+		*/
 	});
 </script>
 <!-- END BLOCK : TAG_TREE_BLOCK -->
