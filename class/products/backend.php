@@ -89,7 +89,7 @@
 				default:
 					self::$temp["MAIN"] = 'ogs-admin-products-list-tpl.html';
 					self::$temp["TREE"] = self::$temp_option["TREE"];
-					PRODUCTS::tree();
+					PRODUCTS::tree('p');
 					self::row();
 				break;
 			}
@@ -153,7 +153,6 @@
 					VIEW::assign(array(
 						'VALUE_NUMBER' => PAGE::$start + (++$i),
 						"VALUE_IMAGE" => $image["path"],
-						'VALUE_NUMBER' => PAGE::$start + (++$i),
 					));
 				}
 			}else{
