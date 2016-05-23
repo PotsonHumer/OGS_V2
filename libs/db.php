@@ -186,7 +186,7 @@
 		    }
 		}
 		
-		protected function error(){
+		protected static function error(){
 			self::$error = mysql_error();
 		}
 		

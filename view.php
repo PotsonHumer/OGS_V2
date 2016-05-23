@@ -99,7 +99,7 @@
 		#######################################################
 		# 組建樣板參數
 		
-		public function assign($value,$value_sec=''){
+		public static function assign($value,$value_sec=''){
 			if(is_array($value)){
 				self::$parameter[][0] = $value;
 			}else{
@@ -107,19 +107,19 @@
 			}
 		}
 		
-		public function newBlock($tag=''){
+		public static function newBlock($tag=''){
 			if(!empty($tag)){
 				self::$parameter[][1] = $tag;
 			}
 		}
 		
-		public function gotoBlock($tag=''){
+		public static function gotoBlock($tag=''){
 			if(!empty($tag)){
 				self::$parameter[][2] = $tag;
 			}
 		}
 		
-		public function assignGlobal($value,$value_sec=''){
+		public static function assignGlobal($value,$value_sec=''){
 			if(is_array($value)){
 				self::$parameter[][3] = $value;
 			}else{
@@ -131,7 +131,7 @@
 		# 不經繁簡翻譯字串
 
 		# 載入字串
-		public function noTrans($s=false){
+		public static function noTrans($s=false){
 			if(empty($s)) return false;
 
 			$noTrans = SESS::get('noTrans');
@@ -142,7 +142,7 @@
 		}
 
 		# 執行反譯
-		public function noTransGo($output){
+		public static function noTransGo($output){
 			if(self::$noTrans){
 				$noTrans = SESS::get('noTrans');
 				if(is_array($noTrans) && count($noTrans)){
