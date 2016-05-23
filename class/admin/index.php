@@ -65,7 +65,7 @@
 		}
 
 		# 目前左邊選單標籤
-		public static function nav_current($class,$func){
+		public static function nav_current($class,$func=false){
 			$func_tag = (!empty($func))?'_'.strtoupper($func):'';
 			VIEW::assignGlobal('CURRENT_NAV_'.$class.$func_tag,'class="current"');
 		}
