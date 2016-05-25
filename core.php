@@ -40,7 +40,7 @@
 		}
 
 		# 定義當前目錄位置
-		public function real_path($__file=__FILE__,$addon=''){
+		public static function real_path($__file=__FILE__,$addon=''){
 			return realpath(dirname($__file)).DIRECTORY_SEPARATOR.$addon;
 		}
 
