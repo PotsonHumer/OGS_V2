@@ -41,7 +41,7 @@
 				'TAG_GALLERY_ACTIVE' => 'class="li1"',
 			));
 
-			#self::nav();
+			self::nav();
 
 			new VIEW(CORE::$temp_option["HULL"],self::$temp,false,false);
 		}
@@ -65,8 +65,8 @@
 					VIEW::newBlock("TAG_GALLERY_LIST");
 					foreach($row as $field => $var){
 						switch($field){
-							case "showdate":
-								$var = date("Y/m/d",strtotime($var));
+							case "dirpath":
+								list($var) = self::dirLoad($var,1);
 							break;
 							case "content":
 								$strLength = 30;
@@ -76,15 +76,8 @@
 
 						VIEW::assign("VALUE_".strtoupper($field),$var);
 					}
-					
-					IMAGES::load('gallery',$row["id"]);
-					list($images) = IMAGES::$data;
-					VIEW::assign(array(
-						"VALUE_LINK" => self::dataLink($row["parent"],$row),
-						"VALUE_IMAGE" => $images["path"],
-						"VALUE_ALT" => $images["alt"],
-						"VALUE_TITLE" => $images["title"],
-					));
+
+					VIEW::assign("VALUE_LINK",self::dataLink($row["parent"],$row));
 				}
 
 				# SEO
@@ -117,7 +110,7 @@
 					VIEW::assign(array(
 						"VALUE_NAV_SUBJECT" => $row["subject"],
 						"VALUE_NAV_LINK" => CORE::$root.'gallery/'.SEO::link($row).'/',
-						"VALUE_NAV_CURRENT" => (self::$id == $row["id"])?'current':'',
+						"VALUE_NAV_CURRENT" => (self::$cate == $row["id"])?'current':'',
 					));
 				}
 			}
@@ -130,12 +123,20 @@
 				list($row) = CRUD::$data;
 				foreach($row as $field => $var){
 					switch($field){
-						case "showdate":
-							$var = date('Y/m/d',strtotime($var));
+						case "dirpath":
+							$images = self::dirLoad($var);
+							continue;
 						break;
 					}
 
 					VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
+				}
+
+				if(is_array($images)){
+					foreach($images as $filePath){
+						VIEW::newBlock('TAG_GALLERY_LIST');
+						VIEW::assign('VALUE_FILE',$filePath);
+					}
 				}
 
 				VIEW::assignGlobal("VALUE_BACK_LINK",self::dataLink(self::$cate));
@@ -170,6 +171,29 @@
 						"VALUE_LINK" => self::dataLink($row["parent"],$row),
 					));
 				}
+			}
+		}
+
+		# 取得相簿圖片
+		private static function dirLoad($dirPath=false,$loadNum=false){
+			if(empty($dirPath)) return false;
+
+			$realPath = ROOT_PATH.'files/'.$dirPath;
+			if(file_exists($realPath)){
+				$allFiles = glob($realPath.'/*.{jpg,png,gif,jpeg,JPG,PNG,GIF,JPEG}',GLOB_BRACE);
+				CHECK::is_array_exist($allFiles);
+				if(CHECK::is_pass()){
+					foreach($allFiles as $key => $filePath){
+						$output[$key] = str_replace(ROOT_PATH,CORE::$root,$filePath);
+						if($loadNum !== false && is_numeric($loadNum) && ++$i >= $loadNum) break;
+					}
+				}
+			}
+
+			if(is_array($output)){
+				return $output;
+			}else{
+				return false;
 			}
 		}
 	}
