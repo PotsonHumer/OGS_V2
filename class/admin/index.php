@@ -40,6 +40,7 @@
 				'sk' => false,
 				'blog' => true,
 				'feedback' => true,
+				'gallery' => true,
 			);
 
 			MANAGER::ban_check();
