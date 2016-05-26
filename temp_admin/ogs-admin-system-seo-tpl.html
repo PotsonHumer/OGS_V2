@@ -29,7 +29,8 @@
 		<tr>
 			<th>網頁抬頭</th>
 			<td>
-				<input type="text" name="title[]" value="{VALUE_TITLE}">
+				<input type="text" class="wordCount" name="title[]" value="{VALUE_TITLE}">
+				<span></span>
 			</td>
 			<th>網頁標題 (H1)</th>
 			<td>
@@ -38,12 +39,16 @@
 		</tr>
 		<tr>
 			<th>關鍵字</th>
-			<td>
-				<input type="text" name="keywords[]" value="{VALUE_KEYWORDS}">
+			<td colspan="3">
+				<input type="text" name="keywords[]" value="{VALUE_KEYWORDS}" size="300">
+				<p>請使用 <span class="red" style="font-size: 2em;">,</span> 區隔關鍵字，建議不超過三組</p>
 			</td>
+		</tr>
+		<tr>
 			<th>網頁描述</th>
-			<td>
-				<input type="text" name="description[]" value="{VALUE_DESCRIPTION}">
+			<td colspan="3">
+				<textarea class="wordCount" name="description[]" rows="5" style="width: 98%;">{VALUE_DESCRIPTION}</textarea>
+				<span></span>
 			</td>
 		</tr>
 		<tr>
@@ -64,6 +69,19 @@
 		$(document).tab_box({
 			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
 			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+
+		/* ----- */
+		var wordCount = function(OBJ){
+			return OBJ.val().length;
+		}
+
+		$(".wordCount").each(function(){
+			$(this).next('span').text('字數:'+ wordCount($(this)));
+		});
+
+		$(".wordCount").keyup(function(){
+			$(this).next('span').text('字數:'+ wordCount($(this)));
 		});
 	});
 </script>
