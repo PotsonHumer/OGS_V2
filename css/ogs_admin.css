@@ -20,6 +20,14 @@ input,select,textarea{
 	outline: none;
 }
 
+input[type=text],input[type=password],input[type=number],input[type=email],input[type=tel]{
+	height: 1.5em;
+}
+
+select{
+	padding: 0.5em;
+}
+
 table{
 	border-collapse:collapse; 
 	border-spacing:0;
