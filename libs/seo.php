@@ -104,12 +104,15 @@
 			if(CHECK::is_pass()){
 				foreach($output as $field => $var){
 					switch($field){
+						case "title":
+							if(!preg_match('/'.SYSTEM::$setting['name'].'/', $var)) $var = (!empty(SYSTEM::$setting['name']))?(empty($var))?SYSTEM::$setting['name']:$var.'-'.SYSTEM::$setting['name']:$var;
+						break;
 						case "short_desc":
 							$var = (!empty($var))?"<h2>{$var}</h2>":'';
-						default:
-							VIEW::assignGlobal("SEO_".strtoupper($field),$var);
 						break;
 					}
+
+					VIEW::assignGlobal("SEO_".strtoupper($field),$var);
 				}
 			}
 		}
