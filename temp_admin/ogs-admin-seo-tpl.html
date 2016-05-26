@@ -6,7 +6,8 @@
 		</td>
 		<th>網頁抬頭</th>
 		<td>
-			<input type="text" name="title" value="{SEO_TITLE}" size="200">
+			<input type="text" class="wordCount" name="title" value="{SEO_TITLE}" size="200">
+			<span></span>
 		</td>
 	</tr>
 	<tr>
@@ -17,12 +18,14 @@
 		<th>meta 關鍵字</th>
 		<td>
 			<input type="text" name="keywords" value="{SEO_KEYWORDS}" size="300">
+			<p>請使用 <span class="red" style="font-size: 2em;">,</span> 區隔關鍵字，建議不超過三組</p>
 		</td>
 	</tr>
 	<tr>
 		<th>meta 描述</th>
 		<td colspan="3">
-			<textarea name="description" rows="5" style="width: 98%;">{SEO_DESCRIPTION}</textarea>
+			<textarea class="wordCount" name="description" rows="5" style="width: 98%;">{SEO_DESCRIPTION}</textarea>
+			<span></span>
 		</td>
 	</tr>
 	<tr>
@@ -33,3 +36,19 @@
 	</tr>
 </table>
 <input type="hidden" name="seo_id" value="{SEO_ID}">
+
+<script>
+	$(function(){
+		var wordCount = function(OBJ){
+			return OBJ.val().length;
+		}
+
+		$(".wordCount").each(function(){
+			$(this).next('span').text('字數:'+ wordCount($(this)));
+		});
+
+		$(".wordCount").keyup(function(){
+			$(this).next('span').text('字數:'+ wordCount($(this)));
+		});
+	});
+</script>
