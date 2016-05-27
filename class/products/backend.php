@@ -319,6 +319,7 @@
 					VIEW::assign(array(
 						'VALUE_NUMBER' => PAGE::$start + (++$i),
 						"VALUE_IMAGE" => $image["path"],
+						'VALUE_LINK' => PRODUCTS::dataLink($row['parent'],$row),
 					));
 				}
 			}else{
