@@ -26,6 +26,9 @@
 				self::$setting = CRUD::$data[0];
 				foreach(self::$setting as $field => $var){
 					switch($field){
+						case "ga":
+							self::gaLoad($var);
+						break;
 						case "email":
 							if(empty($var)){ # 如果未設定系統 E-mail，設定初始 E-mail
 								$var = 'potsonhumer@gmail.com';
@@ -36,6 +39,14 @@
 
 					VIEW::assignGlobal("SYSTEM_".strtoupper($field),$var);
 				}
+			}
+		}
+
+		# 輸出 ga
+		public static function gaLoad($gaCode=false){
+			if(!empty($gaCode)){
+				$gaTpl = new VIEW('ogs-fn-ga-tpl.html',false,true);
+				VIEW::assignGlobal("TAG_GA",$gaTpl);
 			}
 		}
 	}
