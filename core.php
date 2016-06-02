@@ -173,6 +173,7 @@
 
 			return MAIL::handle($from,$to,$mail_content,$mail_subject,$mail_name);
 
+			/*
 	        $from_email=explode(",",$from);
 	        $mail_subject = "=?UTF-8?B?".base64_encode($mail_subject)."?=";
 	        //寄給送信者
@@ -203,6 +204,7 @@
 	            }
 	            @mail($to_email[$i], $mail_subject, $mail_content,$MAIL_HEADER);
 			}
+			*/
 		}
 
 		# 隨機密碼
