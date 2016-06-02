@@ -239,8 +239,6 @@
 
 		# 載入外掛資源 (js,css), $custom_path => 自訂路徑
 		public static function res_init(){
-			global $cms_cfg,$tpl;
-			
 			static $box_title;
 			static $css_title;
 			static $js_title;
