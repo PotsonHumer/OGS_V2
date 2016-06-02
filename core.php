@@ -490,9 +490,9 @@
 		# 載入共通資源
 		public static function common_resource($args=false){
 			$default = array(
-				#'css' => array('style'),
+				#'css' => array(''),
 				#'footer_css' => array('add'),
-				#'footer_js' => array('touch','main','add')
+				#'footer_js' => array('add')
 			);
 
 			if(is_array($default)) $resource = $default;
