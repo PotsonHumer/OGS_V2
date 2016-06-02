@@ -209,9 +209,7 @@
 
 		# 隨機密碼
 		public static function rand_password($length=8){
-			$code_num = $length;
-
-			while(++$i <= $code_num){
+			while(++$i <= $length){
 				$type = mt_rand(1,3);
 				$upper = false;
 
