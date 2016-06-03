@@ -7,7 +7,7 @@
 		private static $data;
 
 		function __construct(){
-			self::make(CORE::$lang["index"],CORE::$root);
+			self::make(CORE::$lang["home"],CORE::$root);
 		}
 
 		# 輸入組合資訊
