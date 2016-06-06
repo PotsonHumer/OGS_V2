@@ -98,9 +98,16 @@
 		}
 
 		# 分類選單
-		private static function cate_select($now=null,$cate="null",$level=0){
+		private static function cate_select($now=null,$cate="null",$level=0,$noself=false){
 			if(is_null($cate) || empty($cate)) $cate = "null";
-			$rsnum = CRUD::dataFetch('products_cate',array('parent' => $cate,"langtag" => CORE::$langtag),false,array('sort' => CORE::$cfg["sort"]));
+
+			if($noself){
+				list($func,$args) = CORE::$args;
+				$rsnum = CRUD::dataFetch('products_cate',array('parent' => $cate,"langtag" => CORE::$langtag,'id' => '!'.$args),false,array('sort' => CORE::$cfg["sort"]));
+			}else{
+				$rsnum = CRUD::dataFetch('products_cate',array('parent' => $cate,"langtag" => CORE::$langtag),false,array('sort' => CORE::$cfg["sort"]));
+			}
+
 			if(!empty($rsnum)){
 				$dataRow = CRUD::$data;
 				foreach($dataRow as $key => $row){
@@ -115,7 +122,7 @@
 					$selected = (!is_null($now) && $now == $row["id"])?'selected':'';
 					$option_array[] = '<option value="'.$row["id"].'" '.$selected.'>├'.$star.$row["subject"].'</option>';
 
-					$option_array[] = self::cate_select($now,$row["id"],($level + 1));
+					$option_array[] = self::cate_select($now,$row["id"],($level + 1),$noself);
 				}
 
 				if(is_array($option_array)){
@@ -214,7 +221,7 @@
 
 				IMAGES::output('products_cate',$row["id"]);
 
-				VIEW::assignGlobal("VALUE_PARENT_OPTION",self::cate_select($row["parent"]));
+				VIEW::assignGlobal("VALUE_PARENT_OPTION",self::cate_select($row["parent"],NULL,0,true));
 
 				$page_args = SESS::get("PAGE");
 				$sk_args = SESS::get('SK');
