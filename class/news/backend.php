@@ -288,19 +288,21 @@
 					foreach($row as $field => $var){
 						switch($field){
 							case "parent":
-								CRUD::dataFetch('news_cate',array('id' => $var),array('subject'));
-								list($parent) = CRUD::$data;
-								VIEW::assign("VALUE_".strtoupper($field),$parent["subject"]);
+								$parentRsnum = CRUD::dataFetch('news_cate',array('id' => $var),array('subject'));
+								if(!empty($parentRsnum)){
+									list($parent) = CRUD::$data;
+									$var = $parent["subject"];
+								}else{
+									$var = '無分類';
+								}
 							break;
 							case "status":
-								$status = ($var)?self::$lang["status_on"]:self::$lang["status_off"];
 								if(empty($var)) VIEW::assign("CLASS_STATUS_RED",'red');
-								VIEW::assign("VALUE_".strtoupper($field),$status);
-							break;
-							default:
-								VIEW::assign("VALUE_".strtoupper($field),$var);
+								$var = ($var)?self::$lang["status_on"]:self::$lang["status_off"];
 							break;
 						}
+
+						VIEW::assign("VALUE_".strtoupper($field),$var);
 					}
 
 					VIEW::assign('VALUE_NUMBER',PAGE::$start + (++$i));
@@ -318,6 +320,8 @@
 				"VALUE_SORT" => ++$rsnum,
 				"VALUE_SHOWDATE" => date("Y-m-d"),
 				"VALUE_PARENT_OPTION" => self::cate_select(),
+				"VALUE_PARENT_OPTION_DEFAULT_STR" => (self::cate_select() === false)?'無分類':'未選擇',
+				"VALUE_PARENT_OPTION_DEFAULT_VAR" => (self::cate_select() === false)?'null':'',
 			));
 		}
 
@@ -352,15 +356,21 @@
 				foreach($row as $field => $var){
 					switch($field){
 						case "parent":
-							VIEW::assignGlobal("VALUE_".strtoupper($field)."_OPTION",self::cate_select($var));
+							$field = "VALUE_".strtoupper($field)."_OPTION";
+							$var = self::cate_select($var);
+
+							VIEW::assignGlobal(array(
+								"VALUE_PARENT_OPTION_DEFAULT_STR" => (self::cate_select() === false)?'無分類':'未選擇',
+								"VALUE_PARENT_OPTION_DEFAULT_VAR" => (self::cate_select() === false)?'null':'',
+							));
 						break;
 						case "status":
-							VIEW::assignGlobal("VALUE_".strtoupper($field)."_CK".$var,'selected');
-						break;
-						default:
-							VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
+							$field = $field."_CK".$var;
+							$var = 'selected';
 						break;
 					}
+
+					VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
 				}
 
 				IMAGES::output('news',$row["id"]);

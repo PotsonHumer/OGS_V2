@@ -5,13 +5,21 @@
 	class NEWS_FRONTEND extends NEWS{
 
 		private static 
+			$cateExist,
 			$temp,
 			$cate, #分類 id
 			$id; # 資料 id
 
 		function __construct(){
 
-			list($cate,$args) = CORE::$args;
+			self::$cateExist = self::cateExist();
+
+			if(self::$cateExist){
+				list($cate,$args) = CORE::$args;
+			}else{
+				list($args) = CORE::$args;
+			}
+
 			self::$temp = CORE::$temp_main;
 			
 			CORE::common_resource();
@@ -30,7 +38,7 @@
 				$func++;
 			}
 
-			if($func <= 1){
+			if(self::$cateExist && $func <= 1 || !self::$cateExist && empty($func)){
 				self::row();
 			}else{
 				self::detail();
@@ -124,7 +132,7 @@
 					VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
 				}
 
-				VIEW::assignGlobal("VALUE_BACK_LINK",self::dataLink(self::$cate));
+				VIEW::assignGlobal("VALUE_BACK_LINK",(self::$cateExist)?self::dataLink(self::$cate):CORE::$root.'news/');
 
 				SEO::load($row["seo_id"]);
 				if(empty(SEO::$data["h1"])) SEO::$data["h1"] = $row["subject"];

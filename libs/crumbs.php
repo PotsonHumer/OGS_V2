@@ -76,6 +76,10 @@
 		private static function newsFetch($row=false){
 			self::make(CORE::$lang["news"],CORE::$root.'news/');
 
+			if(!NEWS::cateExist()){
+				return false;
+			}
+
 			if($row["parent"]){
 				# 項目
 				CRUD::dataFetch("news_cate",array('id' => $row["parent"]));
