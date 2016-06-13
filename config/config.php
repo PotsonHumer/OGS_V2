@@ -66,7 +66,7 @@
 
 	#### DEFAULT FUNCTION ####
 	$config["default_function"]	= array(
-		'index','news','products','faq','sitemap','contact','blog','gallery'
+		'index','news','products','faq','sitemap','contact','blog','gallery','nofound'
 	);
 	##############################
 

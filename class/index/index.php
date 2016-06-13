@@ -27,11 +27,12 @@
 		}
 
 		public static function notFound(){
-			VIEW::assignGlobal(array(
-				'SEO_H1' => '404 not found',
-			));
-
 			CORE::common_resource();
+
+			SEO::load('nofound');
+			SEO::output();
+
+			VIEW::assignGlobal('SEO_H1',(empty(SEO::$data['h1']))?'404 not found':SEO::$data['h1']);
 
 			$temp = CORE::$temp_main;
 			$temp["MAIN"] = 'ogs-fn-404-tpl.html';
