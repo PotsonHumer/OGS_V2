@@ -23,19 +23,30 @@
 			CORE::call_function(self::$endClass,$function,$args);
 		}
 
+		# 確認是否有設定分類
+		public static function cateExist(){
+			$rsnum = CRUD::dataFetch('news_cate',array('status' => '1','langtag' => CORE::$langtag));
+			return (!empty($rsnum))?true:false;
+		}
+
 		# 資料項目連結
 		public static function dataLink($parent,$data=false){
-			$rsnum = CRUD::dataFetch('news_cate',array('id' => $parent));
-			if(!empty($rsnum)){
-				list($cate) = CRUD::$data;
-				$parentLink = SEO::link($cate);
-			}
-			
-			if(!$data){
-				return CORE::$root."news/{$parentLink}/";
+			if(self::cateExist()){
+				$rsnum = CRUD::dataFetch('news_cate',array('id' => $parent));
+				if(!empty($rsnum)){
+					list($cate) = CRUD::$data;
+					$parentLink = SEO::link($cate);
+				}
+				
+				if(!$data){
+					return CORE::$root."news/{$parentLink}/";
+				}else{
+					$link = SEO::link($data);
+					return CORE::$root."news/{$parentLink}/{$link}/";
+				}
 			}else{
 				$link = SEO::link($data);
-				return CORE::$root."news/{$parentLink}/{$link}/";
+				return CORE::$root."news/{$link}/";
 			}
 		}
 

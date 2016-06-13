@@ -7,7 +7,7 @@
 		private static $data;
 
 		function __construct(){
-			self::make(CORE::$lang["index"],CORE::$root);
+			self::make(CORE::$lang["home"],CORE::$root);
 		}
 
 		# 輸入組合資訊
@@ -75,6 +75,11 @@
 		# 最新消息
 		private static function newsFetch($row=false){
 			self::make(CORE::$lang["news"],CORE::$root.'news/');
+
+			if(!NEWS::cateExist() && is_array($row)){
+				self::make($row["subject"],NEWS::dataLink($row['parent'],$row));
+				return;
+			}
 
 			if($row["parent"]){
 				# 項目
