@@ -103,7 +103,9 @@
 
 					CRUMBS::fetch('news',$cate_row);
 				}else{
-					SEO::output('news');
+					SEO::load('news');
+					if(empty(SEO::$data["h1"])) SEO::$data["h1"] = CORE::$lang["news"];
+					SEO::output();
 					CRUMBS::fetch('news');
 				}
 			}else{
