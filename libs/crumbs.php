@@ -77,7 +77,8 @@
 			self::make(CORE::$lang["news"],CORE::$root.'news/');
 
 			if(!NEWS::cateExist()){
-				return false;
+				self::make($row["subject"],NEWS::dataLink($row['parent'],$row));
+				return;
 			}
 
 			if($row["parent"]){
