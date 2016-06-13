@@ -173,6 +173,7 @@
 
 			return MAIL::handle($from,$to,$mail_content,$mail_subject,$mail_name);
 
+			/*
 	        $from_email=explode(",",$from);
 	        $mail_subject = "=?UTF-8?B?".base64_encode($mail_subject)."?=";
 	        //寄給送信者
@@ -203,13 +204,12 @@
 	            }
 	            @mail($to_email[$i], $mail_subject, $mail_content,$MAIL_HEADER);
 			}
+			*/
 		}
 
 		# 隨機密碼
 		public static function rand_password($length=8){
-			$code_num = $length;
-
-			while(++$i <= $code_num){
+			while(++$i <= $length){
 				$type = mt_rand(1,3);
 				$upper = false;
 
@@ -239,8 +239,6 @@
 
 		# 載入外掛資源 (js,css), $custom_path => 自訂路徑
 		public static function res_init(){
-			global $cms_cfg,$tpl;
-			
 			static $box_title;
 			static $css_title;
 			static $js_title;
@@ -492,9 +490,9 @@
 		# 載入共通資源
 		public static function common_resource($args=false){
 			$default = array(
-				#'css' => array('style'),
+				#'css' => array(''),
 				#'footer_css' => array('add'),
-				#'footer_js' => array('touch','main','add')
+				#'footer_js' => array('add')
 			);
 
 			if(is_array($default)) $resource = $default;
@@ -523,6 +521,12 @@
 					call_user_func_array(array(self,'res_init'),$paramater);
 				}
 			}
+		}
+
+		# 文章切割功能
+		public static function strCut($str=false,$strLength=100){
+			if(empty($str)) return false;
+			return (mb_strlen($str) > $strLength)?mb_substr(strip_tags($str), 0, $strLength,'UTF-8').'...':$str;
 		}
 
 		# eval 組合方法 start----------------------------------------------------------------------------
