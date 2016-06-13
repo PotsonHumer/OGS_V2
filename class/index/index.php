@@ -23,7 +23,7 @@
 
 			CORE::common_resource();
 
-			new VIEW($mainTpl,$temp,false,false);
+			new VIEW('ogs-index-tpl.html',$temp,false,false);
 		}
 
 		public static function notFound(){
