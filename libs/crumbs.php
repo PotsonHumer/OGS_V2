@@ -76,7 +76,7 @@
 		private static function newsFetch($row=false){
 			self::make(CORE::$lang["news"],CORE::$root.'news/');
 
-			if(!NEWS::cateExist()){
+			if(!NEWS::cateExist() && is_array($row)){
 				self::make($row["subject"],NEWS::dataLink($row['parent'],$row));
 				return;
 			}

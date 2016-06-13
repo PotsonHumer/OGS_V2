@@ -87,20 +87,25 @@
 					));
 				}
 
-				# SEO
-				$cate_rsnum = CRUD::dataFetch('news_cate',array('id' => self::$cate));
-				if(!empty($cate_rsnum)){
-					list($cate_row) = CRUD::$data;
-					SEO::load($cate_row["seo_id"]);
-					if(empty(SEO::$data["h1"])) SEO::$data["h1"] = $cate_row["subject"];
+				if(self::$cateExist){
+					# SEO
+					$cate_rsnum = CRUD::dataFetch('news_cate',array('id' => self::$cate));
+					if(!empty($cate_rsnum)){
+						list($cate_row) = CRUD::$data;
+						SEO::load($cate_row["seo_id"]);
+						if(empty(SEO::$data["h1"])) SEO::$data["h1"] = $cate_row["subject"];
+					}else{
+						SEO::load('news');
+						if(empty(SEO::$data["h1"])) SEO::$data["h1"] = CORE::$lang["news"];
+					}
+
+					SEO::output();
+
+					CRUMBS::fetch('news',$cate_row);
 				}else{
-					SEO::load('news');
-					if(empty(SEO::$data["h1"])) SEO::$data["h1"] = CORE::$lang["news"];
+					SEO::output('news');
+					CRUMBS::fetch('news');
 				}
-
-				SEO::output();
-
-				CRUMBS::fetch('news',$cate_row);
 			}else{
 				VIEW::newBlock("TAG_NONE");
 			}
