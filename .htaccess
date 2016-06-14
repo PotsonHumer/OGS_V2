@@ -27,6 +27,10 @@ RewriteEngine On
 #RewriteRule ^([^*]+)$ watermark.php?path=$0 [L]
 #RewriteRule ^(watermark.php)$  $1 [L]
 
+# 網址必要有 www
+#RewriteCond %{HTTP_HOST} ^domin.com$
+#RewriteRule ^(.*)$ http://www.domin.com/$1 [R=301,L]
+
 RewriteCond %{QUERY_STRING} (RID=(.+))
 RewriteRule ^([^*]+)$  index.php?RID=%2 [L]
 
