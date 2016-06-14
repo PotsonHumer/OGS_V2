@@ -46,7 +46,7 @@
 								default:
 									if(!empty($equation)) unset($equation);
 
-									if(preg_match("/%([^%])+/", $var) || preg_match("/([^%])+%/", $var)){
+									if(!is_array($var) && (preg_match("/%([^%])+/", $var) || preg_match("/([^%])+%/", $var))){
 										$equation = 'like';
 									}
 
