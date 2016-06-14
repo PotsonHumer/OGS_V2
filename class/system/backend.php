@@ -47,7 +47,15 @@
 				VIEW::newBlock("TAG_SEO_BLOCK");
 				foreach(CRUD::$data as $key => $row){
 					VIEW::newBlock("TAG_SEO_TITLE");
-					VIEW::assign("VALUE_NAME",self::$lang[$row["name"]]);
+
+					switch($row["name"]){
+						case "index":
+							VIEW::assign("VALUE_NAME",self::$lang['home']);
+						break;
+						default:
+							VIEW::assign("VALUE_NAME",self::$lang[$row["name"]]);
+						break;
+					}
 
 					VIEW::newBlock("TAG_SEO_TAB");
 					foreach($row as $field => $var){
