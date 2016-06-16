@@ -15,8 +15,11 @@
 			$m_id = SESS::get('m_id');
 
 			switch($func){
+				case "thankyou":
+					new RESPONSE('contact',CORE::$lang['contactThanks']);
+				break;
 				case "add":
-					self::$temp["MAIN"] = CORE::$temp_option["MSG"];
+					#self::$temp["MAIN"] = CORE::$temp_option["MSG"];
 					self::add($m_id);
 				break;
 				default:
@@ -117,7 +120,7 @@
 				CRUD::args_output();
 			}
 
-			CORE::msg($msg,CORE::$root.'contact/');
+			RESPONSE::register($msg,CORE::$root.'contact/thankyou/');
 		}
 
 		# 驗證
