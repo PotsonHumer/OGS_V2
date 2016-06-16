@@ -23,6 +23,9 @@
 			SEO::output();
 
 			switch($args){
+				case "thankyou":
+					new RESPONSE('feedback',CORE::$lang['feedbackThanks']);
+				break;
 				case "list": # 顯示反饋
 					self::$temp["MAIN"] = 'ogs-feedback-list-tpl.html';
 					self::row();
@@ -97,7 +100,7 @@
 				$msg = CHECK::$alert;
 			}
 
-			CORE::msg($msg,CORE::$root.'feedback/');
+			RESPONSE::register($msg,CORE::$root.'feedback/thankyou/');
 		}
 	}
 

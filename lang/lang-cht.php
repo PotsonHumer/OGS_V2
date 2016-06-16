@@ -25,6 +25,8 @@
 		'blog' => '部落格',
 		'feedback' => '意見反饋',
 		'nofound' => '查無網頁 (404)',
+		'contactThanks' => '感謝您的留言',
+		'feedbackThanks' => '感謝您的點評',
 
 		// 會員功能
 		'regist_mail' => '會員認證信',
