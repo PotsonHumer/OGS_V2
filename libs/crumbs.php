@@ -116,6 +116,14 @@
 		private static function productsFetch($row=false){
 			self::make(CORE::$lang["products"],CORE::$root.'products/');
 
+			CRUD::dataFetch('lang',array('id' => $row['lang_id']),array('sheet'));
+			list($langRow) = CRUD::$data;
+
+			if($langRow['sheet'] == 'products_cate'){
+				self::productsCateFetch($row);
+				return;
+			}
+
 			if(is_array($row)){
 				$rsnum = CRUD::dataFetch('products',array('id' => $row["id"]));
 				if(!empty($rsnum)){
