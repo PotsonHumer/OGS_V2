@@ -61,7 +61,8 @@
 					foreach($row as $field => $var){
 						switch($field){
 							case "name":
-								VIEW::assign("VALUE_".strtoupper($field),self::$lang[$var]);
+								$name = ($var == 'index')?self::$lang['home']:self::$lang[$var];
+								VIEW::assign("VALUE_".strtoupper($field),$name);
 							break;
 							default:
 								VIEW::assign("VALUE_".strtoupper($field),$var);
