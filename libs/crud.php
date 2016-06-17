@@ -173,6 +173,7 @@
 		public static function args_output($output=false,$tpl=false,$args=false){
 			if(!$output){
 				$sess_args = ($args !== false)?$args:$_REQUEST;
+				/*
 				if(is_array($sess_args)){
 					foreach($sess_args as $field => $var){
 						$newArgs[$field] = urlencode($var);
@@ -182,6 +183,9 @@
 				}else{
 					$newArgsJson = json_encode(urlencode($sess_args));
 				}
+				*/
+
+				$newArgsJson = json_encode($sess_args);
 
 				SESS::write('last_args',urlencode($newArgsJson));
 			}else{
@@ -198,7 +202,7 @@
 					if($tpl){
 						foreach($argsArray as $field => $value){
 
-							$value = urldecode($value);
+							#$value = urldecode($value);
 
 							switch($field){
 								case "filename":
