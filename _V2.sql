@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主機: localhost
--- 產生日期: 2016 年 04 月 19 日 15:42
+-- 產生日期: 2016 年 06 月 20 日 09:10
 -- 伺服器版本: 5.5.47
 -- PHP 版本: 5.5.9-1ubuntu4.14
 
@@ -145,6 +145,24 @@ CREATE TABLE IF NOT EXISTS `ogs_contact` (
 -- --------------------------------------------------------
 
 --
+-- 表的結構 `ogs_contact_subject`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_contact_subject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang_id` int(11) NOT NULL,
+  `langtag` char(3) NOT NULL,
+  `subject` varchar(255) NOT NULL COMMENT '主題名稱',
+  `email` text NOT NULL COMMENT '管理員 E-mail',
+  `sort` int(11) NOT NULL COMMENT '排序',
+  PRIMARY KEY (`id`),
+  KEY `sort` (`sort`),
+  KEY `lang_id` (`lang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的結構 `ogs_faq`
 --
 
@@ -200,6 +218,48 @@ CREATE TABLE IF NOT EXISTS `ogs_feedback` (
   PRIMARY KEY (`id`),
   KEY `m_id` (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='反饋留言板' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的結構 `ogs_gallery`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_gallery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang_id` int(11) NOT NULL COMMENT '語系 id',
+  `parent` int(11) NOT NULL COMMENT '分類 id',
+  `seo_id` int(11) NOT NULL COMMENT '行銷 id',
+  `subject` varchar(255) NOT NULL COMMENT '標題',
+  `langtag` char(3) NOT NULL COMMENT '語系標籤; eng,cht,chs...etc',
+  `sort` int(11) NOT NULL COMMENT '排序',
+  `status` tinyint(1) NOT NULL COMMENT '狀態; 0 => 關閉 , 1 => 開啟',
+  `content` text NOT NULL COMMENT '內容',
+  `dirpath` varchar(255) NOT NULL COMMENT '相簿目錄指向',
+  PRIMARY KEY (`id`),
+  KEY `lang_id` (`lang_id`),
+  KEY `seo_id` (`seo_id`),
+  KEY `parent` (`parent`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='最新消息' AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的結構 `ogs_gallery_cate`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_gallery_cate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang_id` int(11) NOT NULL COMMENT '語系 id',
+  `seo_id` int(11) NOT NULL COMMENT '行銷 id',
+  `subject` varchar(255) NOT NULL COMMENT '標題',
+  `langtag` char(3) NOT NULL COMMENT '語系標籤; eng,cht,chs...etc',
+  `sort` int(11) NOT NULL COMMENT '排序',
+  `status` tinyint(1) NOT NULL COMMENT '狀態; 0 => 關閉 , 1 => 開啟',
+  PRIMARY KEY (`id`),
+  KEY `lang_id` (`lang_id`),
+  KEY `seo_id` (`seo_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='最新消息分類' AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -271,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `ogs_level` (
 --
 
 INSERT INTO `ogs_level` (`id`, `name`, `status`, `class`) VALUES
-(1, '總管理員', 1, '{"system":"1","manager":"1","ad":"1","intro":"1","faq":"1","news":"1","products":"1","order":"1","member":"1","contact":"1","feedback":"1"}');
+(1, '總管理員', 1, '{"system":"1","manager":"1","ad":"1","intro":"1","faq":"1","news":"1","products":"1","order":"1","member":"1","contact":"1","feedback":"1","blog":"1"}');
 
 -- --------------------------------------------------------
 
@@ -330,13 +390,40 @@ CREATE TABLE IF NOT EXISTS `ogs_member` (
 -- --------------------------------------------------------
 
 --
+-- 表的結構 `ogs_message`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dataID` int(11) DEFAULT NULL COMMENT '綁定功能的資料 id',
+  `m_id` int(11) DEFAULT NULL COMMENT '會員 id',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '狀態',
+  `func` varchar(255) NOT NULL COMMENT '綁定使用的功能',
+  `name` varchar(255) NOT NULL,
+  `gender` tinyint(1) DEFAULT NULL,
+  `cell` varchar(255) NOT NULL,
+  `email` text NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reply` int(11) DEFAULT NULL COMMENT '回覆標籤; 紀錄回覆的資料 id',
+  PRIMARY KEY (`id`),
+  KEY `m_id` (`m_id`),
+  KEY `dataID` (`dataID`),
+  KEY `status` (`status`),
+  KEY `reply` (`reply`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='留言板功能' AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的結構 `ogs_news`
 --
 
 CREATE TABLE IF NOT EXISTS `ogs_news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lang_id` int(11) NOT NULL COMMENT '語系 id',
-  `parent` int(11) NOT NULL COMMENT '分類 id',
+  `parent` int(11) DEFAULT NULL COMMENT '分類 id',
   `seo_id` int(11) NOT NULL COMMENT '行銷 id',
   `subject` varchar(255) NOT NULL COMMENT '標題',
   `langtag` char(3) NOT NULL COMMENT '語系標籤; eng,cht,chs...etc',
@@ -470,6 +557,51 @@ CREATE TABLE IF NOT EXISTS `ogs_products_cate` (
 -- --------------------------------------------------------
 
 --
+-- 表的結構 `ogs_products_color`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_products_color` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject` varchar(255) NOT NULL,
+  `thumb` text COMMENT '顏色圖示',
+  `code` varchar(7) DEFAULT NULL COMMENT '顏色代碼',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='產品顏色' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的結構 `ogs_products_size`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_products_size` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `size` int(11) NOT NULL COMMENT '尺寸代碼 (我也不知道那是啥..)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='產品尺寸' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的結構 `ogs_products_stock`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_products_stock` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pID` int(11) NOT NULL COMMENT '對應產品 id',
+  `colorID` int(11) NOT NULL COMMENT '對應顏色 id',
+  `sizeID` int(11) NOT NULL COMMENT '尺寸 id',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '開啟狀態',
+  `amount` int(11) NOT NULL DEFAULT '0' COMMENT '庫存數量',
+  PRIMARY KEY (`id`),
+  KEY `pID` (`pID`),
+  KEY `colorID` (`colorID`),
+  KEY `sizeID` (`sizeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='庫存功能' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的結構 `ogs_seo`
 --
 
@@ -486,7 +618,30 @@ CREATE TABLE IF NOT EXISTS `ogs_seo` (
   PRIMARY KEY (`id`),
   KEY `langtag` (`langtag`),
   KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='行銷資料表' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='行銷資料表' AUTO_INCREMENT=18 ;
+
+--
+-- 轉存資料表中的資料 `ogs_seo`
+--
+
+INSERT INTO `ogs_seo` (`id`, `langtag`, `name`, `title`, `keywords`, `description`, `filename`, `h1`, `short_desc`) VALUES
+(1, 'cht', 'index', 'TEST', '', '', '', '', ''),
+(2, 'cht', 'news', '', '', '', '', '', ''),
+(3, 'cht', 'products', '', '', '', '', '', ''),
+(4, 'cht', 'faq', '', '', '', '', '', ''),
+(5, 'cht', 'member', '', '', '', '', '', ''),
+(6, 'cht', 'sitemap', '', '', '', '', '', ''),
+(7, 'cht', 'contact', '', '', '', '', '', ''),
+(8, 'eng', 'index', '', '', '', '', '', ''),
+(9, 'eng', 'news', '', '', '', '', '', ''),
+(10, 'eng', 'products', '', '', '', '', '', ''),
+(11, 'eng', 'faq', '', '', '', '', '', ''),
+(12, 'eng', 'member', '', '', '', '', '', ''),
+(13, 'eng', 'sitemap', '', '', '', '', '', ''),
+(14, 'eng', 'contact', '', '', '', '', '', ''),
+(15, 'cht', 'blog', '', '', '', '', '', ''),
+(16, 'cht', 'gallery', '', '', '', '', '', ''),
+(17, 'cht', 'nofound', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -498,6 +653,11 @@ CREATE TABLE IF NOT EXISTS `ogs_system` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '網站名稱',
   `email` text NOT NULL COMMENT '系統信箱',
+  `ga` varchar(20) NOT NULL,
+  `notfound` text NOT NULL COMMENT '404 畫面內文',
+  `response` text NOT NULL COMMENT '表單送出畫面',
+  `reCAPTCHAkey` varchar(50) NOT NULL COMMENT '驗證碼公開key',
+  `reCAPTCHAsecret` varchar(50) NOT NULL COMMENT '驗證碼後端key',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='系統設定' AUTO_INCREMENT=2 ;
 
@@ -505,8 +665,8 @@ CREATE TABLE IF NOT EXISTS `ogs_system` (
 -- 轉存資料表中的資料 `ogs_system`
 --
 
-INSERT INTO `ogs_system` (`id`, `name`, `email`) VALUES
-(1, 'Open Grid System ver.2', 'potsonhumer@gmail.com');
+INSERT INTO `ogs_system` (`id`, `name`, `email`, `ga`, `notfound`, `response`, `reCAPTCHAkey`, `reCAPTCHAsecret`) VALUES
+(1, 'Open Grid System ver.2', 'potsonhumer@gmail.com', '', '', '<p style="text-align: center;">{TAG_MSG}</p>', '', '');
 
 -- --------------------------------------------------------
 
@@ -524,6 +684,18 @@ CREATE TABLE IF NOT EXISTS `ogs_verify` (
   PRIMARY KEY (`id`),
   KEY `manager_id` (`manager_id`,`m_id`,`verify_code`,`used`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='認證碼對應表' AUTO_INCREMENT=1 ;
+
+--
+-- 匯出資料表的 Constraints
+--
+
+--
+-- 資料表的 Constraints `ogs_products_stock`
+--
+ALTER TABLE `ogs_products_stock`
+  ADD CONSTRAINT `ogs_products_stock_ibfk_3` FOREIGN KEY (`sizeID`) REFERENCES `ogs_products_size` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ogs_products_stock_ibfk_1` FOREIGN KEY (`pID`) REFERENCES `ogs_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ogs_products_stock_ibfk_2` FOREIGN KEY (`colorID`) REFERENCES `ogs_products_color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
