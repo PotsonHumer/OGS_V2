@@ -356,7 +356,7 @@
 				foreach($row as $field => $var){
 					switch($field){
 						case "parent":
-							$field = "VALUE_".strtoupper($field)."_OPTION";
+							$field = $field."_OPTION";
 							$var = self::cate_select($var);
 
 							VIEW::assignGlobal(array(
