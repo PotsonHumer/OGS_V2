@@ -1,0 +1,90 @@
+<h2>系統設定</h2>
+
+<div id="cate">
+	<ul>
+		<li><label>設定項目</label></li>
+		<li><a href="{TAG_MANAGE_PATH}system/">基本設定</a></li>
+		<li><a href="{TAG_MANAGE_PATH}system/custom/" class="theme">分店資訊設定</a></li>
+		<li><a href="{TAG_MANAGE_PATH}system/seo/">各功能主頁 SEO 設定</a></li>
+	</ul>
+</div>
+<label>分店資訊設定</label>
+<form action="{TAG_MANAGE_PATH}system/custom-replace/" method="post">
+	<table id="customTable">
+		<tr>
+			<th>排序</th>
+			<th>名稱</th>
+			<th>電話</th>
+			<th>地址</th>
+			<th>營業時間</th>
+			<th>狀態</th>
+			<th>刪除</th>
+		</tr>
+
+		<!-- START BLOCK : TAG_CUSTOM_LIST -->
+		<tr class="row">
+			<td>拖移此處修改排序</td>
+			<td>
+				<input type="text" name="name[]" value="{VALUE_NAME}" size="150">
+			</td>
+			<td>
+				<input type="text" name="tel[]" value="{VALUE_TEL}" size="200">
+			</td>
+			<td>
+				<input type="text" name="address[]" value="{VALUE_ADDRESS}" size="300">
+			</td>
+			<td>
+				<input type="text" name="time[]" value="{VALUE_TIME}" size="150">
+			</td>
+			<td>
+				<select name="status[]">
+					<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+				</select>
+			</td>
+			<td>
+				<input type="hidden" name="id[]" value="{VALUE_ID}">
+				<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}system/custom-del/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_CUSTOM_LIST -->
+
+	</table>
+
+	<input type="button" name="add" value="增加分店" rel="customTable">
+	<input type="submit" name="send" value="儲存資料">
+</form>
+
+<script>
+	var customRow = function(){
+		return '<tr class="row">'+
+			'<td>拖移此處修改排序</td>'+
+			'<td>'+
+				'<input type="text" name="name[]" size="150">'+
+			'</td>'+
+			'<td>'+
+				'<input type="text" name="tel[]" size="200">'+
+			'</td>'+
+			'<td>'+
+				'<input type="text" name="address[]" size="300">'+
+			'</td>'+
+			'<td>'+
+				'<input type="text" name="time[]" size="150">'+
+			'</td>'+
+			'<td>'+
+				'<select name="status[]">'+
+					'<option value="1">開啟</option>'+
+					'<option value="0">關閉</option>'+
+				'</select>'+
+			'</td>'+
+			'<td>'+
+				'<input type="hidden" name="id[]">'+
+				'<input type="button" name="del" value="刪除">'+
+			'</td>'+
+		'</tr>';
+	}
+
+	$(function(){
+		js_add_row(customRow());
+	});
+</script>

@@ -40,6 +40,8 @@
 					VIEW::assignGlobal("SYSTEM_".strtoupper($field),$var);
 				}
 			}
+
+			self::custom();
 		}
 
 		# 輸出 ga
@@ -50,6 +52,20 @@
 				return VIEW::$output;
 			}
 		}
+
+		# 輸出分店資訊
+		public static function custom($tag='TAG'){
+			$rsnum = CRUD::dataFetch('system_custom',array('status' => '1','langtag' => CORE::$langtag),false,array('sort' => CORE::$cfg['sort']));
+			if(!empty($rsnum)){
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $row){
+					VIEW::newBlock("{$tag}_SYSTEM_CUSTOM");
+					foreach($row as $field => $var){
+						VIEW::assign('VALUE_'.strtoupper($field),$var);
+					}
+				}
+			}
+		}		
 	}
 
 ?>

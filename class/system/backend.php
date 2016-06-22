@@ -20,6 +20,19 @@
 					self::$temp["MAIN"] = self::$temp_option["MSG"];
 					self::replace();
 				break;
+				case "custom":
+					CORE::res_init('get','box');
+					self::$temp["MAIN"] = 'ogs-admin-system-custom-tpl.html';
+					self::custom();
+				break;
+				case "custom-replace":
+					self::$temp["MAIN"] = self::$temp_option["MSG"];
+					self::customReplace();
+				break;
+				case "custom-del":
+					self::$temp["MAIN"] = self::$temp_option["MSG"];
+					self::customDel();
+				break;				
 				default:
 					self::$temp["MAIN"] = 'ogs-admin-system-tpl.html';
 					self::row();
@@ -134,6 +147,88 @@
 
 			CORE::msg($msg);
 		}
+
+		# 分店資訊
+		private static function custom(){
+			$rsnum = CRUD::dataFetch('system_custom',array('langtag' => CORE::$langtag),false,array('sort' => CORE::$cfg['sort']));
+			if(!empty($rsnum)){
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $row){
+					VIEW::newBlock('TAG_CUSTOM_LIST');
+					foreach($row as $field => $var){
+						switch($field){
+							case "status":
+								$field = $field.'_ck'.$var;
+								$var = 'selected';
+							break;
+						}
+
+						VIEW::assign('VALUE_'.strtoupper($field),$var);
+					}
+				}
+			}else{
+				VIEW::newBlock('TAG_CUSTOM_LIST');
+			}
+		}
+
+		# 分店資訊更新
+		private static function customReplace(){
+			CHECK::is_array_exist($_POST['id']);
+			if(CHECK::is_pass()){
+				foreach($_POST['id'] as $key => $ID){
+					unset($args);
+
+					$fields = array('name','tel','address','time','status','sort','id');
+					foreach($fields as $field){
+						switch($field){
+							case "sort":
+								$var = $key + 1;
+							break;
+							case "id":
+								if(empty($ID)) continue;
+							default:
+								$var = $_POST[$field][$key];;
+							break;
+						}
+
+						$args[$field] = $var;
+					}
+
+					if(empty($ID)){
+						CRUD::dataInsert('system_custom',$args,true);
+					}else{
+						CRUD::dataUpdate('system_custom',$args);
+					}
+
+					if(!empty(DB::$error)){
+						$msg = DB::$error;
+					}
+				}
+			}else{
+				$msg = self::$lang['no_args'];
+			}
+
+			if(empty($msg)) $msg = self::$lang['modify_done'];
+
+			CORE::msg($msg,CORE::$manage.'system/custom/');
+		}
+
+		# 刪除分店資訊
+		private static function customDel(){
+			if(empty($_POST['call'])){
+				echo self::$lang['no_args'];
+				return;
+			}
+
+			CRUD::dataDel('system_custom',array('id' => $_POST['call']));
+			if(!empty(DB::$error)){
+				$msg = DB::$error;
+			}else{
+				$msg = self::$lang['del_done'];
+			}
+
+			echo $msg;
+		}		
 	}
 
 ?>
