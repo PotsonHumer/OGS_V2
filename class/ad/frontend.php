@@ -9,18 +9,19 @@
 
 		# 廣告列表
 		public static function row(){
-			$args = (!self::$cate)?array('status' => '1'):array('status' => '1','id' => self::$cate);
-			$rsnum = CRUD::dataFetch('ad_cate',$args);
-			if(!empty($rsnum)){
-				$dataRow = CRUD::$data;
+			#$args = (!self::$cate)?array('status' => '1'):array('status' => '1','id' => self::$cate);
+			#$rsnum = CRUD::dataFetch('ad_cate',$args);
+			#if(!empty($rsnum)){
+				#$dataRow = CRUD::$data;
+				$dataRow = CORE::$cfg['ad_cate'];
 				$nowDate = date("Y-m-d");
 
-				foreach($dataRow as $key => $cate){
-					$rsnum = CRUD::dataFetch('ad',array('langtag' => CORE::$langtag,'parent' => $cate["id"],'custom' => "status = '1' or (status = '2' and startdate <= '{$nowDate}' and limitdate >= '{$nowDate}')"));
+				foreach($dataRow as $cateID => $cateName){
+					$rsnum = CRUD::dataFetch('ad',array('cateID' => $cateID,'custom' => "status = '1' or (status = '2' and startdate <= '{$nowDate}' and limitdate >= '{$nowDate}')"));
 					if(!empty($rsnum)){
-						VIEW::newBlock("TAG_AD_BLOCK".$cate["id"]);
+						VIEW::newBlock("TAG_AD_BLOCK".$cateID);
 						foreach(CRUD::$data as $key => $row){
-							VIEW::newBlock("TAG_AD_LIST".$cate["id"]);
+							VIEW::newBlock("TAG_AD_LIST".$cateID);
 							foreach($row as $field => $var){
 								switch($field){
 									case "link":
@@ -42,7 +43,7 @@
 						}
 					}
 				}
-			}
+			#}
 		}
 
 	}
