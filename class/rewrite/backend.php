@@ -23,7 +23,7 @@
 				break;
 			}
 
-			self::nav_current('REWRITE');
+			self::nav_current('SYSTEM','REWRITE');
 		}
 
 		# 轉址設定顯示
