@@ -41,6 +41,7 @@
 				'blog' => true,
 				'feedback' => true,
 				'gallery' => true,
+				'rewrite' => true,
 			);
 
 			MANAGER::ban_check();
