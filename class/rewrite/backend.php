@@ -28,7 +28,7 @@
 
 		# 轉址設定顯示
 		private static function row(){
-			$rsnum = CRUD::dataFetch('rewrite');
+			$rsnum = CRUD::dataFetch('rewrite',false,false,array('id' => 'desc'));
 			if(!empty($rsnum)){
 				$dataRow = CRUD::$data;
 				foreach($dataRow as $row){
