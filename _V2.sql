@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主機: localhost
--- 產生日期: 2016 年 06 月 20 日 09:10
+-- 產生日期: 2016 年 06 月 28 日 17:53
 -- 伺服器版本: 5.5.47
 -- PHP 版本: 5.5.9-1ubuntu4.14
 
@@ -331,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `ogs_level` (
 --
 
 INSERT INTO `ogs_level` (`id`, `name`, `status`, `class`) VALUES
-(1, '總管理員', 1, '{"system":"1","manager":"1","ad":"1","intro":"1","faq":"1","news":"1","products":"1","order":"1","member":"1","contact":"1","feedback":"1","blog":"1"}');
+(1, '總管理員', 1, '{"system":"1","manager":"1","ad":"1","intro":"1","faq":"1","news":"1","products":"1","order":"1","member":"1","contact":"1","feedback":"1","blog":"1","gallery":"1","rewrite":"1"}');
 
 -- --------------------------------------------------------
 
@@ -350,14 +350,17 @@ CREATE TABLE IF NOT EXISTS `ogs_manager` (
   `verify` varchar(32) NOT NULL COMMENT '管理員認證碼 (md5)',
   PRIMARY KEY (`id`),
   KEY `level` (`level`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='管理員資料表' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='管理員資料表' AUTO_INCREMENT=5 ;
 
 --
 -- 轉存資料表中的資料 `ogs_manager`
 --
 
 INSERT INTO `ogs_manager` (`id`, `level`, `account`, `password`, `name`, `status`, `ban`, `verify`) VALUES
-(1, 1, 'potsonhumer@gmail.com', 'c8e2f3cd8913f5332972952517b814d9', 'Potson Humer', 1, 0, '74b87337454200d4d33f80c4663dc5e5');
+(1, 1, 'potsonhumer@gmail.com', 'c8e2f3cd8913f5332972952517b814d9', 'Potson Humer', 1, 0, '74b87337454200d4d33f80c4663dc5e5'),
+(2, 1, 'jerry.icisco@gmail.com', '5dd3e025ab80c5f5694757852918e7ce', 'Jerry', 1, 0, '2944e854b075378730c97081224ae085'),
+(3, 1, 'renee2111537@hotmail.com', '670b14728ad9902aecba32e22fa4f6bd', 'reneehsu', 1, 0, 'ad58590bedcaa5a860599789fb5802c8'),
+(4, 1, 'wei820529@gmail.com', '670b14728ad9902aecba32e22fa4f6bd', 'Rain', 1, 0, 'adeda6bbbe65ed10ab5f92b6342a0ed2');
 
 -- --------------------------------------------------------
 
@@ -667,6 +670,27 @@ CREATE TABLE IF NOT EXISTS `ogs_system` (
 
 INSERT INTO `ogs_system` (`id`, `name`, `email`, `ga`, `notfound`, `response`, `reCAPTCHAkey`, `reCAPTCHAsecret`) VALUES
 (1, 'Open Grid System ver.2', 'potsonhumer@gmail.com', '', '', '<p style="text-align: center;">{TAG_MSG}</p>', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- 表的結構 `ogs_system_custom`
+--
+
+CREATE TABLE IF NOT EXISTS `ogs_system_custom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang_id` int(11) NOT NULL,
+  `langtag` char(3) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `sort` int(11) NOT NULL DEFAULT '1',
+  `name` varchar(50) NOT NULL COMMENT '公司抬頭',
+  `tel` text NOT NULL,
+  `fax` varchar(50) NOT NULL,
+  `address` text NOT NULL,
+  `email` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lang_id` (`lang_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
