@@ -1,0 +1,62 @@
+<h2>轉址設定</h2>
+
+<form action="{TAG_MANAGE_PATH}rewrite/replace/" method="post">
+	<table id="rewriteForm">
+		<tr>
+			<th>轉址位置</th>
+			<th>目標位置</th>
+			<th>狀態</th>
+			<th>刪除</th>
+		</tr>
+
+		<!-- START BLOCK : TAG_REWRITE_LIST -->
+		<tr class="row">
+			<td>
+				<input type="text" name="origin[]" value="{VALUE_ORIGIN}" size="500" placeholder="請輸入包含 http:// 的完整網址">
+			</td>
+			<td>
+				<input type="text" name="target[]" value="{VALUE_TARGET}" size="500" placeholder="請輸入包含 http:// 的完整網址">
+			</td>
+			<td>
+				<select name="status[]">
+					<option value="1" {VALUE_STATUS_CK1}>開啟</option>
+					<option value="0" {VALUE_STATUS_CK0}>關閉</option>
+				</select>
+			</td>
+			<td>
+				<input type="hidden" name="id[]" value="{VALUE_ID}">
+				<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}rewrite/del/">
+			</td>
+		</tr>
+		<!-- END BLOCK : TAG_REWRITE_LIST -->
+
+	</table>
+
+	<input type="button" name="add" value="增加轉址設定" rel="rewriteForm">
+	<input type="submit" name="send" value="儲存設定">
+</form>
+
+<script>
+	js_add_row(
+		'<tr class="row">'+
+			'<td>'+
+				'<input type="text" name="origin[]" size="500" placeholder="請輸入包含 http:// 的完整網址">'+
+			'</td>'+
+			'<td>'+
+				'<input type="text" name="target[]" size="500" placeholder="請輸入包含 http:// 的完整網址">'+
+			'</td>'+
+			'<td>'+
+				'<select name="status[]">'+
+					'<option value="1">開啟</option>'+
+					'<option value="0">關閉</option>'+
+				'</select>'+
+			'</td>'+
+			'<td>'+
+				'<input type="hidden" name="id[]">'+
+				'<input type="button" name="del" value="刪除" rel="{TAG_MANAGE_PATH}rewrite/del/">'+
+			'</td>'+
+		'</tr>'
+	);
+</script>
+
+
