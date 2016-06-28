@@ -59,7 +59,16 @@
 					unset($args);
 
 					foreach($fieldArray as $field){
-						$args[$field] = $_POST[$field][$key];
+						switch($field){
+							case "origin":
+								$var = preg_replace('/(http:\/\/|https:\/\/)([^\/]*)(.)/si','$1'.CORE::$cfg['url'].'$3',$_POST[$field][$key]);
+							break;
+							default:
+								$var = $_POST[$field][$key];
+							break;
+						}
+
+						$args[$field] = $var;
 					}
 
 					if(empty($ID)){
