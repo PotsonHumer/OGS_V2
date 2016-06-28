@@ -61,7 +61,7 @@
 					foreach($fieldArray as $field){
 						switch($field){
 							case "origin":
-								$var = preg_replace('/(http:\/\/|https:\/\/)([^\/]*)(.)/si','$1'.CORE::$cfg['url'].'$3',$_POST[$field][$key]);
+								$var = preg_replace('/(http:\/\/|https:\/\/)([^\/]+)(.*)/si','$1'.CORE::$cfg['url'].'$3',$_POST[$field][$key]);
 							break;
 							default:
 								$var = $_POST[$field][$key];
@@ -70,6 +70,8 @@
 
 						$args[$field] = $var;
 					}
+
+					if(urlencode($args['origin']) == urlencode($args['target'])) continue;
 
 					if(empty($ID)){
 						unset($args['id']);
