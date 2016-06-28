@@ -54,6 +54,9 @@
 				array_pop($uri_array);
 			}
 
+			# 轉址功能
+			$uri_array = REWRITE::handle($uri_array);
+
 			# 頁次偵測
 			$uri_array = self::page_handle($uri_array);
 			$uri_array = self::sk_handle($uri_array);
