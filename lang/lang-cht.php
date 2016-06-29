@@ -27,6 +27,7 @@
 		'nofound' => '查無網頁 (404)',
 		'contactThanks' => '感謝您的留言',
 		'feedbackThanks' => '感謝您的點評',
+		'rewrite' => '轉址功能',
 
 		// 會員功能
 		'regist_mail' => '會員認證信',
