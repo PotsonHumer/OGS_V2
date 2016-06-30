@@ -92,7 +92,7 @@
 	
 	
 	#### autoload filter ####
-	$config["file_filter"] = array("index","core","watermark");
+	$config["file_filter"] = array("index","core","watermark","backup");
 	$config["dir_filter"] = array();
 	$config["class_filter"] = array();
 	#########################
