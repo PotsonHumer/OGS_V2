@@ -526,7 +526,7 @@
 		# 文章切割功能
 		public static function strCut($str=false,$strLength=100){
 			if(empty($str)) return false;
-			return (mb_strlen($str) > $strLength)?mb_substr(strip_tags($str), 0, $strLength,'UTF-8').'...':$str;
+			return (mb_strlen($str) > $strLength)?mb_substr(strip_tags($str), 0, $strLength,'UTF-8').'...':strip_tags($str);
 		}
 
 		# eval 組合方法 start----------------------------------------------------------------------------
