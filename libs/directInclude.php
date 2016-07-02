@@ -37,7 +37,7 @@
 
 		# 引入處理
 		private static function includeHandle($path){
-			$realPath = ROOT_PATH.$path;
+			$realPath = HOME_PATH.$path;
 			if(file_exists($realPath)){
 				$lineArray = file($realPath,FILE_SKIP_EMPTY_LINES);
 				if(is_array($lineArray)){
