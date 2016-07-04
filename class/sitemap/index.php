@@ -15,8 +15,7 @@
 			$rs = self::output();
 
 			$msg = ($rs)?'sitemap.xml 輸出完成':'sitemap.xml 輸出失敗';
-			echo '<script>alert("'.$msg.'");</script>';
-			header("Refresh: 1; url=".CORE::$root."sitemap.xml");
+			echo '<script>alert("'.$msg.'"); location.href="'.CORE::$root.'sitemap.xml";</script>';
 		}
 
 		# crul
@@ -116,8 +115,14 @@
 			$output = $xml->asXML();
 
 			$filePath = HOME_PATH.'sitemap.xml';
+			$fileHandle = true;
 
-			if(file_exists($filePath)) chmod($filePath,777);
+			if(file_exists($filePath)){
+				$chmodRs = chmod($filePath,0777);
+				if(!$chmodRs) $fileHandle = unlink($filePath);
+			}
+
+			if(!$fileHandle) exit('程式沒有權限修改原本的 sitemap.xml 檔案，請先手動移除後再執行一次。');
 
 			$file = fopen($filePath,"w");
 			fwrite($file,$output);
