@@ -63,9 +63,10 @@
 
 			SK::fetch();
 			$allRsnum = CRUD::dataFetch('products_cate');
-			CRUD::dataFetch('products_cate',array('parent' => $parent),false,array('sort' => CORE::$cfg["sort"]));
+			$rsnum = CRUD::dataFetch('products_cate',array('parent' => $parent),false,array('sort' => CORE::$cfg["sort"]));
 			if($allRsnum > 1){
 				if(++$i == 1) VIEW::newBlock("TAG_TREE_BLOCK");
+				if(empty($rsnum)) return false;
 
 				$dataRow = CRUD::$data;
 				foreach($dataRow as $key => $row){
