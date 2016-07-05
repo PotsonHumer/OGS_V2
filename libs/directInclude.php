@@ -43,7 +43,7 @@
 				if(is_array($lineArray)){
 					foreach($lineArray as $key => $line){
 						#$lineArray[$key] = str_replace('url("../','url("'.self::$cfg["base_root"],$lineArray[$key]);
-						$handleArray[$key] = preg_replace('/url\((..\/)+images\//','url('.CORE::$root.'images/',$line);
+						$handleArray[$key] = preg_replace('/url\((\'|\")?(..\/)+images\//','url($1'.CORE::$root.'images/',$line);
 						$handleArray[$key] = preg_replace('/url\((..\/)+fonts\//','url('.CORE::$root.'fonts/',$handleArray[$key]);
 						#$lineArray[$key] = $line;
 					}
