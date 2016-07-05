@@ -109,6 +109,8 @@
 			foreach(self::$handle as $path){
 				$url = $xml->addChild('url');
 				$loc = $url->addChild('loc',$path);
+				$loc = $url->addChild('lastmod',date('Y-m-d').'T'.date('H:i:s').'+08:00');
+				$loc = $url->addChild('changefreq','weekly');
 			}
 
 			#header('Content-type: text/xml');
