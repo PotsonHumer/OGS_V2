@@ -160,9 +160,44 @@ function fix_get_params($str){
     return strip_tags(preg_replace( "/[^a-zA-Z0-9\.\[\]_| -]/", '', $str));
 }
 
+# 隨機密碼
+function rand_filename($length=8){
+    while(++$i <= $length){
+        $type = mt_rand(1,3);
+        $upper = false;
+
+        switch($type){
+            case 3: # 大寫英文
+                $upper = true;
+            case 2: # 小寫英文
+                $w = 1;
+                $word = "a";
+                $plus = mt_rand(1,26);
+                while(++$w <= $plus){
+                    if($w > 1){
+                        ++$word;
+                    }
+                }
+
+                $code_array[] = ($upper)?strtoupper($word):$word;
+            break;
+            default: # 數字
+                $code_array[] = mt_rand(0,9);
+            break;
+        }
+    }
+
+    return implode('',$code_array);
+}
+
 function fix_filename($str,$transliteration,$convert_spaces=false){
     if ($convert_spaces) {
         $str=str_replace(' ', '_', $str);
+    }
+
+    if(preg_match("/[\x{4e00}-\x{9fa5}]/u", $str)){
+        $file_extension = strtolower(substr(strrchr($str,"."),1));
+        $str = (!empty($file_extension))?rand_filename().'.'.$file_extension:rand_filename();
     }
 
     if($transliteration){
@@ -193,6 +228,7 @@ function fix_filename($str,$transliteration,$convert_spaces=false){
 }
 
 function fix_dirname($str){
+    if(preg_match("/[\x{4e00}-\x{9fa5}]/u", $str)) $str = rand_filename();
     return str_replace('~',' ',dirname(str_replace(' ','~',$str)));
 }
 
