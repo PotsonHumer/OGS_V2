@@ -2543,7 +2543,7 @@ class imageLib
             case 'jpg':
             case 'jpeg':
         header('Content-type: image/jpeg');
-        imagejpeg($this->imageResized, '', $imageQuality);
+        imagejpeg($this->imageResized, NULL, $imageQuality);
                 break;
             case 'gif':
         header('Content-type: image/gif');
@@ -2558,7 +2558,7 @@ class imageLib
         // *** Invert qualit setting as 0 is best, not 9
         $invertScaleQuality = 9 - $scaleQuality;
 
-        imagepng($this->imageResized, '', $invertScaleQuality);
+        imagepng($this->imageResized, NULL, $invertScaleQuality);
         break;
       case 'bmp':
         echo 'bmp file format is not supported.';

@@ -137,15 +137,23 @@
 
 		# 縮放圖片
 		public static function resize($path=false,$width=false,$height=false){
-			$path = self::absolute_path($path);
-			$imagick = new Imagick($path);
-			#$imagick->resizeImage($width,$height,Imagick::FILTER_LANCZOS,false);
+			require_once(ROOT_PATH."class/editor/filemanager/include/php_image_magician.php");
+			require_once(ROOT_PATH."class/editor/filemanager/include/utils.php");
 
-			$imagick->scaleImage($width,$height);
+			$path = str_replace(CORE::$cfg['host'],ROOT_PATH,$path);
+
+			$magicianObj = new imageLib($path);
+			#$magicianObj->setForceStretch(false);
+			$magicianObj->resizeImage($width, $height);
+
+			#$imagick = new Imagick($path);
+			#$imagick->resizeImage($width,$height,Imagick::FILTER_LANCZOS,false);
+			#$imagick->scaleImage($width,$height);
 
 			$filename = basename($path);
 			$file_extension = strtolower(substr(strrchr($filename,"."),1));
 
+			/*
 			switch($file_extension){
 			    case "gif": $ctype="image/gif"; break;
 			    case "png": $ctype="image/png"; break;
@@ -155,13 +163,20 @@
 			}
 
 			header('Content-type: '.$ctype);
-			echo $imagick->getImageBlob();
+			*/
+
+			#echo $imagick->getImageBlob();
+			$magicianObj->displayImage($file_extension);
 		}
 
 		# 縮放路徑處裡
 		public static function resizePath($path=false,$width=false,$height=false){
 			if(empty($path)) return self::absolute_path(CORE::$cfg["noimg"]);
 
+			$urlPath = base64_encode($path);
+			return CORE::$root.'imghandle/resize/'.$width.'/'.$height.'/'.$urlPath.'/';
+
+			/*
 			if(preg_match('/^http/',$path)){
 				if(preg_match('/^http:\/\/'.CORE::$cfg["url"].'/',$path)){
 					$relativePath = str_replace(CORE::$cfg['host'],'/',$path);
@@ -172,6 +187,7 @@
 			}else{
 
 			}
+			*/
 		}
 	}
 
