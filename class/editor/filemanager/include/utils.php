@@ -1,6 +1,6 @@
 <?php 
 
-if($_SESSION['RF']["verify"] != "RESPONSIVEfilemanager") die('forbiden');
+#if($_SESSION['RF']["verify"] != "RESPONSIVEfilemanager") die('forbiden');
 
 function deleteDir($dir) {
     if (!file_exists($dir)) return true;

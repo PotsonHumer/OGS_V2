@@ -23,16 +23,11 @@
 
 		# 縮放圖片
 		private static function resize(){
-			$width = array_shift(self::$args);
-			$height = array_shift(self::$args);
-			CHECK::is_array_exist(self::$args);
-
-			if(CHECK::is_pass()){
-				$path = implode("/",self::$args);
-				IMAGES::resize($path,$width,$height);
-			}else{
-				self::error();
-			}
+			list($width,$height,$path) = self::$args;
+			$realPath = base64_decode($path);
+			IMAGES::resize($realPath,$width,$height);
+			
+			#self::error();
 		}
 
 		# 錯誤處理
