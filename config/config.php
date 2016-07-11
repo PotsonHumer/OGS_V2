@@ -4,7 +4,14 @@
 	$config["url"] = "ogsysvm.cloudapp.net";
 	$config["host"] = 'http://'.$config["url"].$config["root"];
 	$config["manage"] = "ogsadmin/";
-	
+
+	$config['smtp'] = array(
+		'host' => 'smtp.gmail.com',
+		'account' => 'ogs.notice@gmail.com',
+		'pass' => 'ntjrfzntaoyulddc',
+		'port' => '465'
+	);
+
 	# 初始路徑
 	$config["images"] = $config["root"].'images/'; # 圖片路徑
 	$config["noimg"] = $config["host"].'images/no-thumb.jpg'; # 預設圖片路徑
