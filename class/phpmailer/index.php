@@ -7,6 +7,8 @@
 
 		function __construct(){
 
+			$smtp = CORE::$cfg['smtp'];
+
 			CORE::summon(__FILE__);
 
 			self::$call = new PHPMailer();
@@ -14,8 +16,8 @@
 
 			self::$call->SMTPAuth = true;
 			self::$call->SMTPSecure = "ssl"; # 設定 SSL 連線
-			self::$call->Host = "smtp.gmail.com"; # 主機位置
-			self::$call->Port = 465; # Gmail 是 465
+			self::$call->Host = $smtp['host']; # 主機位置
+			self::$call->Port = $smtp['port']; # Gmail 是 465
 
 			# 信件內容的編碼方式       
 			self::$call->CharSet = "utf-8";
@@ -24,8 +26,8 @@
 			self::$call->Encoding = "base64";
 
 			# SMTP 驗證的使用者資訊
-			self::$call->Username = 'ogs.notice@gmail.com';  # mail 帳號
-			self::$call->Password = "ntjrfzntaoyulddc";  # mail 密碼
+			self::$call->Username = $smtp['account'];  # mail 帳號
+			self::$call->Password = $smtp['pass'];  # mail 密碼
 		}
 
 		public static function handle($from,$to,$mail_content,$mail_subject,$mail_name){
