@@ -529,6 +529,43 @@
 			return (mb_strlen($str) > $strLength)?mb_substr(strip_tags($str), 0, $strLength,'UTF-8').'...':strip_tags($str);
 		}
 
+		# json 格式化處理
+		public static function jsonEncode(array $args){
+			if(!is_array($args)) return false;
+
+			foreach($args as $key => $value){
+				if(is_array($value)){
+					$newArgs[$key] = rawurlencode(self::jsonEncode($value));
+				}else{
+					$newArgs[$key] = rawurlencode($value);
+				}
+			}
+
+			if(is_array($newArgs)){
+				return json_encode($newArgs);
+			}
+		}
+
+		# json 拆解處理
+		public static function jsonDecode($str=false){
+			if(empty($str)) return false;
+
+			$strArray = json_decode($str,true);
+
+			foreach($strArray as $key => $value){
+				$value = rawurldecode($value);
+				$valueArray = json_decode($value,true);
+
+				if(is_array($valueArray)){
+					$newArgs[$key] = self::jsonDecode($value);
+				}else{
+					$newArgs[$key] = rawurldecode($value);
+				}
+			}
+
+			return (is_array($newArgs))?$newArgs:false;
+		}
+
 		# eval 組合方法 start----------------------------------------------------------------------------
 
 		function call_function($class,$function,$args){
