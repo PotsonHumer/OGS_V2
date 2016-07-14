@@ -253,3 +253,61 @@
 			}
 		});
 	}
+
+	/*json 處理*/
+	function jsonEncode(args){
+		var arrayType = function(args){
+			return (typeof(args) == 'object')?true:false;
+		}
+
+		if(arrayType(args)){
+			var newArgs = new Array;
+
+			$.each(args,function(key,value){
+				if(isset(value)){
+					if(arrayType(value)){
+						newArgs[key] = encodeURIComponent(jsonEncode(value));
+					}else{
+						newArgs[key] = encodeURIComponent(value);
+					}
+				}
+			});
+
+			if(isset(newArgs)){
+				return JSON.stringify(newArgs);
+			}
+		}
+	}
+
+	function jsonDecode(args){
+		var isJson = function(args){
+			try{
+				jsonArgs = JSON.parse(args);
+				return (typeof(jsonArgs) == 'object')?true:false;
+			}catch(e){
+				return false;
+			}
+			return true;
+		}
+
+		if(isset(args)){
+			var newArgs = new Array;
+			var argsArray = JSON.parse(args);
+
+			$.each(argsArray,function(key,value){
+				if(isset(value)){
+					value = decodeURIComponent(value);
+
+					if(isJson(value)){
+						newArgs[key] = jsonDecode(value);
+					}else{
+						newArgs[key] = value;
+					}
+				}
+			});
+
+			if(isset(newArgs)){
+				return newArgs;
+			}
+		}
+	}
