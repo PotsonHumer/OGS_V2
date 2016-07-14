@@ -1,4 +1,4 @@
-	// OGS default js function
+	/*OGS default js function*/
 	
 	function log(OUTPUT){
 		try{
@@ -8,7 +8,7 @@
 		}
 	}
 	
-	// js 提示功能
+	/*js 提示功能*/
 	function js_notice(MSG,HEADING){
 		
 		if(isset(MSG)){
@@ -20,7 +20,7 @@
 		}
 	}
 	
-	// js 連結
+	/*js 連結*/
 	function goto(){
 		$(document).on("click",".goto",function(){
 			var HEADING = $(this).attr("rel");
@@ -41,7 +41,7 @@
 		});
 	}
 	
-	// 檢查變數是否存在
+	/*檢查變數是否存在*/
 	function isset(ARGS){
 		if(typeof(ARGS) != "undefined" && ARGS != '' && ARGS != "false" && ARGS != 0 && ARGS != false){
 			return true;
@@ -50,7 +50,7 @@
 		}
 	}
 	
-	// 更改 size 定義成像素寬度
+	/*更改 size 定義成像素寬度*/
 	function pixels_size(){
 		$("input,select,textarea").each(function(){
 			var INPUT_SIZE = $(this).attr("size");
@@ -62,7 +62,7 @@
 		});
 	}
 	
-	// 功能處理
+	/*功能處理*/
 	function func_handle(){
 		$(".func").click(function(E){
 			E.preventDefault();
@@ -87,7 +87,7 @@
 		});
 	}
 	
-	// 連結警告
+	/*連結警告*/
 	function link_alert(){
 		$(document).on("click",".alert",function(E){
 			var ALERT_MSG = $(this).attr("rel");
@@ -98,7 +98,7 @@
 		});
 	}
 	
-	// 全選功能
+	/*全選功能*/
 	function all_select(){
 		$(document).on("click",".all",function(E){
 			E.preventDefault();
@@ -117,7 +117,7 @@
 		});
 	}
 	
-	// 快捷鍵
+	/*快捷鍵*/
 	function hotkey(){
 		$(document).keyup(function(E){
 			if(E.altKey){
@@ -142,7 +142,7 @@
 		});
 	}
 
-	// 選單開闔
+	/*選單開闔*/
 	function nav_slide(){
 		$("nav label").click(function(){
 			var OBJ = $(this).next("ul");
@@ -153,14 +153,14 @@
 			OBJ.css({ "min-height":DRAP_H +"px" });
 		});
 
-		// 預設選取
+		/*預設選取*/
 		var DEFAULT_OBJ = $("nav label").next("ul").find("li a.current");
 		if(DEFAULT_OBJ.length > 0){
 			DEFAULT_OBJ.parents("ul.animate").prev("label").trigger('click');
 		}
 	}
 
-	// 動態增加列表
+	/*動態增加列表*/
 	function js_add_row(CLONE){
 		$("*[name=add]").click(function(){
 			var CONTENT_ID = $(this).attr("rel");
@@ -178,13 +178,13 @@
 
 			if(isset(ID)){
 				$(document).get_box({
-					CLICK : false, // 按鍵後才啟動功能 , true => 按鍵啟動  , false => 直接啟動
-					CALL : ID, // key 值
-					PHP : DEL_PATH, // 取值目標
-					FUNC : "", // func 附值
-					AFTER : function() {  }, // 動作後執行擴充
+					CLICK : false, /*按鍵後才啟動功能 , true => 按鍵啟動  , false => 直接啟動*/
+					CALL : ID, /*key 值*/
+					PHP : DEL_PATH, /*取值目標*/
+					FUNC : "", /*func 附值*/
+					AFTER : function() {  }, /*動作後執行擴充*/
 				}, function(DATA){
-					//callback
+					/*callback*/
 					if(DATA == "DONE"){
 						alert('刪除完成');
 					}else{
@@ -204,7 +204,7 @@
 		});
 	}
 
-	// 圖片選擇框處理
+	/*圖片選擇框處理*/
 	function images_box(NOIMG){
 		NOIMG = (!isset(NOIMG))?SAVE_NOIMG:NOIMG;
 
@@ -230,7 +230,7 @@
 		setTimeout(images_box,500);
 	}
 
-	// 取消選擇框圖片
+	/*取消選擇框圖片*/
 	function images_cancel(){
 		$(".images_cancel").click(function(E){
 			E.preventDefault();
@@ -239,7 +239,7 @@
 		});
 	}
 
-	// 多重語系修改
+	/*多重語系修改*/
 	function multiChange(){
 		$("input[name=multiBtn]").click(function(){
 			if(confirm('系統將目前的資料儲存至所有語系版本，確定要執行？')){
@@ -252,4 +252,62 @@
 				$(this).parents('form').attr('action',multiChangePath).submit();
 			}
 		});
+	}
+
+	/*json 處理*/
+	function jsonEncode(args){
+		var arrayType = function(args){
+			return (typeof(args) == 'object')?true:false;
+		}
+
+		if(arrayType(args)){
+			var newArgs = new Array;
+
+			$.each(args,function(key,value){
+				if(isset(value)){
+					if(arrayType(value)){
+						newArgs[key] = encodeURIComponent(jsonEncode(value));
+					}else{
+						newArgs[key] = encodeURIComponent(value);
+					}
+				}
+			});
+
+			if(isset(newArgs)){
+				return JSON.stringify(newArgs);
+			}
+		}
+	}
+
+	function jsonDecode(args){
+		var isJson = function(args){
+			try{
+				jsonArgs = JSON.parse(args);
+				return (typeof(jsonArgs) == 'object')?true:false;
+			}catch(e){
+				return false;
+			}
+			return true;
+		}
+
+		if(isset(args)){
+			var newArgs = new Array;
+			var argsArray = JSON.parse(args);
+
+			$.each(argsArray,function(key,value){
+				if(isset(value)){
+					value = decodeURIComponent(value);
+
+					if(isJson(value)){
+						newArgs[key] = jsonDecode(value);
+					}else{
+						newArgs[key] = value;
+					}
+				}
+			});
+
+			if(isset(newArgs)){
+				return newArgs;
+			}
+		}
 	}
