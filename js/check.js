@@ -53,19 +53,32 @@ var goCheck = function(OBJ,CALLBACK){
 	});
 }
 
-$(document).on('click','.check .checkBtn',function(E){
-	E.preventDefault();
+$(function(){
+	$(document).on('click','.checkBtn',function(E){
+		E.preventDefault();
 
-	var OBJ = $(this).parents('form.check');
-	goCheck(OBJ,function(result,title,msg){
-		if(result == false){
-			if(isset(msg)){
-				alert(msg);
-			}else{
-				alert('請確實填寫 "'+ title +'" 欄位');
-			}
+		var THIS = $(this);
+		var target = THIS.attr('rel');
+		if(typeof(target) != 'undefined' && target != ''){
+			var OBJ = $('#'+ target +'.check');
 		}else{
-			OBJ.submit();
+			var OBJ = THIS.parents('form.check');
 		}
+		goCheck(OBJ,function(result,title,msg){
+			if(result == false){
+				if(isset(msg)){
+					alert(msg);
+				}else{
+					alert('請確實填寫 "'+ title +'" 欄位');
+				}
+			}else{
+				THIS.removeClass('checkBtn').addClass('checkOver');
+				OBJ.submit();
+			}
+		});
+	});
+
+	$(document).on('click','.checkOver',function(E){
+		E.preventDefault();
 	});
 });
