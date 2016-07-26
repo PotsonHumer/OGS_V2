@@ -25,6 +25,8 @@
 			CHECK::is_array_exist(self::$data);
 
 			if(CHECK::is_pass()){
+				SCHEMA::breadcrumb(self::$data);
+
 				foreach(self::$data as $key => $args){
 					VIEW::newBlock("TAG_CRUMBS_LIST");
 					foreach($args as $field => $var){

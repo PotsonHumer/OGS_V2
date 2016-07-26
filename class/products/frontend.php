@@ -48,6 +48,8 @@
 			self::nav();
 
 			CORE::res_init('fix','css');
+
+			SCHEMA::output(true);
 			new VIEW(CORE::$temp_option["HULL"],self::$temp,false,false);
 		}
 
