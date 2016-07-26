@@ -20,6 +20,7 @@
 				break;
 				default:
 					$temp_router = CORE::$temp;
+					if(!$output_type) SCHEMA::output(true); # 輸出結構化標記
 				break;
 			}
 			
