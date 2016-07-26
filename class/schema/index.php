@@ -4,7 +4,9 @@
 
 	class SCHEMA{
 
-		private static $schema;
+		private static 
+			$publisher = 'Icisco 愛思科',
+			$schema;
 
 		function __construct(){
 			
@@ -40,6 +42,66 @@
 						return $urlArgs;
 					}
 				}
+			}
+		}
+
+		# 產生 schema
+		public static function make($func=false,$args=false){
+			if(empty($args)) return false;
+
+			switch($func){
+				case 'index':
+				case 'intro':
+				case 'news_list':
+				case 'news_detail':
+				case 'blog_list':
+				case 'blog_detail':
+				case 'products_list':
+				case 'products_detail':
+				case 'gallery_list':
+				case 'gallery_detail':
+				case 'feedback':
+				case 'contact':
+				case 'faq':
+					self::$func($args);
+				break;
+				case 'custom':
+				break;
+			}
+		}
+
+		# index
+		private static function index($args){
+			$output = array(
+				
+			);
+		}
+
+		# intro
+		private static function intro($args){
+			switch(true){
+				case (is_array($args)): # 依照來源資料
+					$row = $args;
+				break;
+				case (is_numeric($args)): # 自行取得資料
+					$rsnum = CRUD::dataFetch('intro',array('id' => $args,'status' => '1','langtag' => CORE::$langtag));
+					if(!empty($rsnum)){
+						list($row) = CRUD::$data;
+					}
+				break;
+				default:
+					$row = false;
+				break;
+			}
+
+			if(is_array($row)){
+				$output = array(
+					'name' => $row['subject'],
+					'articleBody' => strip_tags($row['content']),
+					'publisher' => array('@type' => 'Organization','name' => self::$publisher)
+				);
+
+				self::$schema[] = self::basic('Article',$output);
 			}
 		}
 
