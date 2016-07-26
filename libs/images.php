@@ -140,11 +140,26 @@
 			require_once(ROOT_PATH."class/editor/filemanager/include/php_image_magician.php");
 			require_once(ROOT_PATH."class/editor/filemanager/include/utils.php");
 
+			switch(true){
+				case ((empty($width) || $width == 'auto') && (empty($height) || $height == 'auto')):
+					return false;
+				break;
+				case (empty($width) || $width == 'auto'):
+					$option = 1;
+				break;
+				case (empty($height) || $height == 'auto'):
+					$option = 2;
+				break;
+				default:
+					$option = 0;
+				break;
+			}
+
 			$path = str_replace(CORE::$cfg['host'],ROOT_PATH,$path);
 
 			$magicianObj = new imageLib($path);
 			#$magicianObj->setForceStretch(false);
-			$magicianObj->resizeImage($width, $height);
+			$magicianObj->resizeImage($width, $height, $option);
 
 			#$imagick = new Imagick($path);
 			#$imagick->resizeImage($width,$height,Imagick::FILTER_LANCZOS,false);
@@ -173,8 +188,10 @@
 		public static function resizePath($path=false,$width=false,$height=false){
 			if(empty($path)) return self::absolute_path(CORE::$cfg["noimg"]);
 
+			$extension = pathinfo($path, PATHINFO_EXTENSION);
+			$baseName = basename($path,'.'.$extension);
 			$urlPath = base64_encode($path);
-			return CORE::$root.'imghandle/resize/'.$width.'/'.$height.'/'.$urlPath.'/';
+			return CORE::$root.'imghandle/resize/'.$width.'/'.$height.'/'.$urlPath.'/'.$baseName.'/';
 
 			/*
 			if(preg_match('/^http/',$path)){
