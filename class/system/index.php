@@ -26,6 +26,9 @@
 				self::$setting = CRUD::$data[0];
 				foreach(self::$setting as $field => $var){
 					switch($field){
+						case "address":
+							if(!empty($var)) $output['SYSTEM_MAP'] = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode&q='.$var;
+						break;
 						case "ga":
 							$var = self::gaLoad($var);
 						break;
@@ -35,10 +38,20 @@
 								self::$setting[$field] = $var;
 							}
 						break;
+						case "facebook":
+						case "gplus":
+						case "twitter":
+						case "instagram":
+						case "linkedin":
+							$output['SYSTEM_'.strtoupper($field).'_TARGET'] = (!empty($var))?'_blank':'_self';
+							$var = (empty($var))?'#':'';
+						break;
 					}
 
-					VIEW::assignGlobal("SYSTEM_".strtoupper($field),$var);
+					$output['SYSTEM'.strtoupper($field)] = $var;
 				}
+
+				VIEW::assignGlobal($output);
 			}
 		}
 
