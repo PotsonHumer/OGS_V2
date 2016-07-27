@@ -43,6 +43,20 @@
 			}
 		}
 
+		# 圖片
+		private static function image($path=false){
+			if(empty($path)) return false;
+
+			list($width,$height) = getimagesize($path);
+
+			return array(
+				'@type' => 'ImageObject',
+				'url' => $path,
+				'width' => $width,
+				'height' => $height
+			);
+		}
+
 		# 產生 schema
 		public static function make($func=false,$args=false){
 			if(empty($args)) return false;
@@ -123,10 +137,21 @@
 
 			if(is_array($row)){
 				$output = array(
-					'name' => $row['subject'],
+					'name' => CORE::$lang['intro'],
+					'headline' => $args['subject'],
 					'articleBody' => strip_tags($row['content']),
-					'publisher' => array('@type' => 'Organization','name' => self::$publisher)
+					'author' => SYSTEM::$setting['name'],
+					'publisher' => array('@type' => 'Organization','name' => self::$publisher,'logo' => self::image(SYSTEM::$setting['logo'])),
+					'datePublished' => (!empty($args['createdate']))?$args['createdate']:date('Y-m-d'),
+					'dateModified' => (!empty($args['modifydate']))?$args['modifydate']:date('Y-m-d'),
+					'mainEntityOfPage' => CORE::$cfg['host'].'blog/',
 				);
+
+				preg_match('/<img src="(.*?)" [^>]*?>/', $row['content'], $imgOutput);
+				if(is_array($imgOutput)){
+					list($imgTag,$imgPath) = $imgOutput;
+					$output['image'] = self::image($imgPath);
+				}
 
 				self::$schema[] = self::basic('Article',$output);
 			}
