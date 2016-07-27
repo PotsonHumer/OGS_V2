@@ -181,6 +181,29 @@
 			self::$schema[] = self::basic('BlogPosting',$output);
 		}
 
+		# products list
+		private static function products_list($args){
+			foreach($args as $row){
+				self::products_detail($row);
+			}
+		}
+
+		# products
+		private static function products_detail($args){
+			$output = array(
+				'name' => $args['subject'],
+				'description' => preg_replace('/\s(?=)/', '', strip_tags($args['content'])),
+			);
+
+			IMAGES::load('products',$args['id']);
+			if(is_array(IMAGES::$data)){
+				list($image) = IMAGES::$data;
+				$output['image'] = self::image($image['path']);
+			}
+
+			self::$schema[] = self::basic('Product',$output);
+		}
+
 		# 麵包屑生成
 		public static function breadcrumb(array $args){
 			foreach($args as $key => $data){

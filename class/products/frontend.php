@@ -104,6 +104,9 @@
 			$rsnum = CRUD::dataFetch('products',array('parent' =>  self::$cate,'status' => '1'),false,array('sort' => CORE::$cfg["sort"]));
 			if(!empty($rsnum)){
 				$dataRow = CRUD::$data;
+
+				SCHEMA::make('products_list',$dataRow);
+
 				foreach($dataRow as $key => $row){
 					VIEW::newBlock("TAG_PRODUCTS_LIST");
 					foreach($row as $field => $var){
@@ -134,6 +137,8 @@
 				foreach($row as $field => $var){
 					VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
 				}
+
+				SCHEMA::make('products_detail',$row);
 
 				VIEW::assignGlobal("VALUE_BACK_LINK",self::dataLink(self::$cate));
 
