@@ -8,9 +8,7 @@
 			$publisher = 'Icisco 愛思科',
 			$schema;
 
-		function __construct(){
-			
-		}
+		function __construct(){}
 
 		# 基本項目
 		private static function basic($type,array $args){
@@ -134,6 +132,25 @@
 			}
 		}
 
+		# news list
+		private static function news_list($args){
+			foreach($args as $row){
+				self::news_detail($row);
+			}
+		}
+
+		# news
+		private static function news_detail($args){
+			$output = array(
+					'name' => $args['subject'],
+					'startDate' => $args['showdate'],
+					'description' => strip_tags($args['content']),
+					#'location' => '',
+				);
+
+			self::$schema[] = self::basic('Event',$output);
+		}
+
 		# 麵包屑生成
 		public static function breadcrumb(array $args){
 			foreach($args as $key => $data){
@@ -166,4 +183,4 @@
 		}
 	}
 
-?> 
+?>
