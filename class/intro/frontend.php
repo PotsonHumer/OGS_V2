@@ -45,6 +45,8 @@
 				SEO::output();
 
 				CRUMBS::fetch('intro',$row);
+
+				SCHEMA::make('intro',$row);
 			}else{
 				VIEW::newBlock("TAG_NONE");
 			}
