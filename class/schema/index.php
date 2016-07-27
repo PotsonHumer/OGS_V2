@@ -222,6 +222,34 @@
 			self::$schema[] = self::basic('IndividualProduct',$output);
 		}
 
+		# feedback
+		private static function feedback($args){
+			$output = array(
+				'name' => CORE::$lang['feedback'],
+				'aggregateRating' => array('@type' => 'AggregateRating','ratingValue' => $args['score'],'reviewCount' => $args['count'])
+			);
+
+			if(is_array($args['review'])){
+				foreach($args['review'] as $row){
+					$output['review'][] = array(
+						'@type' => 'Review',
+						'author' => $row['name'],
+						'datePublished' => $row['createdate'],
+						'description' => $row['content'],
+						'reviewRating' => array(
+							'@type' => 'Rating',
+							'bestRating' => '5',
+							'worstRating' => '1',
+							'ratingValue' => $row['score'],
+						),
+					);
+				}
+
+			}
+
+			self::$schema[] = self::basic('webPage',$output);
+		}
+
 		# 麵包屑生成
 		public static function breadcrumb(array $args){
 			foreach($args as $key => $data){
