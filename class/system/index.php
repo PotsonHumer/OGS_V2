@@ -40,7 +40,7 @@
 					case "instagram":
 					case "linkedin":
 						$output[$prefix.'_'.strtoupper($field).'_TARGET'] = (!empty($var))?'_blank':'_self';
-						$var = (empty($var))?'#':'';
+						$var = (empty($var))?'#':$var;
 					break;
 				}
 
