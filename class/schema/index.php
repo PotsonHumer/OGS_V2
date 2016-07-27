@@ -8,9 +8,7 @@
 			$publisher = 'Icisco 愛思科',
 			$schema;
 
-		function __construct(){
-			
-		}
+		function __construct(){}
 
 		# 基本項目
 		private static function basic($type,array $args){
@@ -134,6 +132,124 @@
 			}
 		}
 
+		# news list
+		private static function news_list($args){
+			foreach($args as $row){
+				self::news_detail($row);
+			}
+		}
+
+		# news
+		private static function news_detail($args){
+			$output = array(
+					'name' => $args['subject'],
+					'startDate' => $args['showdate'],
+					'description' => strip_tags($args['content']),
+					#'location' => '',
+				);
+
+			self::$schema[] = self::basic('Event',$output);
+		}
+
+		# blog list
+		private static function blog_list($args){
+			foreach($args as $row){
+				self::blog_detail($row);
+			}
+		}
+
+		# blog
+		private static function blog_detail($args){
+			$output = array(
+				'name' => CORE::$lang['blog'],
+				#'logo' => '',
+				'headline' => $args['subject'],
+				'articleBody' => preg_replace('/\s(?=)/', '', strip_tags($args['content'])),
+				'author' => SYSTEM::$setting['name'],
+				'publisher' => array('@type' => 'Organization','name' => self::$publisher),
+				'datePublished' => (!empty($args['createdate']))?$args['createdate']:date('Y-m-d'),
+				'dateModified' => (!empty($args['modifydate']))?$args['modifydate']:date('Y-m-d'),
+				'mainEntityOfPage' => CORE::$cfg['host'].'blog/',
+			);
+
+			IMAGES::load('blog',$args['id']);
+			if(is_array(IMAGES::$data)){
+				list($image) = IMAGES::$data;
+				$output['image'] = self::image($image['path']);
+			}
+
+			self::$schema[] = self::basic('BlogPosting',$output);
+		}
+
+		# products list
+		private static function products_list($args){
+			foreach($args as $row){
+				self::products_handle($row);
+			}
+		}
+
+		# products list content
+		private static function products_handle($args){
+			$output = array(
+				'name' => $args['subject'],
+				'description' => preg_replace('/\s(?=)/', '', strip_tags($args['content'])),
+			);
+
+			IMAGES::load('products',$args['id']);
+			if(is_array(IMAGES::$data)){
+				list($image) = IMAGES::$data;
+				$output['image'] = self::image($image['path']);
+			}
+
+			self::$schema[] = self::basic('Product',$output);
+		}
+
+		# products
+		private static function products_detail($args){
+			$output = array(
+				'name' => $args['subject'],
+				'description' => preg_replace('/\s(?=)/', '', strip_tags($args['content'])),
+			);
+
+			if(!empty($args['serial'])) $output['serialNumber'] = $args['serial'];
+
+			IMAGES::load('products',$args['id']);
+			if(is_array(IMAGES::$data)){
+				list($image) = IMAGES::$data;
+				$output['image'] = self::image($image['path']);
+			}
+
+			self::$schema[] = self::basic('IndividualProduct',$output);
+		}
+
+		# feedback
+		private static function feedback($args){
+			$output = array(
+				'name' => CORE::$lang['feedback'],
+				'aggregateRating' => array('@type' => 'AggregateRating','ratingValue' => $args['score'],'reviewCount' => $args['count'])
+			);
+
+			if(is_array($args['review'])){
+				foreach($args['review'] as $row){
+					$output['review'][] = array(
+						'@type' => 'Review',
+						'author' => $row['name'],
+						'datePublished' => $row['createdate'],
+						'description' => $row['content'],
+						'reviewRating' => array(
+							'@type' => 'Rating',
+							'bestRating' => '5',
+							'worstRating' => '1',
+							'ratingValue' => $row['score'],
+						),
+					);
+				}
+
+			}
+
+			self::$schema[] = self::basic('webPage',$output);
+		}
+
 		# 麵包屑生成
 		public static function breadcrumb(array $args){
 			foreach($args as $key => $data){
@@ -166,4 +282,4 @@
 		}
 	}
 
-?> 
+?>

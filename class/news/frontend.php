@@ -64,6 +64,8 @@
 				#VIEW::newBlock("TAG_NEWS_BLOCK");
 				$dataRow = CRUD::$data;
 
+				SCHEMA::make('news_list',$dataRow);
+
 				foreach($dataRow as $key => $row){
 					VIEW::newBlock("TAG_NEWS_LIST");
 					foreach($row as $field => $var){
@@ -140,6 +142,8 @@
 				}
 
 				VIEW::assignGlobal("VALUE_BACK_LINK",(self::$cateExist)?self::dataLink(self::$cate):CORE::$root.'news/');
+
+				SCHEMA::make('news_detail',$row);
 
 				SEO::load($row["seo_id"]);
 				if(empty(SEO::$data["h1"])) SEO::$data["h1"] = $row["subject"];
