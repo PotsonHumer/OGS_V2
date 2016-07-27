@@ -360,6 +360,8 @@
 					$_POST['related'] = '';
 				}
 
+				$_POST['createdate'] = date('Y-m-d H:i:s');
+
 				CRUD::dataInsert('products',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
