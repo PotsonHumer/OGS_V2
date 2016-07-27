@@ -59,6 +59,8 @@
 				#VIEW::newBlock("TAG_BLOG_BLOCK");
 				$dataRow = CRUD::$data;
 
+				SCHEMA::make('blog_list',$dataRow);
+
 				foreach($dataRow as $key => $row){
 					VIEW::newBlock("TAG_BLOG_LIST");
 					foreach($row as $field => $var){
@@ -166,6 +168,13 @@
 				SEO::output();
 
 				CRUMBS::fetch('blog',$row);
+
+				MESSAGE::$dataID = $row['id'];
+				MESSAGE::$func = 'blog';
+				new MESSAGE();
+				VIEW::assignGlobal('TAG_MESSAGE_BLOCK',MESSAGE::$output);
+
+				SCHEMA::make('blog_detail',$row);
 			}
 		}
 

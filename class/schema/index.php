@@ -151,6 +151,36 @@
 			self::$schema[] = self::basic('Event',$output);
 		}
 
+		# blog list
+		private static function blog_list($args){
+			foreach($args as $row){
+				self::blog_detail($row);
+			}
+		}
+
+		# blog
+		private static function blog_detail($args){
+			$output = array(
+				'name' => CORE::$lang['blog'],
+				#'logo' => '',
+				'headline' => $args['subject'],
+				'articleBody' => preg_replace('/\s(?=)/', '', strip_tags($args['content'])),
+				'author' => SYSTEM::$setting['name'],
+				'publisher' => array('@type' => 'Organization','name' => self::$publisher),
+				'datePublished' => (!empty($args['createdate']))?$args['createdate']:date('Y-m-d'),
+				'dateModified' => (!empty($args['modifydate']))?$args['modifydate']:date('Y-m-d'),
+				'mainEntityOfPage' => CORE::$cfg['host'].'blog/',
+			);
+
+			IMAGES::load('blog',$args['id']);
+			if(is_array(IMAGES::$data)){
+				list($image) = IMAGES::$data;
+				$output['image'] = self::image($image['path']);
+			}
+
+			self::$schema[] = self::basic('BlogPosting',$output);
+		}
+
 		# 麵包屑生成
 		public static function breadcrumb(array $args){
 			foreach($args as $key => $data){
