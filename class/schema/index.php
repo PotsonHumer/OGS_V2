@@ -121,13 +121,18 @@
 			self::$schema[] = self::basic('BreadcrumbList',$items);
 		}
 
+		# 輸出
 		public static function output($view=false){
-			$schemaFull = '<script type="application/ld+json">'.self::jsonEncode().'</script>';
+			$schemaJson = self::jsonEncode();
 
-			if($view){
-				VIEW::assignGlobal('TAG_SCHEMA',$schemaFull);
-			}else{
-				return $schemaFull;
+			if(!empty($schemaJson)){
+				$schemaFull = '<script type="application/ld+json">'.$schemaJson.'</script>';
+
+				if($view){
+					VIEW::assignGlobal('TAG_SCHEMA',$schemaFull);
+				}else{
+					return $schemaFull;
+				}
 			}
 		}
 	}
