@@ -21,6 +21,8 @@
 
 			new AD;
 
+			SCHEMA::make('index',SYSTEM::$setting);
+
 			CORE::common_resource();
 
 			new VIEW('ogs-index-tpl.html',$temp,false,false);

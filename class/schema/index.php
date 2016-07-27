@@ -72,9 +72,38 @@
 
 		# index
 		private static function index($args){
+
 			$output = array(
-				
+				'url' => CORE::$cfg['host'],
+				#'contactPoint' => 
 			);
+
+			CHECK::is_array_exist($args);
+			if(CHECK::is_pass()){
+				foreach(SYSTEM::$setting as $field => $var){
+					if(empty($var)) continue;
+					switch($field){
+						case "name":
+						case "email":
+						case "address":
+						case "logo":
+							$output[$field] = $var;
+						break;
+						case "tel":
+							$output['telephone'] = $var;
+						break;
+						case "facebook":
+						case "gplus":
+						case "twitter":
+						case "instagram":
+						case "linkedin":
+							$output['sameAs'][] = $var;
+						break;
+					}
+				}
+			}
+
+			self::$schema[] = self::basic('Organization',$output);
 		}
 
 		# intro
