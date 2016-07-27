@@ -328,6 +328,8 @@
 			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["content"],$_POST["parent"]);
 
 			if(CHECK::is_pass()){
+				$_POST['createdate'] = date('Y-m-d H:i:s');
+
 				CRUD::dataInsert('blog',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
