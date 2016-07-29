@@ -5,6 +5,7 @@
 
 		public static 
 			$now,
+			$sub,
 			$args;
 
 		function __construct(){
@@ -43,17 +44,37 @@
 				foreach($sk_array as $sk_group){
 					list($field,$value) = explode(":",$sk_group);
 					if(!empty($value)){
-						switch($field){
-							case "parent":
-								$sk[] = "{$field} = '{$value}'";
+						$subCK = (preg_match('/^sub-/',$field))?true:false;
+						$output = false;
+
+						if($subCK){
+							list($prefix,$orignField) = explode('-',$field);
+							$field = $orignField;
+						}
+
+						switch(true){
+							case ($field == "parent"):
+								$output = "{$field} = '{$value}'";
 							break;
 							default:
-								$sk[] = "{$field} like '%{$value}%'";
+								$output = "{$field} like '%{$value}%'";
 							break;
 						}
+
+						if(!$subCK){
+							$sk[] = $output;
+						}else{
+							$sub[] = $output;
+							$field = 'SUB_'.$orignField;
+						}
+
 						self::$args[$field] = $value;
 						VIEW::assignGlobal("SK_".strtoupper($field),$value);
 					}
+				}
+
+				if(is_array($sub)){
+					self::$sub = implode(" and ",$sub);
 				}
 
 				if(is_array($sk)){
