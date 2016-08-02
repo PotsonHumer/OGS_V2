@@ -43,8 +43,11 @@ var goCheck = function(OBJ,CALLBACK){
 		}
 
 		if(!$rs){
+			$(this).addClass('checkError');
 			CALLBACK(false,title,msg);
 			return false;
+		}else{
+			$(this).removeClass('checkError');
 		}
 
 		if(totalField == (KEY + 1)){
@@ -54,7 +57,8 @@ var goCheck = function(OBJ,CALLBACK){
 }
 
 $(function(){
-	$(document).on('click','.checkBtn',function(E){
+	//$(document).on('click','.checkBtn',function(E){
+	$('.checkBtn').click(function(E){
 		E.preventDefault();
 
 		var THIS = $(this);
