@@ -17,12 +17,15 @@
 
 			if(empty(self::$num)) self::$num = CORE::$cfg["item_num"];
 			if(!empty($rsnum) && $rsnum > self::$num){
+				$offset = 0;
+				list($offset,$oldNum) = explode(',',$select['limit']);
+
 				self::$all = ceil($rsnum / self::$num); # 總頁數
 
 				if(empty(self::$now)) self::$now = 1;
 				if(self::$now < 0 || self::$now > self::$all) self::$now = 1;
 
-				self::$start = $limit_start = self::$num * self::$now - self::$num; # limit 開始資料列數
+				self::$start = $limit_start = self::$num * self::$now - self::$num + $offset; # limit 開始資料列數
 				$new_limit = $limit_start.",".self::$num; # limit 組合完成
 
 				$select['limit'] = $new_limit;
