@@ -530,14 +530,14 @@
 		}
 
 		# json 格式化處理
-		public static function jsonEncode(array $args){
+		public static function jsonEncode(array $args,$noEmpty=false){
 			if(!is_array($args)) return false;
 
 			foreach($args as $key => $value){
 				if(is_array($value)){
 					$newArgs[$key] = rawurlencode(self::jsonEncode($value));
 				}else{
-					$newArgs[$key] = rawurlencode($value);
+					if($noEmpty && !empty($value) || !$noEmpty) $newArgs[$key] = rawurlencode($value);
 				}
 			}
 
