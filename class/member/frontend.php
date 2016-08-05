@@ -4,20 +4,15 @@
 
 	class MEMBER_FRONTEND extends MEMBER{
 
-		private static $id;
-		private static $temp;
-		#private static $option_temp;
+		private static $id,$temp;
 
 		function __construct(){
 
-			$func = array_shift(CORE::$args);
+			list($func,$args) = CORE::$args;
 			self::$id = SESS::get('m_id');
 			self::$temp = CORE::$temp_main;
 
-			self::$temp["NAV"] = '';
-			self::$temp["HEADER"] = 'ogs-member-header-tpl.html';
-			self::$temp["TOP"] = 'ogs-member-top-tpl.html';
-			self::$temp["FOOTER"] = 'ogs-member-footer-tpl.html';
+			self::$temp["NAV"] = 'ogs-member-nav-tpl.html';
 
 			switch($func){
 				case "regist":
@@ -30,7 +25,7 @@
 				break;
 				case "verify":
 					self::$temp["MAIN"] = CORE::$temp_option["MSG"];
-					self::verify();
+					self::verify($args);
 				break;
 				case "forget":
 					self::$temp["MAIN"] = 'ogs-member-forget-tpl.html';
@@ -62,7 +57,7 @@
 					self::modify();
 				break;
 				case "order":
-					self::order();
+					self::order($args);
 				break;
 				default:
 					if(empty(self::$id)){
@@ -74,7 +69,9 @@
 				break;
 			}
 
-			new VIEW('ogs-member-main-tpl.html',self::$temp,false,false);
+			CORE::common_resource();
+
+			new VIEW(CORE::$temp_option["HULL"],self::$temp,false,false);
 		}
 
 		# 檢查登入
@@ -164,8 +161,9 @@
 		}
 
 		# 驗證功能
-		private static function verify(){
-			$verify_code = array_shift(CORE::$args);
+		private static function verify($verify_code=false){
+			if(empty($verify_code)) CORE::msg(CORE::$lang["verify_error"],CORE::$root.'member/');
+
 			$rsnum = CRUD::dataFetch('member',array('verify_code' => $verify_code,'verify' => '0'));
 			if($rsnum == 1){
 				list($row) = CRUD::$data;
@@ -182,7 +180,7 @@
 					return true;
 				}
 			}else{
-				if(CRUD::dataFetch('member',array('verify_code' => $verify_code,'verify' => '1'))){
+				if(CRUD::dataNum('member',array('verify_code' => $verify_code,'verify' => '1'))){
 					CORE::msg(CORE::$lang["verify_already"],CORE::$root.'member/');
 					return true;
 				}
@@ -314,9 +312,7 @@
 		}
 
 		# 會員訂單列表
-		private static function order(){
-			$o_id = array_shift(CORE::$args);
-			
+		private static function order($o_id=false){			
 			if(empty($o_id)){
 				self::$temp["MAIN"] = 'ogs-member-order-tpl.html';
 				$rsnum = CRUD::dataFetch('order',false,false,array('createdate' => 'desc'));
