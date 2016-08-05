@@ -56,8 +56,8 @@
 			return self::$status[] = $rs;
 		}
 		
-		public static function is_password($args){
-			$rs = preg_match('/^[A-Za-z0-9]{4,20}/',$args);
+		public static function is_password($args,$range='4,20'){
+			$rs = preg_match('/^[A-Za-z0-9]{'.$range.'}/',$args);
 			
 			if(!$rs){
 				self::$alert = '錯誤的密碼，請輸入 4 ~ 20 個字元的數字與英文';
