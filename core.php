@@ -566,6 +566,41 @@
 			return (is_array($newArgs))?$newArgs:false;
 		}
 
+		# 上傳功能
+		# 參數 : 
+		# field   => array , 上傳參數物件 (必填)
+		# filter  => array , 檔案類型篩選 (必填)
+		# path    => string , 輸出目錄
+		# output  => string , 輸出檔名,不包含副檔名
+
+		public static function fileUpload(array $args,array $filter,$path=false,$output=false){
+			if(is_array($args)){
+				foreach($args as $key => $V){
+					$text = "file_".$key;
+					$$text = $V;
+				}
+
+				$path = (!empty($path))?$path:'upload';
+				$dir = ROOT_PATH."files/{$path}/";
+				if(!is_dir($dir)){
+					mkdir($dir, 0777, true) || die("can't create dir in '{$dir}'");
+					chmod($dir, 0777);
+				}
+				
+				$file_name_array = explode(".",$file_name);
+				$sub_name = $file_name_array[count($file_name_array) - 1];
+
+				if($file_error == 0 && $file_name != "" && in_array(strtolower($sub_name),$filter)){
+					$date_name = (!empty($output))?$output.'.'.$sub_name:date("Y-m-d-H-i-s")."-file".'.'.$sub_name;
+					$route = $dir . $date_name;
+					move_uploaded_file($file_tmp_name,$route);
+					chmod($route, 0777);
+				}
+
+				return (!empty($date_name))?$date_name:false;
+			}
+		}
+
 		# eval 組合方法 start----------------------------------------------------------------------------
 
 		function call_function($class,$function,$args){
