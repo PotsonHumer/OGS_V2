@@ -11,13 +11,24 @@ var validateEmail = function(email){
     return re.test(email);
 }
 
+var recaptchaCheck = function(CALLBACK){
+	if(typeof(grecaptcha) == 'object' && grecaptcha.getResponse() == ''){
+		CALLBACK(false,false,'請勾選 "我不是機器人" 驗證器');
+		return false;
+	}
+
+	return true;
+}
+
+
 var goCheck = function(OBJ,CALLBACK){
 	var totalField = OBJ.find('*[data-check=true]').length;
 	var result = true;
 	var resultTitle = '';
 
 	if(totalField == 0){
-		CALLBACK(true);
+		var reacptchaRs = recaptchaCheck(CALLBACK);
+		if(reacptchaRs) CALLBACK(true);
 		return;
 	}
 
@@ -51,7 +62,8 @@ var goCheck = function(OBJ,CALLBACK){
 		}
 
 		if(totalField == (KEY + 1)){
-			CALLBACK(true);
+			var reacptchaRs = recaptchaCheck(CALLBACK);
+			if(reacptchaRs) CALLBACK(true);
 		}
 	});
 }
