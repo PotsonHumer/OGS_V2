@@ -47,7 +47,8 @@
 		private static function image($path=false){
 			if(empty($path)) return false;
 
-			list($width,$height) = getimagesize($path);
+			#list($width,$height) = getimagesize($path);
+			list($width,$height) = IMAGES::size($path);
 
 			return array(
 				'@type' => 'ImageObject',
