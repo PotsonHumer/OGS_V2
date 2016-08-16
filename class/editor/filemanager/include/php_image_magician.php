@@ -243,7 +243,11 @@ class imageLib
          *  $this->imageSize[3] = width x height
          *
          */
-            $this->imageSize = getimagesize($this->fileName);
+            if(class_exists('IMAGES')){
+              $this->imageSize = IMAGES::size($this->fileName);
+            }else{
+              $this->imageSize = getimagesize($this->fileName);  
+            }
 
         } else {
       $this->errorArray[] = 'File is not an image';
