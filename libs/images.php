@@ -206,6 +206,15 @@
 			}
 			*/
 		}
+
+		# 快速取得圖片大小
+		public static function size($path=false){
+			if(empty($path)) return false;
+
+			require_once ROOT_PATH.'libs/Fastimage.php';
+			$image = new FastImage($path);
+			return $image->getSize();
+		}
 	}
 
 ?>
