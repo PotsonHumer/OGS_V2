@@ -601,6 +601,45 @@
 			}
 		}
 
+		# 輸出名稱組合
+		# @pram string $lastName : 姓氏
+		# @pram string $firstName : 名字
+		# @pram string,boolean $type : 輸出類型
+		# @value string,boolean
+
+		public static function fetchName($name=false,$type=false){
+			if(is_array($name) || empty($name)){
+				$nameArgs = (count($name) <= 0 || empty($name))?array($_POST['lastName'],$_POST['firstName']):$name;
+				$input = true;
+			}else{
+				$nameArgs = explode(' ',$name);
+				$input = false;
+			}
+
+			switch(true){
+				case (!$input):
+				case (CORE::$langtag == "cht"):
+				case (CORE::$langtag == "chs"):
+					list($front,$after) = $nameArgs;
+				break;
+				default:
+					list($after,$front) = $nameArgs;
+				break;
+			}
+
+			switch(true){
+				case ($type === true):
+					return $front.' '.$after;
+				break;
+				case ($type === false):
+					return $front.$after;
+				break;
+				case ($type === 'array'):
+					return array($front,$after);
+				break;
+			}
+		}
+
 		# eval 組合方法 start----------------------------------------------------------------------------
 
 		function call_function($class,$function,$args){
