@@ -1,12 +1,18 @@
-<div class="images_block">
+<div class="images_block clearAfter">
 	<input type="hidden" name="images[id][]" value="{IMAGES_ID}">
 	<input type="hidden" name="images[path][]" value="{IMAGES_PATH}">
 	<div class="images_box img_manage fix"></div>
 	<div class="images_detail fix">
 		<p class="right">
+			<label>指定寬高</label><input type="number" name="images[width][]" value="{IMAGES_WIDTH}" size="50" placeholder="寬度" min="0">
+			<input type="number" name="images[height][]" value="{IMAGES_HEIGHT}" size="50" placeholder="高度" min="0"><br />
+			<label>手機寬高</label><input type="number" name="images[width_m][]" value="{IMAGES_WIDTH_M}" size="50" placeholder="寬度" min="0">
+			<input type="number" name="images[height_m][]" value="{IMAGES_HEIGHT_M}" size="50" placeholder="高度" min="0"><br />
 			<label>alt</label><input type="text" name="images[alt][]" value="{IMAGES_ALT}"><br />
 			<label>title</label><input type="text" name="images[title][]" value="{IMAGES_TITLE}"><br />
 			<a class="images_cancel" href="#">取消圖片</a>
 		</p>
 	</div>
+	<p><textarea name="images[info][]" placeholder="圖片簡述，僅出現在部分功能；例：相簿功能">{IMAGES_INFO}</textarea></p>
+	<p class="left notice">只填寬或高則自動依照比例調整</p>
 </div>
