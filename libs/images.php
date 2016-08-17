@@ -83,10 +83,18 @@
 		# 紀錄圖片
 		public static function add($tb_name,array $args,$related){
 			foreach($args["id"] as $key => $id){
+				list($width,$height) = IMAGES::size($args["path"][$key]);
 				$images = array(
 					'path' => $args["path"][$key],
 					'alt' => $args["alt"][$key],
 					'title' => $args["title"][$key],
+					'width_o' => $width,
+					'height_o' => $height,
+					'width' => $args['width'][$key],
+					'height' => $args['height'][$key],
+					'width_m' => $args['width_m'][$key],
+					'height_m' => $args['height_m'][$key],
+					'info' => $args['info'][$key],
 					'sheet' => $tb_name,
 					'related' => $related
 				);
@@ -98,11 +106,19 @@
 		# 更新圖片
 		public static function modify(array $args,$tb_name=false,$related=false){
 			foreach($args["id"] as $key => $id){
+				list($width,$height) = IMAGES::size($args["path"][$key]);
 				$images = array(
 					'id' => $id,
 					'path' => $args["path"][$key],
 					'alt' => $args["alt"][$key],
 					'title' => $args["title"][$key],
+					'width_o' => $width,
+					'height_o' => $height,
+					'width' => $args['width'][$key],
+					'height' => $args['height'][$key],
+					'width_m' => $args['width_m'][$key],
+					'height_m' => $args['height_m'][$key],
+					'info' => $args['info'][$key],
 				);
 
 				if(empty($id)){

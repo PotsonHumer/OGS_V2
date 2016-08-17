@@ -103,6 +103,12 @@ hr:before{
 	clear: both;
 }
 
+.clearAfter:after{
+	content: ' ';
+	display: block;
+	clear: both;
+}
+
 .left{
 	text-align: left;
 }
@@ -383,8 +389,8 @@ main{
 
 /* images_block */
 .images_block{
-	width: 300px;
-	height: 110px;
+	width: 400px;
+	/* height: 110px; */
 	text-align: center;
 	position: relative;
 	white-space: nowrap;
@@ -394,12 +400,12 @@ main{
 
 .images_box{
 	margin: 5px;
-	width: 100px;
-	height: 100px;
+	width: 150px;
+	height: 150px;
 	border: 1px dotted #333;
 	display: inline-block;
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: top;
 	position: relative;
 }
 
@@ -424,8 +430,8 @@ main{
 .images_detail{
 	text-align: center;
 	margin: 5px;
-	width: 160px;
-	height: 100px;
+	width: 210px;
+	/* height: 100px; */
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -437,6 +443,17 @@ main{
 
 .images_detail p{
 	font-size: 16px;
+}
+
+.images_block textarea{
+	width: calc(100% - 25px);
+	height: 3rem;
+	margin: 0.5rem 0 0 0;
+	padding: 0;
+}
+
+.images_block .notice{
+	margin: 5px 12px;
 }
 
 /* column */
