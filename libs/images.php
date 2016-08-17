@@ -13,9 +13,12 @@
 			self::$data = array();
 			$rsnum = CRUD::dataFetch('images',array('sheet' => $tb_name,'related' => $id),false,array('id' => 'asc'));
 			if(!empty($rsnum)){
+				$cropField = (CORE::$mobile)?'crop_m':'crop';
+
 				foreach(CRUD::$data as $key => $row){
 					$row["exist"] = (!empty($row["path"]))?true:false;
 					$row["path"] = (!empty($row["path"]))?self::absolute_path($row["path"]):self::absolute_path(CORE::$cfg["noimg"]);
+					$row["path"] = (!empty($row[$cropField]))?$row[$cropField]:$row['path'];
 					self::$data[] = $row;
 				}
 
@@ -169,7 +172,7 @@
 
 		# 製作小圖
 		public static function crop($id,$path=false,$width=false,$height=false,$width_m=false,$height_m=false){
-			if(empty($id) || empty($path)) return false;
+			if(empty($id) || empty($path) || $path == CORE::$cfg["noimg"]) return false;
 
 			$filePath = str_replace(CORE::$cfg['host'],ROOT_PATH,$path);
 			$fileName = basename($filePath);
