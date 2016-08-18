@@ -165,6 +165,10 @@
 				MESSAGE::$dataID = $row['id'];
 				new MESSAGE;
 				VIEW::assignGlobal("TAG_MESSAGE_BLOCK",MESSAGE::$output);
+
+				GALLERY::related($row['related']);
+			}else{
+				header('location: '.CORE::$root.'gallery/');
 			}
 		}
 

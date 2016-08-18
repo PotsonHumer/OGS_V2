@@ -80,6 +80,9 @@
 				case "imagesDel":
 					self::imagesDel();
 				break;
+				case "seek":
+					self::seek($id);
+				break;
 				default:
 					self::$temp["MAIN"] = 'ogs-admin-gallery-list-tpl.html';
 					self::row($func);
@@ -332,6 +335,13 @@
 			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["dirpath"],$_POST["parent"]);
 
 			if(CHECK::is_pass()){
+
+				if(is_array($_POST['related'])){
+					$_POST['related'] = json_encode($_POST['related']);
+				}else{
+					$_POST['related'] = '';
+				}
+
 				CRUD::dataInsert('gallery',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
@@ -357,6 +367,9 @@
 				list($row) = CRUD::$data;
 				foreach($row as $field => $var){
 					switch($field){
+						case "related":
+							GALLERY::related($var);
+						break;
 						case "parent":
 							$field = $field.'_OPTION';
 							$var = self::cate_select($var);
@@ -406,6 +419,13 @@
 			$rsnum = CRUD::dataFetch('gallery',array('id' => $_POST["id"]));
 
 			if($check && !empty($rsnum)){
+
+				if(is_array($_POST['related'])){
+					$_POST['related'] = json_encode($_POST['related']);
+				}else{
+					$_POST['related'] = '';
+				}
+
 				CRUD::dataUpdate('gallery',$_POST,true,true);
 				if(!empty(DB::$error)){
 					$msg = DB::$error;
@@ -473,6 +493,50 @@
 		private static function imagesDel(){
 			if(empty($_POST['call'])) return false;
 			IMAGES::del('gallery',$_POST['call']);
+		}
+
+		# 搜尋關聯相簿
+		private static function seek($id=false){
+			if(empty($_POST['call'])) echo 'NONE';
+			$seekStr = $_POST['call'];
+
+			if(!empty($id)){
+				$rsnum = CRUD::dataFetch('gallery',array('id' => $id),array('related'));
+				if(!empty($rsnum)){
+					list($nowRow) = CRUD::$data;
+					if(!empty($nowRow['related'])){
+						$relatedArray = json_decode($nowRow['related'],true);
+						$seekFilter = "id NOT IN('".implode("','",$relatedArray)."','".$id."')";
+
+						$sk = array('status' => '1','langtag' => CORE::$langtag,'subject' => '%'.$seekStr.'%','custom' => $seekFilter);
+					}else{
+						$sk = array('status' => '1','langtag' => CORE::$langtag,'subject' => '%'.$seekStr.'%','id' => "!{$id}");
+					}
+				}
+			}
+
+			if(empty($sk) || !is_array($sk)) $sk = array('status' => '1','langtag' => CORE::$langtag,'subject' => '%'.$seekStr.'%');
+
+			$rsnum = CRUD::dataFetch('gallery',$sk);
+			if(!empty($rsnum)){
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $key => $row){
+					foreach($row as $field => $var){
+						$output[$key][$field] = rawurlencode($var);
+					}
+
+					IMAGES::load('gallery',$row["id"]);
+					list($image) = IMAGES::$data;
+					$output[$key]['image'] = '<img src="'.$image['path'].'" style="width: 100px;">';
+					$output[$key]['link'] = GALLERY::dataLink($row['parent'],$row);
+				}
+
+				if(is_array($output)){
+					echo json_encode($output);
+				}
+			}else{
+				echo 'NONE';
+			}
 		}
 	}
 
