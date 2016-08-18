@@ -2,7 +2,8 @@
 
 	$config["root"] = "/V2/";
 	$config["url"] = "ogsysvm.cloudapp.net";
-	$config["host"] = 'http://'.$config["url"].$config["root"];
+	$config["dns"] = 'http://'.$config["url"];
+	$config["host"] = $config["dns"].$config["root"];
 	$config["manage"] = "ogsadmin/";
 
 	$config['smtp'] = array(

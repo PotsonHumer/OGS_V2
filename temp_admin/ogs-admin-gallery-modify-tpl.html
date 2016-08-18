@@ -45,6 +45,16 @@
 				</td>
 			</tr>
 			<tr>
+				<th>圖檔列表</th>
+				<td id="imageList" colspan="3">
+					
+					<!-- START BLOCK : TAG_IMAGES_LIST -->
+						<!-- INCLUDE BLOCK : IMAGE -->
+					<!-- END BLOCK : TAG_IMAGES_LIST -->
+
+				</td>
+			</tr>
+			<tr>
 				<th>※ 內容</th>
 				<td colspan="3">
 					<textarea class="tiny" name="content">{VALUE_CONTENT}</textarea>
@@ -64,10 +74,46 @@
 </form>
 
 <script>
+	var confirmCK = false;
+
 	$(function(){
 		$(document).tab_box({
 			TITLE : false, //自動生成頁籤 , true => 啟動 , false => 停用
 			AFTER :  function() {  }, // 動作後執行擴充			
+		});
+
+		$('input[name=dirpath]').keyup(function(){
+			if(!confirmCK && confirm('確定重新取樣圖片?? 原本的圖片會被刪掉喔~')) confirmCK = true;
+			if(!confirmCK) return false;
+
+			$(document).get_box({
+				CLICK : false, // 按鍵後才啟動功能 , true => 按鍵啟動  , false => 直接啟動
+				CALL : '{VALUE_ID}', // key 值
+				PHP : "{TAG_MANAGE_PATH}gallery/imagesDel/", // 取值目標
+				FUNC : "", // func 附值
+				AFTER : function() {  }, // 動作後執行擴充
+			}, function(DATA){
+				//callback
+			});			
+
+			var word = $(this).val();
+
+			$(document).get_box({
+				CLICK : false, // 按鍵後才啟動功能 , true => 按鍵啟動  , false => 直接啟動
+				CALL : word, // key 值
+				PHP : "{TAG_MANAGE_PATH}gallery/images/", // 取值目標
+				FUNC : "", // func 附值
+				AFTER : function() {  }, // 動作後執行擴充
+			}, function(DATA){
+				//callback
+				if(isset(DATA) && DATA != 'NONE'){
+					$('#imageList').html('').append(DATA);
+					pixels_size();
+					images_cancel();
+				}else{
+					$('#imageList').html('請先於上方寫入目錄位置');
+				}
+			});
 		});
 	});
 </script>

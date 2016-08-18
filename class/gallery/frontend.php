@@ -66,7 +66,7 @@
 					foreach($row as $field => $var){
 						switch($field){
 							case "dirpath":
-								list($var) = self::dirLoad($var,1);
+								#list($var) = self::dirLoad($var,1);
 							break;
 							case "content":
 								$strLength = 30;
@@ -74,10 +74,16 @@
 							break;
 						}
 
-						VIEW::assign("VALUE_".strtoupper($field),$var);
+						$output["VALUE_".strtoupper($field)] = $var;
 					}
 
-					VIEW::assign("VALUE_LINK",self::dataLink($row["parent"],$row));
+					IMAGES::load('gallery',$row['id']);
+					list($image) = IMAGES::$data;
+
+					$output['VALUE_IMAGE'] = $image['path'];
+					$output['VALUE_LINK'] = self::dataLink($row["parent"],$row);
+
+					VIEW::assign($output);
 				}
 
 				# SEO
@@ -124,22 +130,28 @@
 				foreach($row as $field => $var){
 					switch($field){
 						case "dirpath":
-							$images = self::dirLoad($var);
-							continue;
+							#$images = self::dirLoad($var);
+							#continue;
 						break;
 					}
 
-					VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
+					$output["VALUE_".strtoupper($field)] = $var;
 				}
 
-				if(is_array($images)){
-					foreach($images as $filePath){
+				IMAGES::load('gallery',$row['id']);
+				if(is_array(IMAGES::$data)){
+					foreach(IMAGES::$data as $images){
 						VIEW::newBlock('TAG_GALLERY_LIST');
-						VIEW::assign('VALUE_FILE',$filePath);
+						foreach($images as $field => $var){
+							$imgOutput['IMAGE_'.strtoupper($field)] = $var;
+						}
+
+						VIEW::assign($imgOutput);
 					}
 				}
 
-				VIEW::assignGlobal("VALUE_BACK_LINK",self::dataLink(self::$cate));
+				$output['VALUE_BACK_LINK'] = self::dataLink(self::$cate);
+				VIEW::assignGlobal($output);
 
 				SEO::load($row["seo_id"]);
 				if(empty(SEO::$data["h1"])) SEO::$data["h1"] = $row["subject"];
