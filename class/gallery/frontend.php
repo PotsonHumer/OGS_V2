@@ -185,29 +185,6 @@
 				}
 			}
 		}
-
-		# 取得相簿圖片
-		private static function dirLoad($dirPath=false,$loadNum=false){
-			if(empty($dirPath)) return false;
-
-			$realPath = ROOT_PATH.'files/'.$dirPath;
-			if(file_exists($realPath)){
-				$allFiles = glob($realPath.'/*.{jpg,png,gif,jpeg,JPG,PNG,GIF,JPEG}',GLOB_BRACE);
-				CHECK::is_array_exist($allFiles);
-				if(CHECK::is_pass()){
-					foreach($allFiles as $key => $filePath){
-						$output[$key] = str_replace(ROOT_PATH,CORE::$root,$filePath);
-						if($loadNum !== false && is_numeric($loadNum) && ++$i >= $loadNum) break;
-					}
-				}
-			}
-
-			if(is_array($output)){
-				return $output;
-			}else{
-				return false;
-			}
-		}
 	}
 
 ?>
