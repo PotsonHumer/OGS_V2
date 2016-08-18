@@ -48,7 +48,7 @@
 					self::$temp["MAIN"] = 'ogs-admin-gallery-insert-tpl.html';
 					self::$temp["SEO"] = self::$temp_option["SEO"];
 					self::$temp["IMAGE"] = self::$temp_option["IMAGE"];
-					CORE::res_init('tab','box');
+					CORE::res_init('tab','get','box');
 					self::add();
 				break;
 				case "insert":
@@ -59,7 +59,7 @@
 					self::$temp["MAIN"] = 'ogs-admin-gallery-modify-tpl.html';
 					self::$temp["SEO"] = self::$temp_option["SEO"];
 					self::$temp["IMAGE"] = self::$temp_option["IMAGE"];
-					CORE::res_init('tab','box');
+					CORE::res_init('tab','get','box');
 					self::detail($id);
 				break;
 				case "modify":
@@ -73,6 +73,12 @@
 				case "multi":
 					self::$temp["MAIN"] = self::$temp_option["MSG"];
 					parent::multi('gallery',CORE::$manage.'gallery/');
+				break;
+				case "images":
+					self::images();
+				break;
+				case "imagesDel":
+					self::imagesDel();
 				break;
 				default:
 					self::$temp["MAIN"] = 'ogs-admin-gallery-list-tpl.html';
@@ -326,7 +332,7 @@
 			CHECK::is_must($_POST["callback"],$_POST["subject"],$_POST["dirpath"],$_POST["parent"]);
 
 			if(CHECK::is_pass()){
-				CRUD::dataInsert('gallery',$_POST,true,true);
+				CRUD::dataInsert('gallery',$_POST,true,true,true);
 				if(!empty(DB::$error)){
 					CRUD::args_output();
 					$msg = DB::$error;
@@ -352,18 +358,29 @@
 				foreach($row as $field => $var){
 					switch($field){
 						case "parent":
-							VIEW::assignGlobal("VALUE_".strtoupper($field)."_OPTION",self::cate_select($var));
+							$field = $field.'_OPTION';
+							$var = self::cate_select($var);
 						break;
 						case "status":
-							VIEW::assignGlobal("VALUE_".strtoupper($field)."_CK".$var,'selected');
-						break;
-						default:
-							VIEW::assignGlobal("VALUE_".strtoupper($field),$var);
+							$field = $field.'_ck'.$var;
+							$var = 'selected';
 						break;
 					}
+
+					$output["VALUE_".strtoupper($field)] = $var;
 				}
 
+				VIEW::assignGlobal($output);
+
 				IMAGES::output('gallery',$row["id"]);
+				foreach(IMAGES::$data as $images){
+					VIEW::newBlock('TAG_IMAGES_LIST');
+					foreach($images as $field => $var){
+						$images['IMAGES_'.strtoupper($field)] = $var;
+					}
+
+					VIEW::assign($images);
+				}
 
 				SEO::load($row["seo_id"]);
 				SEO::output();
@@ -389,7 +406,7 @@
 			$rsnum = CRUD::dataFetch('gallery',array('id' => $_POST["id"]));
 
 			if($check && !empty($rsnum)){
-				CRUD::dataUpdate('gallery',$_POST,true);
+				CRUD::dataUpdate('gallery',$_POST,true,true);
 				if(!empty(DB::$error)){
 					$msg = DB::$error;
 					$path = CORE::$manage.'gallery/';
@@ -429,6 +446,33 @@
 			}
 
 			CORE::msg($msg,$path);
+		}
+
+		# 取得圖片資料與列表
+		private static function images(){
+			$rs = 'NONE';
+
+			if(!empty($_POST['call'])){
+				$args = GALLERY::dirLoad($_POST['call']);
+				CHECK::is_array_exist($args);
+				if(CHECK::is_pass()){
+					foreach($args as $filePath){
+						VIEW::newBlock('TAG_GALLERY_IMAGE');
+						VIEW::assign('IMAGES_PATH',CORE::$cfg['dns'].$filePath);
+					}
+
+					new VIEW('ogs-admin-gallery-image-tpl.html',array('IMAGE' => self::$temp_option["IMAGE"]),true,1);
+					$rs = VIEW::$output;
+				}
+			}
+
+			echo $rs;
+		}
+
+		# 刪除已經建立的圖片
+		private static function imagesDel(){
+			if(empty($_POST['call'])) return false;
+			IMAGES::del('gallery',$_POST['call']);
 		}
 	}
 

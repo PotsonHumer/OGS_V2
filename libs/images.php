@@ -111,36 +111,33 @@
 		# 更新圖片
 		public static function modify(array $args,$tb_name=false,$related=false){
 			foreach($args["id"] as $key => $id){
-				$rsnum = CRUD::dataFetch('images',array('id' => $id));
-				if(!empty($rsnum)){
-					list($imgRow) = CRUD::$data;
+				list($width,$height) = IMAGES::size($args["path"][$key]);
+				$images = array(
+					'id' => $id,
+					'path' => $args["path"][$key],
+					'alt' => $args["alt"][$key],
+					'title' => $args["title"][$key],
+					'width_o' => $width,
+					'height_o' => $height,
+					'width' => $args['width'][$key],
+					'height' => $args['height'][$key],
+					'width_m' => $args['width_m'][$key],
+					'height_m' => $args['height_m'][$key],
+					'info' => $args['info'][$key],
+				);
 
-					list($width,$height) = IMAGES::size($args["path"][$key]);
-					$images = array(
-						'id' => $id,
-						'path' => $args["path"][$key],
-						'alt' => $args["alt"][$key],
-						'title' => $args["title"][$key],
-						'width_o' => $width,
-						'height_o' => $height,
-						'width' => $args['width'][$key],
-						'height' => $args['height'][$key],
-						'width_m' => $args['width_m'][$key],
-						'height_m' => $args['height_m'][$key],
-						'info' => $args['info'][$key],
-					);
-
-					if(empty($id)){
-						$images = array_merge($images,array('sheet' => $tb_name,'related' => $related));
-						CRUD::dataInsert('images',$images);
-						$ID = CRUD::$id;
-					}else{
-						CRUD::dataUpdate('images',$images);
-						$ID = $images['id'];
-					}
-
-					self::crop($ID,$images['path'],$images['width'],$images['height'],$images['width_m'],$images['height_m'],$imgRow['crop'],$imgRow['crop_m']);
+				if(empty($id)){
+					$images = array_merge($images,array('sheet' => $tb_name,'related' => $related));
+					CRUD::dataInsert('images',$images);
+					$ID = CRUD::$id;
+				}else{
+					CRUD::dataUpdate('images',$images);
+					$ID = $images['id'];
 				}
+
+				$rsnum = CRUD::dataFetch('images',array('id' => $id));
+				if(!empty($rsnum)) list($imgRow) = CRUD::$data;
+				self::crop($ID,$images['path'],$images['width'],$images['height'],$images['width_m'],$images['height_m'],$imgRow['crop'],$imgRow['crop_m']);
 			}
 		}
 
