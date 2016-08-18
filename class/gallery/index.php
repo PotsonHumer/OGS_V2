@@ -83,6 +83,34 @@
 				}
 			}
 		}
+
+		# 關聯產品顯示
+		public static function related($related=false){
+			if(empty($related)) return false;
+
+			$relatedArray = json_decode($related,true);
+			$rsnum = CRUD::dataFetch('gallery',array('id' => $relatedArray,'status' => '1','langtag' => CORE::$langtag));
+			if(!empty($rsnum)){
+				VIEW::newBlock("TAG_RELATED_BLOCK");
+
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $key => $row){
+					VIEW::newBlock("TAG_RELATED_LIST");
+
+					IMAGES::load('gallery',$row["id"]);
+					list($image) = IMAGES::$data;
+					
+					VIEW::assign(array(
+						"VALUE_ID" => $row['id'],
+						"VALUE_SUBJECT" => $row['subject'],
+						"VALUE_IMAGE" => $image['path'],
+						"VALUE_ALT" => $image['alt'],
+						"VALUE_TITLE" => $image['title'],
+						"VALUE_LINK" => GALLERY::dataLink($row['parent'],$row),
+					));
+				}
+			}
+		}
 	}
 
 ?>
