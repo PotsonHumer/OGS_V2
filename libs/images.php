@@ -18,7 +18,7 @@
 				foreach(CRUD::$data as $key => $row){
 					$row["exist"] = (!empty($row["path"]))?true:false;
 					$row["path"] = (!empty($row["path"]))?self::absolute_path($row["path"]):self::absolute_path(CORE::$cfg["noimg"]);
-					$row["path"] = (!empty($row[$cropField]))?$row[$cropField]:$row['path'];
+					if(!CORE::$bgend) $row["path"] = (!empty($row[$cropField]))?$row[$cropField]:$row['path'];
 					self::$data[] = $row;
 				}
 
@@ -111,31 +111,36 @@
 		# 更新圖片
 		public static function modify(array $args,$tb_name=false,$related=false){
 			foreach($args["id"] as $key => $id){
-				list($width,$height) = IMAGES::size($args["path"][$key]);
-				$images = array(
-					'id' => $id,
-					'path' => $args["path"][$key],
-					'alt' => $args["alt"][$key],
-					'title' => $args["title"][$key],
-					'width_o' => $width,
-					'height_o' => $height,
-					'width' => $args['width'][$key],
-					'height' => $args['height'][$key],
-					'width_m' => $args['width_m'][$key],
-					'height_m' => $args['height_m'][$key],
-					'info' => $args['info'][$key],
-				);
+				$rsnum = CRUD::dataFetch('images',array('id' => $id));
+				if(!empty($rsnum)){
+					list($imgRow) = CRUD::$data;
 
-				if(empty($id)){
-					$images = array_merge($images,array('sheet' => $tb_name,'related' => $related));
-					CRUD::dataInsert('images',$images);
-					$ID = CRUD::$id;
-				}else{
-					CRUD::dataUpdate('images',$images);
-					$ID = $images['id'];
+					list($width,$height) = IMAGES::size($args["path"][$key]);
+					$images = array(
+						'id' => $id,
+						'path' => $args["path"][$key],
+						'alt' => $args["alt"][$key],
+						'title' => $args["title"][$key],
+						'width_o' => $width,
+						'height_o' => $height,
+						'width' => $args['width'][$key],
+						'height' => $args['height'][$key],
+						'width_m' => $args['width_m'][$key],
+						'height_m' => $args['height_m'][$key],
+						'info' => $args['info'][$key],
+					);
+
+					if(empty($id)){
+						$images = array_merge($images,array('sheet' => $tb_name,'related' => $related));
+						CRUD::dataInsert('images',$images);
+						$ID = CRUD::$id;
+					}else{
+						CRUD::dataUpdate('images',$images);
+						$ID = $images['id'];
+					}
+
+					self::crop($ID,$images['path'],$images['width'],$images['height'],$images['width_m'],$images['height_m'],$imgRow['crop'],$imgRow['crop_m']);
 				}
-
-				self::crop($ID,$images['path'],$images['width'],$images['height'],$images['width_m'],$images['height_m']);
 			}
 		}
 
@@ -145,17 +150,21 @@
 			if(!empty($rsnum)){
 				foreach(IMAGES::$data as $key => $row){
 					DB::delete(CORE::$prefix.'_images',array('id' => $row["id"]));
-
-					if(!empty($row['crop'])){
-						$cropPath = str_replace(CORE::$cfg['host'],ROOT_PATH,$row['crop']);
-						unlink($cropPath);
-					}
-
-					if(!empty($row['crop_m'])){
-						$cropPath_m = str_replace(CORE::$cfg['host'],ROOT_PATH,$row['crop_m']);
-						unlink($cropPath_m);
-					}
+					self::delCrop($row['crop'],$row['crop_m']);
 				}
+			}
+		}
+
+		# 刪除縮圖
+		private static function delCrop($crop,$crop_m){
+			if(!empty($crop)){
+				$cropPath = str_replace(CORE::$cfg['host'],ROOT_PATH,$crop);
+				if(file_exists($cropPath)) unlink($cropPath);
+			}
+
+			if(!empty($crop_m)){
+				$cropPath_m = str_replace(CORE::$cfg['host'],ROOT_PATH,$crop_m);
+				if(file_exists($cropPath_m)) unlink($cropPath_m);
 			}
 		}
 
@@ -171,56 +180,76 @@
 		}
 
 		# 製作小圖
-		public static function crop($id,$path=false,$width=false,$height=false,$width_m=false,$height_m=false){
-			if(empty($id) || empty($path) || $path == CORE::$cfg["noimg"]) return false;
+		public static function crop($id,$path=false,$width=false,$height=false,$width_m=false,$height_m=false,$crop=false,$crop_m=false){
+			if(empty($id)) return false;
 
-			$filePath = str_replace(CORE::$cfg['host'],ROOT_PATH,$path);
-			$fileName = basename($filePath);
-			$extension = pathinfo($filePath, PATHINFO_EXTENSION);
-
-			$cropName = 'crop_'.$id.'.'.$extension;
-
-			$cropDir = ROOT_PATH."files/crop/";
-			$cropDir_m = ROOT_PATH."files/crop_m/";
-			$cropHostPath = CORE::$cfg['host'].'files/crop/'.$cropName;
-			$cropHost_mPath = CORE::$cfg['host'].'files/crop_m/'.$cropName;
-
-			if(!is_dir($cropDir)){
-				mkdir($cropDir, 0777, true) || die("can't create dir in '{$cropDir}'");
-				chmod($cropDir, 0777);
+			if(!empty($crop) || !empty($crop_m)){
+				self::delCrop($crop,$crop_m);
 			}
 
-			if(!is_dir($cropDir_m)){
-				mkdir($cropDir_m, 0777, true) || die("can't create dir in '{$cropDir_m}'");
-				chmod($cropDir_m, 0777);
+			if(!empty($path) && $path != CORE::$cfg['noimg']){
+				$nowDate = strtotime(date('Y-m-d H:i:s'));
+				$filePath = str_replace(CORE::$cfg['host'],ROOT_PATH,$path);
+				$fileName = basename($filePath);
+				$extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+				$cropName = 'crop_'.$id.'_'.$nowDate.'.'.$extension;
+
+				$cropDir = ROOT_PATH."files/crop/";
+				$cropDir_m = ROOT_PATH."files/crop_m/";
+				$cropHostPath = CORE::$cfg['host'].'files/crop/'.$cropName;
+				$cropHost_mPath = CORE::$cfg['host'].'files/crop_m/'.$cropName;
+
+				if(!is_dir($cropDir)){
+					mkdir($cropDir, 0777, true) || die("can't create dir in '{$cropDir}'");
+					chmod($cropDir, 0777);
+				}
+
+				if(!is_dir($cropDir_m)){
+					mkdir($cropDir_m, 0777, true) || die("can't create dir in '{$cropDir_m}'");
+					chmod($cropDir_m, 0777);
+				}
+
+				$cropPath = $cropDir.$cropName;
+				$cropPath_m = $cropDir_m.$cropName;
+
+				switch(true){
+					case (!empty($width) && !empty($height)):
+						self::resize($filePath,$width,$height,$cropPath);
+					break;
+					case (!empty($width) || !empty($height)):
+						if(empty($width)) $width = 'auto';
+						if(empty($height)) $height = 'auto';
+						self::resize($filePath,$width,$height,$cropPath);
+					break;
+					default:
+						$cropNone = true;
+					break;
+				}
+
+				switch(true){
+					case (!empty($width_m) && !empty($height_m)):
+						self::resize($filePath,$width_m,$height_m,$cropPath_m);
+					break;
+					case (!empty($width_m) || !empty($height_m)):
+						if(empty($width_m)) $width_m = 'auto';
+						if(empty($height_m)) $height_m = 'auto';
+						self::resize($filePath,$width_m,$height_m,$cropPath_m);
+					break;
+					default:
+						$cropNone = true;
+					break;
+				}
+			}else{
+				$cropNone = true;
 			}
 
-			$cropPath = $cropDir.$cropName;
-			$cropPath_m = $cropDir_m.$cropName;
-
-			switch(true){
-				case (!empty($width) && !empty($height)):
-					self::resize($filePath,$width,$height,$cropPath);
-				break;
-				case (!empty($width) || !empty($height)):
-					if(empty($width)) $width = 'auto';
-					if(empty($height)) $height = 'auto';
-					self::resize($filePath,$width,$height,$cropPath);
-				break;
+			if(!$cropNone){
+				$cropArgs = array('crop' => $cropHostPath,'crop_m' => $cropHost_mPath,'id' => $id);
+			}else{
+				$cropArgs = array('crop' => 'null','crop_m' => 'null','id' => $id);
 			}
 
-			switch(true){
-				case (!empty($width_m) && !empty($height_m)):
-					self::resize($filePath,$width_m,$height_m,$cropPath_m);
-				break;
-				case (!empty($width_m) || !empty($height_m)):
-					if(empty($width_m)) $width_m = 'auto';
-					if(empty($height_m)) $height_m = 'auto';
-					self::resize($filePath,$width_m,$height_m,$cropPath_m);
-				break;
-			}
-
-			$cropArgs = array('crop' => $cropHostPath,'crop_m' => $cropHost_mPath,'id' => $id);
 			CRUD::dataUpdate('images',$cropArgs);
 		}
 
@@ -302,7 +331,7 @@
 
 		# 快速取得圖片大小
 		public static function size($path=false){
-			if(empty($path)) return false;
+			if(empty($path)) return array(0,0);
 
 			require_once ROOT_PATH.'libs/Fastimage.php';
 			$image = new FastImage($path);
