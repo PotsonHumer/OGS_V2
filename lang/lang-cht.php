@@ -72,6 +72,8 @@
 		'null' => '未選取',
 		'male' => '男性',
 		'female' => '女性',
+		'mr' => '先生',
+		'ms' => '小姐',
 		'status_on' => '開啟',
 		'status_off' => '關閉',
 		'modify_done' => '更新完成',

@@ -120,7 +120,11 @@
 				CRUD::args_output();
 			}
 
-			RESPONSE::register($msg,CORE::$root.'contact/thankyou/');
+			if($rs){
+				RESPONSE::register($_POST,CORE::$root.'contact/thankyou/');
+			}else{
+				CORE::msg($msg,CORE::$root.'contact/');
+			}
 		}
 	}
 

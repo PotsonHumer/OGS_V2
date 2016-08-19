@@ -602,18 +602,37 @@
 		}
 
 		# 輸出名稱組合
-		# @pram string $lastName : 姓氏
-		# @pram string $firstName : 名字
+		# @pram array $name : 姓氏,名字
 		# @pram string,boolean $type : 輸出類型
+		# @pram integer $gender : 性別 0 => 女性, 1 => 男性
 		# @value string,boolean
 
-		public static function fetchName($name=false,$type=false){
+		public static function fetchName($name=false,$type=false,$gender=false){
 			if(is_array($name) || empty($name)){
 				$nameArgs = (count($name) <= 0 || empty($name))?array($_POST['lastName'],$_POST['firstName']):$name;
 				$input = true;
 			}else{
 				$nameArgs = explode(' ',$name);
 				$input = false;
+			}
+
+			switch($gender){
+				case "1":
+					$gender = CORE::$lang['mr'];
+				break;
+				case "0":
+					$gender = CORE::$lang['ms'];
+				break;
+			}
+
+			switch(CORE::$langtag){
+				case "cht":
+				case "chs":
+					list($lastName,$firstName) = $nameArgs;
+				break;
+				default:
+					list($firstName,$lastName) = $nameArgs;
+				break;
 			}
 
 			switch(true){
@@ -636,6 +655,10 @@
 				break;
 				case ($type === 'array'):
 					return array($front,$after);
+				break;
+				case ($type === 'call'):
+					if(!empty($firstName)) return $firstName;
+					return (CORE::$langtag == 'cht' || CORE::$langtag == 'chs')?$lastName.$gender:$gender.$lastName;
 				break;
 			}
 		}
