@@ -38,7 +38,19 @@
 			}
 
 			SESS::del('msg');
-			VIEW::assignGlobal('TAG_MSG',$msg);
+			if(is_array($msg)){
+
+				$output['TAG_NAME'] = CORE::fetchName(array($msg['lastName'],$msg['firstName']),'call',$msg['gender']);
+
+				foreach($msg as $field => $var){
+					$output['TAG_'.strtoupper($field)] = $var;
+				}
+
+			}else{
+				$output['TAG_MSG'] = $msg;
+			}
+
+			VIEW::assignGlobal($output);
 
 			CORE::common_resource();
 
@@ -46,7 +58,16 @@
 		}
 
 		public static function register($msg,$path){
-			SESS::write('msg',$msg);
+			CHECK::is_array_exist($msg);
+
+			if(CHECK::is_pass()){
+				foreach($msg as $field => $var){
+					SESS::write('msg',$field,$var);
+				}
+			}else{
+				SESS::write('msg',$msg);
+			}
+
 			header("location: {$path}");
 		}
 	}
