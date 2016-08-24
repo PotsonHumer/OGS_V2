@@ -19,7 +19,7 @@
 					new RESPONSE('contact',CORE::$lang['contactThanks']);
 				break;
 				case "add":
-					#self::$temp["MAIN"] = CORE::$temp_option["MSG"];
+					self::$temp["MAIN"] = CORE::$temp_option["MSG"];
 					self::add($m_id);
 				break;
 				default:
@@ -113,6 +113,7 @@
 					new VIEW($mail_temp,false,true,false);
 
 					CORE::mail_handle($_POST["email"],SYSTEM::$setting["email"],VIEW::$output,CORE::$lang["contact_mail"],SYSTEM::$setting["name"]); # 寄出認證信
+					$rs = true;
 				}
 			}else{
 				$msg = CHECK::$alert;
@@ -122,6 +123,7 @@
 
 			if($rs){
 				RESPONSE::register($_POST,CORE::$root.'contact/thankyou/');
+				exit;
 			}else{
 				CORE::msg($msg,CORE::$root.'contact/');
 			}
