@@ -6,6 +6,7 @@
 
 		public static 
 			$data, // 讀取的 SEO 資訊
+			$output,
 			$error; // 錯誤訊息
 
 		function __construct(){
@@ -112,6 +113,7 @@
 						break;
 					}
 
+					self::$output[$field] = $var;
 					VIEW::assignGlobal("SEO_".strtoupper($field),$var);
 				}
 			}
