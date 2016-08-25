@@ -58,7 +58,7 @@
 		private static function assemble(array $property,$function=false){
 			switch($function){
 				case "facebook":
-					$prefix = 'ogs:';
+					$prefix = 'og:';
 				break;
 				case "twitter":
 					$prefix =  'twitter:';
