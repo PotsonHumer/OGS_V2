@@ -48,7 +48,7 @@
 						break;
 					}
 
-					$output['SYSTEM'.strtoupper($field)] = $var;
+					$output['SYSTEM_'.strtoupper($field)] = $var;
 				}
 
 				VIEW::assignGlobal($output);
