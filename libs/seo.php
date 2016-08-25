@@ -6,6 +6,7 @@
 
 		public static 
 			$data, // 讀取的 SEO 資訊
+			$output,
 			$error; // 錯誤訊息
 
 		function __construct(){
@@ -106,10 +107,11 @@
 					switch($field){
 						case "short_desc":
 							$var = (!empty($var))?"<h2>{$var}</h2>":'';
-						default:
-							VIEW::assignGlobal("SEO_".strtoupper($field),$var);
 						break;
 					}
+
+					self::$output[$field] = $var;
+					VIEW::assignGlobal("SEO_".strtoupper($field),$var);
 				}
 			}
 		}
