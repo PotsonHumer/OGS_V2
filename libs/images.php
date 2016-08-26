@@ -18,7 +18,11 @@
 				foreach(CRUD::$data as $key => $row){
 					$row["exist"] = (!empty($row["path"]))?true:false;
 					$row["path"] = (!empty($row["path"]))?self::absolute_path($row["path"]):self::absolute_path(CORE::$cfg["noimg"]);
-					if(!CORE::$bgend) $row["path"] = (!empty($row[$cropField]))?$row[$cropField]:$row['path'];
+					if(!CORE::$bgend){
+						$row["path"] = (!empty($row[$cropField]))?$row[$cropField]:$row['path'];
+						$row["width"] = (!empty($row['width']))?(!CORE::$mobile)?$row['width']:$row['width_m']:$row['width_o'];
+						$row["height"] = (!empty($row['height']))?(!CORE::$mobile)?$row['height']:$row['height_m']:$row['height_o'];
+					}
 					self::$data[] = $row;
 				}
 

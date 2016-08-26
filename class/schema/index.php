@@ -44,11 +44,13 @@
 		}
 
 		# 圖片
-		private static function image($path=false){
+		private static function image($path=false,$width=false,$height=false){
 			if(empty($path)) return false;
 
-			#list($width,$height) = getimagesize($path);
-			list($width,$height) = IMAGES::size($path);
+			if(empty($width) && empty($height)){
+				#list($width,$height) = getimagesize($path);
+				list($width,$height) = IMAGES::size($path);
+			}
 
 			return array(
 				'@type' => 'ImageObject',
@@ -201,7 +203,7 @@
 			IMAGES::load('blog',$args['id']);
 			if(is_array(IMAGES::$data)){
 				list($image) = IMAGES::$data;
-				$output['image'] = self::image($image['path']);
+				$output['image'] = self::image($image['path'],$image['width'],$image['height']);
 			}
 
 			self::$schema[] = self::basic('BlogPosting',$output);
@@ -224,7 +226,7 @@
 			IMAGES::load('products',$args['id']);
 			if(is_array(IMAGES::$data)){
 				list($image) = IMAGES::$data;
-				$output['image'] = self::image($image['path']);
+				$output['image'] = self::image($image['path'],$image['width'],$image['height']);
 			}
 
 			self::$schema[] = self::basic('Product',$output);
@@ -242,7 +244,7 @@
 			IMAGES::load('products',$args['id']);
 			if(is_array(IMAGES::$data)){
 				list($image) = IMAGES::$data;
-				$output['image'] = self::image($image['path']);
+				$output['image'] = self::image($image['path'],$image['width'],$image['height']);
 			}
 
 			self::$schema[] = self::basic('IndividualProduct',$output);
