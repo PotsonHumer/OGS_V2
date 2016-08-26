@@ -34,9 +34,7 @@
 		}
 
 		# 顯示聯絡我們
-		private static function form($m_id=false){
-			self::subjectFetch();
-			
+		private static function form($m_id=false){			
 			if(!empty($m_id)){
 				CRUD::dataFetch('member',array('id' => $m_id));
 				list($row) = CRUD::$data;
@@ -44,14 +42,18 @@
 				foreach($row as $field => $var){
 					switch($field){
 						case "gender":
-							VIEW::assignGlobal('VALUE_'.strtoupper($field).'_CK'.$var,'selected');
-						break;
-						default:
-							VIEW::assignGlobal('VALUE_'.strtoupper($field),$var);
+							$field = $field.'_CK'.$var;
+							$var = 'selected';
 						break;
 					}
+
+					$output['VALUE_'.strtoupper($field)] = $var;
 				}
 			}
+
+			$output['VALUE_SUBJECT_OPTION'] = self::subjectOption($row['subject']);
+
+			VIEW::assignGlobal($output);
 
 			CRUD::args_output(true,true);
 
@@ -59,23 +61,6 @@
 			if(empty(SEO::$data["h1"])) SEO::$data["h1"] = CORE::$lang["contact"];
 			SEO::output();
 			CRUMBS::fetch('contact');
-		}
-
-		# 取得主題
-		private static function subjectFetch(){
-			$rsnum = CRUD::dataFetch('contact_subject',false,false,array('sort' => CORE::$cfg['sort']));
-			if(!empty($rsnum)){
-				$dataRow = CRUD::$data;
-				VIEW::newBlock("TAG_SUBJECT_NAME");
-
-				foreach($dataRow as $row){
-					VIEW::newBlock('TAG_SUBJECT_LIST');
-					VIEW::assign('VALUE_SUBJECT',$row['subject']);
-				}
-			}else{
-				VIEW::newBlock('TAG_SUBJECT_LIST');
-				VIEW::assign('VALUE_SUBJECT','無類型');
-			}
 		}
 
 		# 紀錄聯絡我們
@@ -99,6 +84,10 @@
 				}else{
 					foreach($_POST as $field => $var){
 						switch($field){
+							case "subject":
+								$subjectmail = self::subjectFetch($var,'email');
+								$var = self::subjectFetch($var,'subject');
+							break;
 							case "gender":
 								$var = (empty($var))?CORE::$lang["female"]:CORE::$lang["male"];
 							break;
@@ -112,7 +101,9 @@
 					$mail_temp = 'ogs-mail-contact-tpl.html'; # 信件樣板
 					new VIEW($mail_temp,false,true,false);
 
-					CORE::mail_handle($_POST["email"],SYSTEM::$setting["email"],VIEW::$output,CORE::$lang["contact_mail"],SYSTEM::$setting["name"]); # 寄出認證信
+					$fromMail = (!empty($subjectmail))?$subjectmail:SYSTEM::$setting["email"];
+
+					CORE::mail_handle($_POST["email"],$fromMail,VIEW::$output,CORE::$lang["contact_mail"],SYSTEM::$setting["name"]); # 寄出認證信
 					$rs = true;
 				}
 			}else{

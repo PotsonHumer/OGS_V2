@@ -51,6 +51,35 @@
 			$rsArray = json_decode($result,true);
 			return $rsArray["success"];
 		}
+
+		# 主題選單
+		protected static function subjectOption($id=false){
+			$rsnum = CRUD::dataFetch('contact_subject',false,false,array('sort' => CORE::$cfg['sort']));
+			if(!empty($rsnum)){
+				$dataRow = CRUD::$data;
+				foreach($dataRow as $row){
+					$selected = (!empty($id) && $id == $row['id'])?'selected':'';
+					$optionArray[] = '<option value="'.$row['id'].'" '.$selected.'>'.$row['subject'].'</option>';
+				}
+			}else{
+				$optionArray[] = '<option value="null">無類型</option>';
+			}
+
+			if(is_array($optionArray)){
+				return implode("\n",$optionArray);
+			}
+		}
+
+		# 取得主題資料
+		protected static function subjectFetch($id,$field='*'){
+			$rsnum = CRUD::dataFetch('contact_subject',array('id' => $id),array($field));
+			if(!empty($rsnum)){
+				list($row) = CRUD::$data;
+				return $row[$field];
+			}
+
+			return false;
+		}
 	}
 
 ?>
