@@ -56,10 +56,36 @@
 			}
 
 			if(is_array($output)){
-				return $output;
+				return self::indexSort($output);
 			}else{
 				return false;
 			}
+		}
+
+		# 圖檔目錄重新排序 (index 檔名圖片作為封面)
+		private static function indexSort(array $args,$onlyIDX=false){
+			if(count($args) <= 1) return $args;
+
+			foreach($args as $key => $path){
+				list($fileName) = explode(".",basename($path));
+				if($fileName == 'index'){
+					$sort[0] = $key;
+				}else{
+					$sort[$fileName] = $key;
+				}
+			}
+
+			ksort($sort,SORT_STRING);
+
+			if($onlyIDX){
+				$output[] = array_shift($sort);
+			}else{
+				foreach($sort as $sortKey){
+					$output[] = $args[$sortKey];
+				}
+			}
+
+			return $output;
 		}
 
 		# 首頁列表
