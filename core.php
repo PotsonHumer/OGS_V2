@@ -303,7 +303,7 @@
 					switch($res_type){
 						case "box":
 							$res_path = self::$cfg["js"].'box_serial/'.$value.'_box.js';
-							$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$res_insert .= '<script src="'.$res_path.'" type="text/javascript" defer></script>'."\n";
 							$footer = false;
 						break;
 						case "css":
@@ -313,7 +313,7 @@
 						break;
 						case "js":
 							$res_path = self::$cfg["js"].$value.'.js';
-							$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$res_insert .= '<script src="'.$res_path.'" type="text/javascript" defer></script>'."\n";
 							$footer = false;
 						break;
 						case "custom":
@@ -326,7 +326,7 @@
 									$res_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
 								break;
 								case "js":
-									$res_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+									$res_insert .= '<script src="'.$res_path.'" type="text/javascript" defer></script>'."\n";
 								break;
 							}
 
@@ -335,7 +335,7 @@
 
 						case "footer_box":
 							$res_path = self::$cfg["js"].'box_serial/'.$value.'_box.js';
-							$footer_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$footer_insert .= '<script src="'.$res_path.'" type="text/javascript" defer></script>'."\n";
 							$footer = true;
 						break;
 						case "footer_css":
@@ -345,7 +345,7 @@
 						break;
 						case "footer_js":
 							$res_path = self::$cfg["js"].$value.'.js';
-							$footer_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+							$footer_insert .= '<script src="'.$res_path.'" type="text/javascript" defer></script>'."\n";
 							$footer = true;
 						break;
 						case "footer_custom":
@@ -358,7 +358,7 @@
 									$footer_insert .= '<link href="'.$res_path.'" rel="stylesheet" type="text/css" />'."\n";
 								break;
 								case "js":
-									$footer_insert .= '<script src="'.$res_path.'" type="text/javascript"></script>'."\n";
+									$footer_insert .= '<script src="'.$res_path.'" type="text/javascript" defer></script>'."\n";
 								break;
 							}
 
