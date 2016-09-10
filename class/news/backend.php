@@ -317,7 +317,7 @@
 			$rsnum = CRUD::dataFetch('news',array("langtag" => CORE::$langtag));
 			CRUD::args_output(true,true);
 			VIEW::assignGlobal(array(
-				"VALUE_SORT" => ++$rsnum,
+				"VALUE_SORT" => '1', #++$rsnum,
 				"VALUE_SHOWDATE" => date("Y-m-d"),
 				"VALUE_PARENT_OPTION" => self::cate_select(),
 				"VALUE_PARENT_OPTION_DEFAULT_STR" => (self::cate_select() === false)?'無分類':'未選擇',
