@@ -90,7 +90,8 @@
 		private static function add(){
 			$rsnum = CRUD::dataFetch('intro',array("langtag" => CORE::$langtag));
 			CRUD::args_output(true,true);
-			VIEW::assignGlobal("VALUE_SORT",++$rsnum);
+			#VIEW::assignGlobal("VALUE_SORT",++$rsnum);
+			VIEW::assignGlobal("VALUE_SORT",'1');
 		}
 
 		# 執行新增

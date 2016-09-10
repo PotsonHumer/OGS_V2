@@ -324,7 +324,7 @@
 			$rsnum = CRUD::dataFetch('gallery',array("langtag" => CORE::$langtag));
 			CRUD::args_output(true,true);
 			VIEW::assignGlobal(array(
-				"VALUE_SORT" => ++$rsnum,
+				"VALUE_SORT" => '1', #++$rsnum,
 				"VALUE_SHOWDATE" => date("Y-m-d"),
 				"VALUE_PARENT_OPTION" => self::cate_select(),
 			));
