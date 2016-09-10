@@ -366,6 +366,11 @@
 						break;
 					}
 
+					if(preg_match('/^http/', $res_path)){
+						$direct_insert .= ($footer)?$footer_insert:$res_insert;
+						continue;
+					}
+
 					if(self::$cfg['directInclude'] && !self::$bgend){
 						if(!$footer){
 							$direct_insert .= DINCLUDE::allHandle($res_path);
