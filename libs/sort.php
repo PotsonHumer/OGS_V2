@@ -7,12 +7,14 @@
 
 		# 執行自動排序
 		public static function auto($tb_name,$langtag,$id,$sort=1){
-			$parentExist = CRUD::dataFetch($tb_name,array('id' => $id),array('parent'));
+			$rsnum = CRUD::dataFetch($tb_name,array('id' => $id));
+			if(empty($rsnum)) return false;
+
 			list($selfRow) = CRUD::$data;
 
-			if($parentExist){
-				$addon = (!empty($selfRow["parent"]))?" and parent = '{$selfRow["parent"]}'":" and parent IS NULL";
-			}
+			$addon = '';
+
+			if(isset($selfRow["parent"])) $addon .= (!empty($selfRow["parent"]))?" and parent = '{$selfRow["parent"]}'":" and parent IS NULL";
 
 			if(!empty($selfRow['lang_id']) && !empty($selfRow['langtag'])){
 				$addon .= " and langtag = '{$langtag}'";
