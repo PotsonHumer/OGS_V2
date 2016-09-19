@@ -122,6 +122,8 @@
 
 	$config["directInclude"] = false; # 直接載入 css|js 資源
 
+	$config['filemanager_filter'] = array('crop','crop_m'); # 圖片管理過濾目錄
+
 	
 	#### country ####
 	$config["country"] = array(
