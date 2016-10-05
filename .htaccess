@@ -38,6 +38,10 @@ RewriteRule ^(phpmyadmin|class/editor/filemanager|AmgAdmin)([^*]+)$  $1$2 [L]
 RewriteRule ^([^*]+).(css|js|jpg|png|gif|pdf|eot|svg|ttf|woff|xls)$  $1.$2 [L]
 #RewriteRule ^([^*]+)$  index.php [L]
 
+# http 轉至 https
+#RewriteCond %{SERVER_PORT} ^80$
+#RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [L]
