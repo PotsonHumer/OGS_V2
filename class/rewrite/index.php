@@ -32,7 +32,9 @@
 						$args[$field] = CORE::content_file_str_replace($var,'out');
 					}
 
-					$nowUrl = ($_SERVER['HTTPS'])?'https':'http'.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+					$nowUrl = ($_SERVER['HTTPS'])?'https':'http';
+					$nowUrl = $nowUrl.'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
 					if(urlencode($args['origin']) == urlencode($nowUrl)){
 						header("Location: ".$args['target'],TRUE,301);
 						exit;
